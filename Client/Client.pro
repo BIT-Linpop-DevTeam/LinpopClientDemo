@@ -19,7 +19,6 @@ SOURCES += \
     chatwindow.cpp \
     communicator.cpp \
     friend.cpp \
-    login.cpp \
     main.cpp \
     client.cpp \
     message.cpp

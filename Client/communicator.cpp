@@ -35,7 +35,7 @@ void Communicator::onConnectedFromSocket() {
     qDebug() << "connected";
 }
 
-void Communicator::onDisconnectedFromSocket() {\
+void Communicator::onDisconnectedFromSocket() {
     qDebug() << "disconnected";
     tryConnect();
 }

@@ -1,6 +1,6 @@
 #include "chatwindow.h"
 #include "ui_chatwindow.h"
-#include <qDebug>
+#include <QDebug>
 
 ChatWindow::ChatWindow(QWidget *parent) :
     QWidget(parent),
@@ -32,6 +32,7 @@ void ChatWindow::onSendMessageButtonClicked()
 {
     qDebug() << "in slot: onSendMessageButtonClicked()";
     const QString sendData = ui->msgSendTextEdit->toPlainText();
+    ui->msgSendTextEdit->setText("");
     ui->msgShowTextBrowser->append("me:");
     ui->msgShowTextBrowser->append(sendData);
     Message msg(sendData);

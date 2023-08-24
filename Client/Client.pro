@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,14 +16,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chatwindow.cpp \
+    communicator.cpp \
+    friend.cpp \
+    login.cpp \
     main.cpp \
-    client.cpp
+    client.cpp \
+    message.cpp
 
 HEADERS += \
-    client.h
+    chatwindow.h \
+    client.h \
+    communicator.h \
+    friend.h \
+    message.h
 
 FORMS += \
+    chatwindow.ui \
     client.ui
+
+RESOURCES += \
+    chatwindowsrc.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

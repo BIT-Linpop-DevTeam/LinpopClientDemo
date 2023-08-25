@@ -20,10 +20,10 @@ private:
     Ui::ChatWindow *ui;
 
 signals:
-    void signalSendMessageButtonClickedToClient(const Message &msg);
+    void signalSendMessageButtonClickedToClient(const QByteArray &msg);
 
 public slots:
-    void onReadyReadFromClient(const Message &msg);
+    void onReadyReadFromClient(const QByteArray &msg);
     void onCreateWindowButtonClickedFromClient();
     void onSendMessageButtonClicked();
 };

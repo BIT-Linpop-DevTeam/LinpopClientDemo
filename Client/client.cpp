@@ -18,6 +18,6 @@ Client::~Client()
     delete ui;
 }
 
-void Client::onSendMessageButtonFromChat(const Message &msg) {
+void Client::onSendMessageButtonFromChat(const QByteArray &msg) {
     emit signalSendMessageToCommunicator(msg);
 }

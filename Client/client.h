@@ -26,9 +26,9 @@ private:
     QList<ChatWindow *> chatWindowList;
 
 signals:
-    void signalSendMessageToCommunicator(const Message &msg);
+    void signalSendMessageToCommunicator(const QByteArray &msg);
 
 public slots:
-    void onSendMessageButtonFromChat(const Message &msg);
+    void onSendMessageButtonFromChat(const QByteArray &msg);
 };
 #endif // CLIENT_H

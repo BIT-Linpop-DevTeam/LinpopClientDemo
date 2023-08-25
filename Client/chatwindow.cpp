@@ -1,6 +1,7 @@
 #include "chatwindow.h"
 #include "ui_chatwindow.h"
 #include <QDebug>
+#include <QDateTime>
 
 ChatWindow::ChatWindow(QWidget *parent) :
     QWidget(parent),
@@ -15,11 +16,44 @@ ChatWindow::~ChatWindow()
     delete ui;
 }
 
-void ChatWindow::onReadyReadFromClient(const Message& msg)
+//todo
+void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
 {
     qDebug() << "in slot: onReadySendFromClient()";
-    const QString text = msg.toString();
-    ui->msgShowTextBrowser->append(text);
+
+    QByteArray dataSrc = msg;
+    QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
+    Message::Type type = Message::getType(dataStream);
+
+    switch (type) {
+    case Message::CHAT_MESSAGE:
+    {
+        const ChatMessage chatMsg = Message::toChatMessage(dataStream);
+        ui->msgShowTextBrowser->append(QString("%1").arg(chatMsg.sendId));
+        ui->msgShowTextBrowser->append(chatMsg.msg);
+        break;
+    }
+    case Message::REQUEST_FRIENDLIST_MESSAGE:
+        break;
+    case Message::FRIENDLIST_MESSAGE:
+        break;
+    case Message::REQUEST_CHATLOG_MESSAGE:
+        break;
+    case Message::CHATLOG_MESSAGE:
+        break;
+    case Message::REQUEST_FRIEND_MESSAGE:
+        break;
+    case Message::REQUEST_LOGIN_MESSAGE:
+        break;
+    case Message::LOGIN_CHECK_MESSAGE:
+        break;
+    case Message::REQUEST_SIGNUP_MESSAGE:
+        break;
+    case Message::SIGNUP_CHECK_MESSAGE:
+        break;
+    case Message::ERROR_MESSAGE:
+        break;
+    }
 }
 
 void ChatWindow::onCreateWindowButtonClickedFromClient()
@@ -28,6 +62,7 @@ void ChatWindow::onCreateWindowButtonClickedFromClient()
     show();
 }
 
+//todo
 void ChatWindow::onSendMessageButtonClicked()
 {
     qDebug() << "in slot: onSendMessageButtonClicked()";
@@ -35,6 +70,9 @@ void ChatWindow::onSendMessageButtonClicked()
     ui->msgSendTextEdit->setText("");
     ui->msgShowTextBrowser->append("me:");
     ui->msgShowTextBrowser->append(sendData);
-    Message msg(sendData);
+
+    QString sendId = "sender", receiveId = "receiver";
+    struct ChatMessage dataSrc(sendId, receiveId, sendData, QDateTime::currentDateTime());
+    const QByteArray msg = Message::FromChatMessage(dataSrc);
     emit signalSendMessageButtonClickedToClient(msg);
 }

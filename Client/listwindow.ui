@@ -374,7 +374,7 @@ QLineEdit:focus{
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="messagepage">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -427,7 +427,7 @@ QLineEdit:focus{
               <x>0</x>
               <y>0</y>
               <width>357</width>
-              <height>444</height>
+              <height>452</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -753,8 +753,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>229</width>
-              <height>136</height>
+              <width>357</width>
+              <height>452</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -836,7 +836,7 @@ QRadioButton:indicator{
                 <string>冯玉彭</string>
                </property>
                <property name="icon">
-                <iconset resource="src.qrc">
+                <iconset>
                  <normaloff>:/src/GUI/notice.png</normaloff>:/src/GUI/notice.png</iconset>
                </property>
               </widget>

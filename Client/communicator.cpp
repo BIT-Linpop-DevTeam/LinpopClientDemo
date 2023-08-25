@@ -46,12 +46,11 @@ void Communicator::onReadyReadFromSocket() {
     if(socket->bytesAvailable() <= 0) 	return;
 
     const QByteArray recvData = socket->readAll();
-    const Message msg(recvData);
 
-    emit signalReadyReadToClient(msg);
+    emit signalReadyReadToClient(recvData);
 }
 
-void Communicator::onSendMessageClickedFromClient(const Message &msg) {
+void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
     qDebug() << "in slot: onSendMessageClickedFromClient()";
 
     if(!socket->isValid())	{
@@ -59,6 +58,5 @@ void Communicator::onSendMessageClickedFromClient(const Message &msg) {
         return;
     }
 
-    const QByteArray sendData = msg.toByteArray();
-    socket->write(sendData);
+    socket->write(msg);
 }

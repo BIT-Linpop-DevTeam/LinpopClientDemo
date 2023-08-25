@@ -22,10 +22,10 @@ public:
     void initCommunicator(const Client &client);
 
 signals:
-    void signalReadyReadToClient(const Message &msg);
+    void signalReadyReadToClient(const QByteArray &msg);
 
 public slots:
-    void onSendMessageClickedFromClient(const Message &msg);
+    void onSendMessageClickedFromClient(const QByteArray &msg);
     void onReadyReadFromSocket();
     void onConnectedFromSocket();
     void onDisconnectedFromSocket();

@@ -14,5 +14,7 @@ int main(int argc, char *argv[])
     communicator.initCommunicator(w);
 //    ChatWindow w;
 //    w.show();
+
+
     return a.exec();
 }

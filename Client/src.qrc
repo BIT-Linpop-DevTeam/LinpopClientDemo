@@ -1,10 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>src/GUI/icon/search.png</file>
-        <file>src/GUI/bg300x220.png</file>
-        <file>src/GUI/bg300x320.png</file>
-        <file>src/GUI/bg300x490.png</file>
-        <file>src/GUI/bgmain.png</file>
         <file>src/GUI/button.png</file>
         <file>src/GUI/button_hover.png</file>
         <file>src/GUI/button_press.png</file>
@@ -22,13 +18,6 @@
         <file>src/GUI/prompt_hint.png</file>
         <file>src/GUI/prompt_warning.png</file>
         <file>src/GUI/send.png</file>
-        <file>src/GUI/short_button.png</file>
-        <file>src/GUI/short_button_hover.png</file>
-        <file>src/GUI/short_button_press.png</file>
-        <file>src/GUI/short_secbutton.png</file>
-        <file>src/GUI/short_secbutton_hover.png</file>
-        <file>src/GUI/short_secbutton_press.png</file>
-        <file>src/GUI/slice_bg.png</file>
         <file>src/GUI/icon/addFriend.png</file>
         <file>src/GUI/icon/addFriend_hover.png</file>
         <file>src/GUI/icon/send_file.png</file>
@@ -50,5 +39,38 @@
         <file>src/GUI/icon/voice.png</file>
         <file>src/GUI/icon/voice_hover.png</file>
         <file>src/GUI/icon/voice_press.png</file>
+        <file>src/GUI/icon/daymode.png</file>
+        <file>src/GUI/icon/daymode_hover.png</file>
+        <file>src/GUI/icon/daymode_press.png</file>
+        <file>src/GUI/icon/nightmode.png</file>
+        <file>src/GUI/icon/nightmode_hover.png</file>
+        <file>src/GUI/icon/nightmode_press.png</file>
+        <file>src/GUI/head/QQ/qq1.jpeg</file>
+        <file>src/GUI/head/QQ/qq2.jpg</file>
+        <file>src/GUI/head/QQ/qq3.jpg</file>
+        <file>src/GUI/head/QQ/qq4.jpg</file>
+        <file>src/GUI/head/QQ/qq5.jpg</file>
+        <file>src/GUI/head/QQ/qq6.jpg</file>
+        <file>src/GUI/head/QQ/qq7.jpg</file>
+        <file>src/GUI/head/QQ/qq8.jpg</file>
+        <file>src/GUI/head/QQ/qq9.jpg</file>
+        <file>src/GUI/head/QQ/qq10.jpg</file>
+        <file>src/GUI/head/QQ/qq11.jpg</file>
+        <file>src/GUI/head/QQ/qq12.jpg</file>
+        <file>src/GUI/head/QQ/qq13.jpg</file>
+        <file>src/GUI/head/QQ/qq14.jpg</file>
+        <file>src/GUI/head/QQ/qq15.jpg</file>
+        <file>src/GUI/head/Genshin/genshin1.jpg</file>
+        <file>src/GUI/head/Genshin/genshin2.jpg</file>
+        <file>src/GUI/head/Genshin/genshin3.webp</file>
+        <file>src/GUI/head/Genshin/genshin4.webp</file>
+        <file>src/GUI/head/Genshin/genshin5.webp</file>
+        <file>src/GUI/head/Genshin/genshin6.jpg</file>
+        <file>src/GUI/head/Genshin/genshin7.webp</file>
+        <file>src/GUI/head/Genshin/genshin8.webp</file>
+        <file>src/GUI/head/Genshin/genshin9.webp</file>
+        <file>src/GUI/head/Genshin/genshin10.webp</file>
+        <file>src/GUI/head/Genshin/genshin11.webp</file>
+        <file>src/GUI/head/Genshin/genshin12.webp</file>
     </qresource>
 </RCC>

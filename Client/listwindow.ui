@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>663</height>
+    <width>428</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -401,12 +401,6 @@ QLineEdit:focus{
              <height>0</height>
             </size>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>500</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <property name="font">
             <font>
              <family>Roboto</family>
@@ -426,8 +420,8 @@ QLineEdit:focus{
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>357</width>
-              <height>444</height>
+              <width>408</width>
+              <height>453</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -517,6 +511,12 @@ QRadioButton:indicator{
                </item>
                <item>
                 <widget class="QWidget" name="message" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -553,7 +553,7 @@ background-color: rgb(240, 240, 240);
                      </sizepolicy>
                     </property>
                     <property name="text">
-                     <string> 2023-8-25 13:14 </string>
+                     <string> 2023-8-25 13:14</string>
                     </property>
                    </widget>
                   </item>
@@ -627,6 +627,12 @@ QRadioButton:indicator{
                </item>
                <item>
                 <widget class="QWidget" name="message_2" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -655,7 +661,7 @@ background-color: rgb(240, 240, 240);
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QLineEdit" name="time_3">
+                   <widget class="QLineEdit" name="time_2">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -668,7 +674,7 @@ background-color: rgb(240, 240, 240);
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="msg_3">
+                   <widget class="QLineEdit" name="msg_2">
                     <property name="styleSheet">
                      <string notr="true">color: rgb(112, 112, 112);
 background-color: rgb(240, 240, 240);
@@ -728,12 +734,6 @@ background-color: rgb(240, 240, 240);
              <height>0</height>
             </size>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>500</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <property name="font">
             <font>
              <family>Roboto</family>
@@ -753,8 +753,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>229</width>
-              <height>136</height>
+              <width>408</width>
+              <height>453</height>
              </rect>
             </property>
             <property name="sizePolicy">

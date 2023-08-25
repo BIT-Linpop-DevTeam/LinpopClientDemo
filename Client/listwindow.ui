@@ -177,7 +177,7 @@ QPushButton:pressed{
         <property name="styleSheet">
          <string notr="true">border-width:0px;
 border-radius:40px;
-border-image: url(:/src/GUI/01.jpeg);
+border-image: url(:/src/GUI/head/Genshin/genshin1.jpg);
 border-style:solid;
 border-color: rgb(255, 255, 255);
 </string>
@@ -753,8 +753,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>357</width>
-              <height>444</height>
+              <width>229</width>
+              <height>136</height>
              </rect>
             </property>
             <property name="sizePolicy">

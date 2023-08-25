@@ -1,6 +1,39 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+/*  将包装的二进制数据解码
+    QByteArray dataSrc; //收到的二进制数据
+    QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
+    Message::Type type = Message::getType(dataStream);
+
+    switch (type) {
+    case Message::CHAT_MESSAGE:
+         = Message::toChatMessage(dataStream);
+
+        break;
+    case Message::REQUEST_FRIENDLIST_MESSAGE:
+        break;
+    case Message::FRIENDLIST_MESSAGE:
+        break;
+    case Message::REQUEST_CHATLOG_MESSAGE:
+        break;
+    case Message::CHATLOG_MESSAGE:
+        break;
+    case Message::REQUEST_FRIEND_MESSAGE:
+        break;
+    case Message::REQUEST_LOGIN_MESSAGE:
+        break;
+    case Message::LOGIN_CHECK_MESSAGE:
+        break;
+    case Message::REQUEST_SIGNUP_MESSAGE:
+        break;
+    case Message::SIGNUP_CHECK_MESSAGE:
+        break;
+    case Message::ERROR_MESSAGE:
+        break;
+    }
+  */
+
 #include <QByteArray>
 #include <QString>
 #include <QDateTime>
@@ -67,8 +100,114 @@ public:
     static QByteArray FromRequestLoginMessage(const RequestLoginMessage &msg);
     static QByteArray FromLoginCheckMessage(const LoginCheckMessage &msg);
     static QByteArray FromErrorMessage(const ErrorMessage &msg);
+};
 
+struct ChatMessage {
+    QString sendId, receiveId;
+    QString msg;
+    QDateTime dateTime;
+    ChatMessage(const QString &sendId, const QString &receiveId, const QString &msg, const QDateTime &dateTime)
+        :sendId(sendId), receiveId(receiveId), msg(msg), dateTime(dateTime) {}
+    ChatMessage() {}
+};
 
-}
+struct RequestChatLogMessage {
+    QString requestId, friendId;
+    RequestChatLogMessage(const QString &requestId, const QString &friendId)
+        :requestId(requestId), friendId(friendId) {}
+    RequestChatLogMessage() {}
+};
+
+struct ChatLogMessage {
+    QString requestId, friendId;
+    QList<ChatMessage> messageList;
+    ChatLogMessage(const QString &requestId, const QString &friendId, const QList<ChatMessage> &list)
+        :requestId(requestId), friendId(friendId)
+    {
+        for(int i = 0; i < list.length(); i++) {
+            messageList.append(list[i]);
+        }
+    }
+    ChatLogMessage() {}
+};
+
+struct RequestFriendListMessage {
+    QString requestId;
+    RequestFriendListMessage(const QString &requestId)
+        :requestId(requestId) {}
+    RequestFriendListMessage() {}
+};
+
+struct User {
+    QString id, username;
+    User(const QString &id, const QString &username)
+        :id(id), username(username) {}
+    User() {}
+};
+
+struct FriendListMessage {
+    QString requestId;
+    QList<User> friendList;
+    FriendListMessage(const QString &requestId, const QList<User> &list)
+        :requestId(requestId)
+    {
+        for(int i = 0; i < list.length(); i++) {
+            friendList.append(list[i]);
+        }
+    }
+    FriendListMessage() {}
+};
+
+struct RequestFriendMessage {
+    QString requestId, friendId;
+    Message::RequestStates state;
+    RequestFriendMessage(const QString &requestId, const QString &friendId, const Message::RequestStates &state)
+        :requestId(requestId), friendId(friendId), state(state)
+    {}
+    RequestFriendMessage() {}
+};
+
+struct RequestSignUpMessage {
+    QString username, passward;
+    RequestSignUpMessage(const QString &username, const QString &passward)
+        :username(username), passward(passward)
+    {}
+    RequestSignUpMessage() {}
+};
+
+struct SignUpCheckMessage {
+    Message::RequestStates state;
+    QString userId;
+    SignUpCheckMessage(const Message::RequestStates &state, const QString &userId)
+        :state(state), userId(userId)
+    {}
+    SignUpCheckMessage() {}
+};
+
+struct RequestLoginMessage {
+    QString id, passward;
+    RequestLoginMessage(const QString &id, const QString &passward)
+        :id(id), passward(passward)
+    {}
+    RequestLoginMessage() {}
+};
+
+struct LoginCheckMessage {
+    Message::RequestStates state;
+    QString hint, username;
+    LoginCheckMessage(const Message::RequestStates &state, const QString &hint, const QString &username)
+        :state(state), hint(hint), username(username)
+    {}
+    LoginCheckMessage() {}
+};
+
+struct ErrorMessage {
+    QString errorMsg;
+    ErrorMessage(const QString &errorMsg)
+        :errorMsg(errorMsg)
+    {}
+    ErrorMessage() {}
+};
+
 
 #endif // MESSAGE_H

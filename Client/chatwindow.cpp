@@ -67,6 +67,9 @@ void ChatWindow::onSendMessageButtonClicked()
 {
     qDebug() << "in slot: onSendMessageButtonClicked()";
     const QString sendData = ui->msgSendTextEdit->toPlainText();
+
+    if(sendData.length() <= 0)	return;
+
     ui->msgSendTextEdit->setText("");
     ui->msgShowTextBrowser->append("me:");
     ui->msgShowTextBrowser->append(sendData);

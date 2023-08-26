@@ -125,7 +125,7 @@ struct ChatLogMessage {
         :requestId(requestId), friendId(friendId)
     {
         for(int i = 0; i < list.length(); i++) {
-            messageList.append(list[i]);
+            messageList.append(list.at(i));
         }
     }
     ChatLogMessage() {}
@@ -152,7 +152,7 @@ struct FriendListMessage {
         :requestId(requestId)
     {
         for(int i = 0; i < list.length(); i++) {
-            friendList.append(list[i]);
+            friendList.append(list.at(i));
         }
     }
     FriendListMessage() {}
@@ -185,9 +185,9 @@ struct SignUpCheckMessage {
 };
 
 struct RequestLoginMessage {
-    QString id, passward;
-    RequestLoginMessage(const QString &id, const QString &passward)
-        :id(id), passward(passward)
+    QString id, password;
+    RequestLoginMessage(const QString &id, const QString &password)
+        :id(id), password(password)
     {}
     RequestLoginMessage() {}
 };

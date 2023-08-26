@@ -75,7 +75,7 @@ SignUpCheckMessage Message::toSignUpCheckMessage(QDataStream &dataSrc) {
 
 RequestLoginMessage Message::toRequestLoginMessage(QDataStream &dataSrc) {
     RequestLoginMessage ret;
-    dataSrc >> ret.id >> ret.passward;
+    dataSrc >> ret.id >> ret.password;
     return ret;
 }
 
@@ -114,9 +114,9 @@ QByteArray Message::FromChatLogMessage(const ChatLogMessage &msg) {
     QDataStream in(&ret, QIODevice::WriteOnly);
     in << (qint32)CHATLOG_MESSAGE;
     qint32 sz = msg.messageList.length();
-    in << msg.friendId << msg.requestId << sz;
+    in << msg.requestId << msg.friendId << sz;
     for(int i = 0; i < sz; i++) {
-        const ChatMessage &chatMsg = msg.messageList[i];
+        const ChatMessage &chatMsg = msg.messageList.at(i);
         in << chatMsg.sendId << chatMsg.receiveId << chatMsg.msg << chatMsg.dateTime;
     }
     return ret;
@@ -137,7 +137,7 @@ QByteArray Message::FromFriendListMessage(const FriendListMessage &msg) {
     qint32 sz = msg.friendList.length();
     in << msg.requestId << sz;
     for(int i = 0; i < sz; i++) {
-        const User &friendUser = msg.friendList[i];
+        const User &friendUser = msg.friendList.at(i);
         in << friendUser.id << friendUser.username;
     }
     return ret;
@@ -171,7 +171,7 @@ QByteArray Message::FromRequestLoginMessage(const RequestLoginMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
     in << (qint32)REQUEST_LOGIN_MESSAGE;
-    in << msg.id << msg.passward;
+    in << msg.id << msg.password;
     return ret;
 }
 

@@ -32,7 +32,8 @@ HEADERS += \
 
 FORMS += \
     chatwindow.ui \
-    client.ui
+    client.ui \
+    listwindow.ui
 
 RESOURCES += \
     chatwindowsrc.qrc

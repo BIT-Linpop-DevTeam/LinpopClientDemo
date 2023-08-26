@@ -24,11 +24,15 @@ public:
     void update(const QByteArray &dataSrc);
 
 private:
+    void addChat(const QString &userId, const QString &username);
+
+private:
     Ui::Client *ui;
     QList<ChatWindow *> chatWindowList;
 
 signals:
     void signalSendMessageToCommunicator(const QByteArray &msg);
+//    void signalReadyReadToChat(const QByteArray &msg);
 
 public slots:
     void onSendMessageButtonFromChat(const QByteArray &msg);

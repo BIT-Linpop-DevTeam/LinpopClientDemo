@@ -14,10 +14,12 @@ class ChatWindow : public QWidget
 
 public:
     explicit ChatWindow(QWidget *parent = nullptr);
+    explicit ChatWindow(QWidget *parent, const QString &userId, const QString &username);
     ~ChatWindow();
 
 private:
     Ui::ChatWindow *ui;
+    QString userId, username;
 
 signals:
     void signalSendMessageButtonClickedToClient(const QByteArray &msg);

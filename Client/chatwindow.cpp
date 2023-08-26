@@ -11,6 +11,13 @@ ChatWindow::ChatWindow(QWidget *parent) :
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
 }
 
+ChatWindow::ChatWindow(QWidget *parent, const QString &userId, const QString &username)
+    : ChatWindow(parent)
+{
+    this->userId = userId;
+    this->username = username;
+}
+
 ChatWindow::~ChatWindow()
 {
     delete ui;

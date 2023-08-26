@@ -40,29 +40,16 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     Message::Type type = Message::getType(dataStream);
 
     switch (type) {
-    case Message::CHAT_MESSAGE:
-         = Message::toChatMessage(dataStream);
-
-        break;
-    case Message::REQUEST_FRIENDLIST_MESSAGE:
-        break;
     case Message::FRIENDLIST_MESSAGE:
+    {
+        struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
+        for(const User friendUser: friendListMessage.friendList) {
+//			addChat(friendUser.id, friendUser.username);
+        }
         break;
-    case Message::REQUEST_CHATLOG_MESSAGE:
-        break;
-    case Message::CHATLOG_MESSAGE:
-        break;
-    case Message::REQUEST_FRIEND_MESSAGE:
-        break;
-    case Message::REQUEST_LOGIN_MESSAGE:
-        break;
-    case Message::LOGIN_CHECK_MESSAGE:
-        break;
-    case Message::REQUEST_SIGNUP_MESSAGE:
-        break;
-    case Message::SIGNUP_CHECK_MESSAGE:
-        break;
-    case Message::ERROR_MESSAGE:
+    }
+    default:
+//        emit signalReadyReadToChat(msg);
         break;
     }
 }

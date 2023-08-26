@@ -59,7 +59,20 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     case Message::REQUEST_CHATLOG_MESSAGE:
         break;
     case Message::CHATLOG_MESSAGE:
+    {
+        ChatLogMessage chatLogMessage = Message::toChatLogMessage(dataStream);
+        if(chatLogMessage.friendId != userId)	return;
+        for(const ChatMessage &chatMsg: chatLogMessage.messageList) {
+            if(chatMsg.receiveId == userId) {
+                ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
+                ui->msgShowTextBrowser->append(chatMsg.msg);
+            } else if(chatMsg.sendId == userId) {
+                ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
+                ui->msgShowTextBrowser->append(chatMsg.msg);
+            }
+        }
         break;
+    }
     case Message::REQUEST_FRIEND_MESSAGE:
         break;
     case Message::REQUEST_LOGIN_MESSAGE:

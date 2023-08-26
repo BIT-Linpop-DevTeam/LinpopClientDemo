@@ -50,8 +50,11 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
         for(const User friendUser: friendListMessage.friendList) {
             qDebug() << QString("add in friend list: %1 %2").arg(friendUser.id).arg(friendUser.username);
             addChat(userId, friendUser.id, friendUser.username);
+
+            RequestChatLogMessage requestChatLogMessage(userId, friendUser.id);
+            QByteArray dataSrc = Message::FromRequestChatLogMessage(requestChatLogMessage);
+            emit signalSendMessageToCommunicator(dataSrc);
         }
-        break;
     }
     case Message::LOGIN_CHECK_MESSAGE:
         emit signalLoginCheckToLogin(msg);

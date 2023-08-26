@@ -106,7 +106,6 @@ void Login::on_pushButton_clicked()
 //            aa.show();
 //            aa.exec();
 //        }
-
         struct RequestLoginMessage requestLoginMesage(str, str1);
         QByteArray msg = Message::FromRequestLoginMessage(requestLoginMesage);
         emit signalRequestLoginToCommunicator(msg);

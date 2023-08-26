@@ -93,6 +93,27 @@ ErrorMessage Message::toErrorMessage(QDataStream &dataSrc) {
     return ret;
 }
 
+RequestFriendRequestLogMessage Message::toRequestFriendRequestLogMessage(QDataStream &dataSrc){
+    RequestFriendRequestLogMessage ret;
+    dataSrc >> ret.requestId;
+    return ret;
+}
+
+FriendRequestLogMessage Message::toFriendRequestLogMessage(QDataStream &dataSrc){
+    FriendRequestLogMessage ret;
+    qint32 sz;
+    dataSrc >> ret.requestId >> sz;
+    while(sz--){
+        RequestFriendMessage request;
+        qint32 tmp;
+        dataSrc >> request.requestId >> request.friendId;
+        dataSrc >> tmp;
+        request.state = (Message::RequestStates)tmp;
+        ret.friendRequestList.append(request);
+    }
+    return ret;
+}
+
 QByteArray Message::FromChatMessage(const ChatMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
@@ -188,5 +209,30 @@ QByteArray Message::FromErrorMessage(const ErrorMessage &msg) {
     QDataStream in(&ret, QIODevice::WriteOnly);
     in << (qint32)ERROR_MESSAGE;
     in << msg.errorMsg;
+    return ret;
+}
+
+QByteArray Message::FromRequestFriendRequestLogMessage
+    (const RequestFriendRequestLogMessage &msg)
+{
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << (qint32)REQUEST_FRIEND_REQUESTLOG_MESSAGE;
+    in << msg.requestId;
+    return ret;
+}
+
+QByteArray Message::FromFriendRequestLogMessage(const FriendRequestLogMessage &msg){
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << (qint32)FRIEND_REQUESTLOG_MESSAGE;
+    qint32 sz = msg.friendRequestList.size();
+    in << msg.requestId << sz;
+    for(int i = 0; i < sz; i++) {
+        const RequestFriendMessage &request = msg.friendRequestList[i];
+        in << request.requestId << request.friendId;
+        qint32 tmp = request.state;
+        in << tmp;
+    }
     return ret;
 }

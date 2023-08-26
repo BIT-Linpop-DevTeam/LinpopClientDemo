@@ -51,6 +51,8 @@ struct SignUpCheckMessage;
 struct RequestLoginMessage;
 struct LoginCheckMessage;
 struct ErrorMessage;
+struct RequestFriendRequestLogMessage;
+struct FriendRequestLogMessage;
 
 class Message
 {
@@ -66,12 +68,15 @@ public:
         LOGIN_CHECK_MESSAGE,         ///<登录成功消息
         REQUEST_SIGNUP_MESSAGE,      ///<请求注册消息
         SIGNUP_CHECK_MESSAGE,        ///<注册成功消息
-        ERROR_MESSAGE
+        ERROR_MESSAGE,               ///<错误消息
+        REQUEST_FRIEND_REQUESTLOG_MESSAGE, ///<请求好友请求列表消息
+        FRIEND_REQUESTLOG_MESSAGE,   ///<好友请求列表消息
     };
 
     enum RequestStates {
         SUCCESS,
-        FAIL
+        FAIL,
+        UNTREATED,
     };
 
 public:
@@ -88,6 +93,8 @@ public:
     static RequestLoginMessage toRequestLoginMessage(QDataStream &dataSrc);
     static LoginCheckMessage toLoginCheckMessage(QDataStream &dataSrc);
     static ErrorMessage toErrorMessage(QDataStream &dataSrc);
+    static RequestFriendRequestLogMessage toRequestFriendRequestLogMessage(QDataStream &dataSrc);
+    static FriendRequestLogMessage toFriendRequestLogMessage(QDataStream &dataSrc);
 
     static QByteArray FromChatMessage(const ChatMessage &msg);
     static QByteArray FromRequestChatLogMessage(const RequestChatLogMessage &msg);
@@ -100,6 +107,8 @@ public:
     static QByteArray FromRequestLoginMessage(const RequestLoginMessage &msg);
     static QByteArray FromLoginCheckMessage(const LoginCheckMessage &msg);
     static QByteArray FromErrorMessage(const ErrorMessage &msg);
+    static QByteArray FromRequestFriendRequestLogMessage(const RequestFriendRequestLogMessage &msg);
+    static QByteArray FromFriendRequestLogMessage(const FriendRequestLogMessage &msg);
 };
 
 struct ChatMessage {
@@ -209,5 +218,25 @@ struct ErrorMessage {
     ErrorMessage() {}
 };
 
+struct RequestFriendRequestLogMessage{
+    QString requestId;
+    RequestFriendRequestLogMessage(const QString &requestId)
+        :requestId(requestId) {}
+    RequestFriendRequestLogMessage() {}
+};
+
+struct FriendRequestLogMessage{
+    QString requestId;
+    QList<RequestFriendMessage> friendRequestList;
+    FriendRequestLogMessage(const QString &requestId,
+                            const QList<RequestFriendMessage> &list):
+        requestId(requestId)
+    {
+        for (int i = 0; i < list.length(); i++){
+                friendRequestList.append(list.at(i));
+        }
+    }
+    FriendRequestLogMessage(){}
+};
 
 #endif // MESSAGE_H

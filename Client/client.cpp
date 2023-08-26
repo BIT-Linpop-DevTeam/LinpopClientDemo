@@ -45,7 +45,7 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     {
         struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
         for(const User friendUser: friendListMessage.friendList) {
-            addChat(friendUser.id, friendUser.username);
+            addChat(userId, friendUser.id, friendUser.username);
         }
         break;
     }
@@ -130,7 +130,7 @@ void Client::setAreaMovable(const QRect rt)
   }
 }
 
-void Client::addChat(const QString &userId, const QString &username) {
+void Client::addChat(const QString &ownerId, const QString &userId, const QString &username) {
    qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
    QPushButton *friendButton = new QPushButton();
    friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240);spacing: 25px; }"
@@ -139,7 +139,7 @@ void Client::addChat(const QString &userId, const QString &username) {
                             "QPushButton:indicator{width: 0px;height: 0px;border: none;}");
    ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
    friendButton->setText(username);
-   ChatWindow *cw = new ChatWindow(nullptr, userId, username);
+   ChatWindow *cw = new ChatWindow(nullptr, ownerId, userId, username);
    chatWindowList.append(cw);
 
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);

@@ -11,9 +11,10 @@ ChatWindow::ChatWindow(QWidget *parent) :
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
 }
 
-ChatWindow::ChatWindow(QWidget *parent, const QString &userId, const QString &username)
+ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &userId, const QString &username)
     : ChatWindow(parent)
 {
+    this->ownerId = ownerId;
     this->userId = userId;
     this->username = username;
     ui->friendNameLabel->setText(username);
@@ -83,7 +84,7 @@ void ChatWindow::onSendMessageButtonClicked()
     ui->msgShowTextBrowser->append("me:");
     ui->msgShowTextBrowser->append(sendData);
 
-    QString sendId = "sender", receiveId = "receiver";
+    QString sendId = ownerId, receiveId = this->userId;
     struct ChatMessage dataSrc(sendId, receiveId, sendData, QDateTime::currentDateTime());
     const QByteArray msg = Message::FromChatMessage(dataSrc);
     emit signalSendMessageButtonClickedToClient(msg);

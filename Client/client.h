@@ -27,7 +27,7 @@ private:
     QString userId, username;
 
 private:
-    void addChat(const QString &userId, const QString &username);
+    void addChat(const QString &ownerId, const QString &userId, const QString &username);
 
 private:
     Ui::Client *ui;

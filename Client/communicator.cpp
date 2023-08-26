@@ -16,16 +16,17 @@ Communicator::~Communicator() {
 
 void Communicator::tryConnect() {
     for(int i = 0; i < MAX_CONNECT_TIMES; i++) {
-        socket->connectToHost(QHostAddress(HOST_IP), HOST_PORT);
-        if(socket->waitForConnected())	{
-            qDebug() << "connected";
-            return;
-        }
+//        socket->connectToHost(QHostAddress(HOST_IP), HOST_PORT);
+//        if(socket->waitForConnected())	{
+//            qDebug() << "connected";
+//            return;
+//        }
     }
     qDebug() << "connect fail";
 }
 
 void Communicator::initCommunicator(const Client &client) {
+    QObject::connect(this, &Communicator::onReadyReadFromSocket, &client, &Client::onReadyReadFromCommunicator);
     QObject::connect(&client, &Client::signalSendMessageToCommunicator, this, &Communicator::onSendMessageClickedFromClient);
     QObject::connect(socket, &QTcpSocket::connected, this, &Communicator::onConnectedFromSocket);
     QObject::connect(socket, &QTcpSocket::disconnected, this, &Communicator::onDisconnectedFromSocket);

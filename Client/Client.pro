@@ -18,25 +18,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     chatwindow.cpp \
     communicator.cpp \
-    friend.cpp \
+    login.cpp \
     main.cpp \
     client.cpp \
-    message.cpp
+    message.cpp \
+    mylog.cpp
 
 HEADERS += \
     chatwindow.h \
     client.h \
     communicator.h \
-    friend.h \
-    message.h
+    login.h \
+    message.h \
+    mylog.h
 
 FORMS += \
     chatwindow.ui \
     client.ui \
-    listwindow.ui
+    login.ui
 
 RESOURCES += \
-    chatwindowsrc.qrc
+    chatwindowsrc.qrc \
+    src.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

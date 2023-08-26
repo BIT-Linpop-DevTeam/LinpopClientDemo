@@ -426,8 +426,8 @@ QLineEdit:focus{
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>214</width>
-              <height>172</height>
+              <width>419</width>
+              <height>455</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -781,130 +781,9 @@ background-color: rgb(240, 240, 240);
               <bold>false</bold>
              </font>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <widget class="QRadioButton" name="FriendButton1">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>48</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Roboto</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QRadioButton{
-        background-color: rgb(240, 240, 240);
-        spacing: 10px;
-}
-QRadioButton:hover{
-        background-color: rgb(219, 219, 219);
-        spacing: 10px;
-}
-QRadioButton:press{
-        background-color: rgb(219, 219, 219);
-        spacing: 25px;
-}
-QRadioButton:indicator{
-        width: 0px;
-        height: 0px;
-        border: none;
-}</string>
-               </property>
-               <property name="text">
-                <string>冯玉彭</string>
-               </property>
-               <property name="icon">
-                <iconset resource="chatwindowsrc.qrc">
-                 <normaloff>:/src/GUI/notice.png</normaloff>:/src/GUI/notice.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="radioButton_4">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>48</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Roboto</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QRadioButton{
-        background-color: rgb(240, 240, 240);
-        spacing: 25px;
-}
-QRadioButton:hover{
-        background-color: rgb(219, 219, 219);
-        spacing: 25px;
-}
-QRadioButton:press{
-        background-color: rgb(219, 219, 219);
-        spacing: 25px;
-}
-QRadioButton:indicator{
-        width: 0px;
-        height: 0px;
-        border: none;
-}</string>
-               </property>
-               <property name="text">
-                <string>徐玉妃</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
+              <layout class="QVBoxLayout" name="verticalLayout_6"/>
              </item>
             </layout>
            </widget>
@@ -981,8 +860,6 @@ QRadioButton:indicator{
   <zorder>Search</zorder>
   <zorder>user</zorder>
  </widget>
- <resources>
-  <include location="chatwindowsrc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -41,6 +41,34 @@ void Login::on_toolButton_clicked()
 bool check(QString a,QString b){
     return a==b;
 }
+
+void Login::onLoginCheckFromClient(const QByteArray &msg) {
+    QByteArray dataSrc = msg;
+    QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
+    Message::Type type = Message::getType(dataStream);
+
+    if(type != Message::LOGIN_CHECK_MESSAGE) {
+        qDebug() << "when login, expect loginCheckMessage but not";
+        return;
+    }
+
+    struct LoginCheckMessage loginCheckMessage = Message::toLoginCheckMessage(dataStream);
+    if(loginCheckMessage.state == Message::FAIL) {
+        myLog aa(myLog::Critical, "提示", loginCheckMessage.hint, myLog::Ok);
+        aa.show();
+        aa.exec();
+
+        //todo
+        QString userId = ui->e1->text();
+        emit userLogin(userId, loginCheckMessage.username);
+    } else {
+        myLog aa(myLog::Critical, "提示", "登录成功", myLog::Ok);
+        aa.show();
+        aa.exec();
+    }
+
+}
+
 void Login::on_pushButton_clicked()
 {
     bool flag=1;
@@ -65,19 +93,22 @@ void Login::on_pushButton_clicked()
         aa.exec();
     }
     else{
-        if(check(str,str1)){
-            myLog aa(myLog::Critical, "提示", "登录成功", myLog::Ok);
-            aa.show();
-            aa.exec();
-            //
-            emit userLogin(str,str1);
-        }
-        else{
-            myLog aa(myLog::Critical, "提示", "当前账号不存在或密码错误，请重试", myLog::Ok);
-            aa.show();
-            aa.exec();
-        }
+//        if(check(str,str1)){
+//            myLog aa(myLog::Critical, "提示", "登录成功", myLog::Ok);
+//            aa.show();
+//            aa.exec();
+//            //
+//            emit userLogin(str,str1);
+//        }
+//        else{
+//            myLog aa(myLog::Critical, "提示", "当前账号不存在或密码错误，请重试", myLog::Ok);
+//            aa.show();
+//            aa.exec();
+//        }
 
+        struct RequestLoginMessage requestLoginMesage(str, str1);
+        QByteArray msg = Message::FromRequestLoginMessage(requestLoginMesage);
+        emit signalRequestLoginToCommunicator(msg);
     }
 }
 
@@ -137,7 +168,9 @@ void Login::setAreaMovable(const QRect rt)
 }
 
 void Login::initLogin(Client &client) {
+    QObject::connect(&client, &Client::signalLoginCheckToLogin, this, &Login::onLoginCheckFromClient);
     QObject::connect(this, &Login::userLogin, &client, &Client::rcvLogin);
     QObject::connect(&client, &Client::closeLoginWindow, this, &Login::loginWindowClose);
     this->show();
+//    emit userLogin("id1", "nihao");
 }

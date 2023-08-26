@@ -25,11 +25,12 @@ void Communicator::tryConnect() {
     qDebug() << "connect fail";
 }
 
-void Communicator::initCommunicator(const Client &client) {
-    QObject::connect(this, &Communicator::onReadyReadFromSocket, &client, &Client::onReadyReadFromCommunicator);
+void Communicator::initCommunicator(const Client &client, const Login &login) {
+    QObject::connect(this, &Communicator::signalReadyReadToClient, &client, &Client::onReadyReadFromCommunicator);
     QObject::connect(&client, &Client::signalSendMessageToCommunicator, this, &Communicator::onSendMessageClickedFromClient);
     QObject::connect(socket, &QTcpSocket::connected, this, &Communicator::onConnectedFromSocket);
     QObject::connect(socket, &QTcpSocket::disconnected, this, &Communicator::onDisconnectedFromSocket);
+    QObject::connect(&login, &Login::signalRequestLoginToCommunicator, this, &Communicator::onRequestLoginFromLogin);
 }
 
 void Communicator::onConnectedFromSocket() {
@@ -60,4 +61,15 @@ void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
     }
 
     socket->write(msg);
+}
+
+void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {
+     qDebug() << "in slot: onRequestLoginFromLogin";
+
+     if(!socket->isValid()) {
+         qDebug() << "send login request failed";
+         return;
+     }
+
+     socket->write(msg);
 }

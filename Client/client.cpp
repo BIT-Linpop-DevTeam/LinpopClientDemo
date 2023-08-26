@@ -17,9 +17,10 @@ Client::Client(QWidget *parent)
     m_areaMovable = geometry();
     m_bPressed = false;
     setWindowTitle("friends list");
-    ChatWindow *cw = new ChatWindow();
-    chatWindowList.append(cw);
-    QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
+
+//    ChatWindow *cw = new ChatWindow();
+//    chatWindowList.append(cw);
+//    QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
 //    QObject::connect(ui->FriendButton1, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
 //    QObject::connect(this, &Client::updateFriendName, cw, &ChatWindow::updateCreateWindow);
 }
@@ -44,26 +45,46 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     {
         struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
         for(const User friendUser: friendListMessage.friendList) {
-//			addChat(friendUser.id, friendUser.username);
+            addChat(friendUser.id, friendUser.username);
         }
         break;
     }
+    case Message::LOGIN_CHECK_MESSAGE:
+        emit signalLoginCheckToLogin(msg);
+        break;
     default:
-//        emit signalReadyReadToChat(msg);
+        emit signalReadyReadToChat(msg);
         break;
     }
 }
 
-void Client::rcvLogin(QString str,QString str1){
-    qDebug()<<"reghvbjdfbvjvdskvsf"<<endl;
-//    update(str,str1);
+//todo
+void Client::initClient() {
+//    this->addChat("1", "user1");
+//    this->addChat("2", "用户2");
+    struct RequestFriendListMessage requestFriendListMessage(userId);
+    QByteArray msg = Message::FromRequestFriendListMessage(requestFriendListMessage);
+    ui->verticalLayout_6->setAlignment(Qt::AlignTop);
+    emit signalSendMessageToCommunicator(msg);
+}
+
+//todo
+void Client::rcvLogin(QString userId, QString username){
+
+    qDebug()<<"in slot: rcvLogin"<<endl;
+    update(userId, username);
     emit closeLoginWindow();
+    initClient();
     show();
 }
-void Client::update(const QByteArray &dataSrc){
-//    qDebug()<<"00000"<<a<<b<<endl;
-//    ui->usernameLabel->setText("这是"+a);
-//    ui->signature->setText("这是"+a+"的签名");
+
+//todo
+void Client::update(const QString &userId, const QString &username){
+    this->userId = userId;
+    this->username = username;
+    qDebug()<<"00000"<<username<<endl;
+    ui->usernameLabel->setText("这是"+username);
+    ui->signature->setText("这是"+username+"的签名");
 }
 
 void Client::on_closeButton_clicked()
@@ -107,6 +128,22 @@ void Client::setAreaMovable(const QRect rt)
   {
   m_areaMovable = rt;
   }
+}
+
+void Client::addChat(const QString &userId, const QString &username) {
+   qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
+   QPushButton *friendButton = new QPushButton();
+   friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240);spacing: 25px; }"
+                            "QPushButton:hover{background-color: rgb(219, 219, 219);spacing: 25px;}"
+                            "QPushButton:press{background-color: rgb(219, 219, 219);spacing: 25px;}"
+                            "QPushButton:indicator{width: 0px;height: 0px;border: none;}");
+   ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
+   friendButton->setText(username);
+   ChatWindow *cw = new ChatWindow(nullptr, userId, username);
+   chatWindowList.append(cw);
+
+   QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
+   QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
 }
 
 

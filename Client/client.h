@@ -18,10 +18,13 @@ public:
     Client(QWidget *parent = nullptr);
     ~Client();
 
-    //to be done
+    //todo
     void initClient();
 
-    void update(const QByteArray &dataSrc);
+    void update(const QString &userId, const QString &username);
+
+private:
+    QString userId, username;
 
 private:
     void addChat(const QString &userId, const QString &username);
@@ -32,17 +35,20 @@ private:
 
 signals:
     void signalSendMessageToCommunicator(const QByteArray &msg);
-//    void signalReadyReadToChat(const QByteArray &msg);
+    void signalReadyReadToChat(const QByteArray &msg);
+    void signalLoginCheckToLogin(const QByteArray &msg);
 
 public slots:
     void onSendMessageButtonFromChat(const QByteArray &msg);
+
+    //todo
     void onReadyReadFromCommunicator(const QByteArray &msg);
 
 signals:
     void closeLoginWindow();
     void updateFriendName(QString x);
 public slots:
-    void rcvLogin(QString a,QString b);
+    void rcvLogin(QString userId, QString username);
 private slots:
     void on_closeButton_clicked();
     void on_minimizeButton_clicked();

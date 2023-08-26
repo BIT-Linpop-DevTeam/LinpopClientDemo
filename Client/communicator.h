@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "message.h"
 #include "client.h"
+#include "login.h"
 #define HOST_IP "127.0.0.1"
 #define HOST_PORT 8888
 
@@ -19,7 +20,7 @@ private:
 public:
     Communicator();
     ~Communicator();
-    void initCommunicator(const Client &client);
+    void initCommunicator(const Client &client, const Login &login);
 
 signals:
     void signalReadyReadToClient(const QByteArray &msg);
@@ -29,6 +30,7 @@ public slots:
     void onReadyReadFromSocket();
     void onConnectedFromSocket();
     void onDisconnectedFromSocket();
+    void onRequestLoginFromLogin(const QByteArray &msg);
 };
 
 #endif // COMMUNICATOR_H

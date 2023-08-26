@@ -15,7 +15,11 @@ public:
     Login(QWidget *parent = nullptr);
     ~Login();
 signals:
-    void userLogin(QString a,QString b);//信号
+    void userLogin(QString userId, QString username);
+    void signalRequestLoginToCommunicator(const QByteArray &msg);
+
+public slots:
+    void onLoginCheckFromClient(const QByteArray &msg);
 
 public slots:
     void on_toolButton_2_clicked();

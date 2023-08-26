@@ -16,6 +16,8 @@ ChatWindow::ChatWindow(QWidget *parent, const QString &userId, const QString &us
 {
     this->userId = userId;
     this->username = username;
+    ui->friendNameLabel->setText(username);
+    setWindowTitle(QString("和%1的对话").arg(username));
 }
 
 ChatWindow::~ChatWindow()

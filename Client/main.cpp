@@ -8,14 +8,14 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Client w;
-//    w.show();
-
-    Login log;
-    log.initLogin(w);
+    Client client;
+    Login login;
 
     Communicator communicator;
-    communicator.initCommunicator(w);
+    communicator.initCommunicator(client, login);
+
+    login.initLogin(client);
+
 //    ChatWindow w;
 //    w.show();
 

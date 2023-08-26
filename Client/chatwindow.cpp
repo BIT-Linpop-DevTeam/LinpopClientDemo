@@ -40,7 +40,8 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     {
         const ChatMessage chatMsg = Message::toChatMessage(dataStream);
 
-
+        qDebug() << QString("In msg: sendId %1 receivedid %2").arg(chatMsg.sendId).arg(chatMsg.receiveId);
+    qDebug() << QString("In window: ownerId %1 userId %2").arg(ownerId).arg(userId);
         //todo :diff the output way of me and counterpart
         if(chatMsg.receiveId == userId) {
             ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));

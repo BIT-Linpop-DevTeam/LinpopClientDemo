@@ -147,6 +147,7 @@ void Client::addChat(const QString &ownerId, const QString &userId, const QStrin
    chatWindowList.append(cw);
 
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
+   QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
    QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
 }
 

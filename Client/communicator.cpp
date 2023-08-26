@@ -39,7 +39,7 @@ void Communicator::onConnectedFromSocket() {
 
 void Communicator::onDisconnectedFromSocket() {
     qDebug() << "disconnected";
-    tryConnect();
+//    tryConnect();
 }
 
 void Communicator::onReadyReadFromSocket() {
@@ -55,6 +55,7 @@ void Communicator::onReadyReadFromSocket() {
 void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
     qDebug() << "in slot: onSendMessageClickedFromClient()";
 
+    if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
     if(!socket->isValid())	{
         qDebug() << "send failed!";
         return;
@@ -66,6 +67,7 @@ void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
 void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {
      qDebug() << "in slot: onRequestLoginFromLogin";
 
+     if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
      if(!socket->isValid()) {
          qDebug() << "send login request failed";
          return;

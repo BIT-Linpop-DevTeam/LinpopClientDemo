@@ -92,7 +92,7 @@ void ChatWindow::onSendMessageButtonClicked()
     if(sendData.length() <= 0)	return;
 
     ui->msgSendTextEdit->setText("");
-    ui->msgShowTextBrowser->append("me:");
+    ui->msgShowTextBrowser->append(QString("%1(我)").arg(ownerId));
     ui->msgShowTextBrowser->append(sendData);
 
     QString sendId = ownerId, receiveId = this->userId;

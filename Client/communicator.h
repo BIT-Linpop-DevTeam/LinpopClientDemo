@@ -6,7 +6,7 @@
 #include "message.h"
 #include "client.h"
 #include "login.h"
-#define HOST_IP "127.0.0.1"
+#define HOST_IP "10.194.39.186"
 #define HOST_PORT 8888
 
 class Communicator: public QObject

@@ -35,16 +35,20 @@ void Client::onSendMessageButtonFromChat(const QByteArray &msg) {
 }
 
 void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
+    qDebug() << "in slot: onReadyReadFromCommunicator";
+
     QByteArray dataSrc = msg;
     QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
 
     Message::Type type = Message::getType(dataStream);
+    qDebug() << "Message type: " << type;
 
     switch (type) {
     case Message::FRIENDLIST_MESSAGE:
     {
         struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
         for(const User friendUser: friendListMessage.friendList) {
+            qDebug() << QString("add in friend list: %1 %2").arg(friendUser.id).arg(friendUser.username);
             addChat(userId, friendUser.id, friendUser.username);
         }
         break;
@@ -102,7 +106,7 @@ void Client::mousePressEvent(QMouseEvent *e)
   if(e->button() == Qt::LeftButton)
   {
     m_ptPress = e->pos();
-    qDebug() << pos() << e->pos() << m_ptPress;
+//    qDebug() << pos() << e->pos() << m_ptPress;
     m_bPressed = m_areaMovable.contains(m_ptPress);
   }
 }
@@ -111,7 +115,7 @@ void Client::mouseMoveEvent(QMouseEvent *e)
 {
   if(m_bPressed)
   {
-    qDebug() << pos() << e->pos() << m_ptPress;
+//    qDebug() << pos() << e->pos() << m_ptPress;
     move(pos() + e->pos() - m_ptPress);
   }
 }

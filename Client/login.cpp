@@ -43,6 +43,7 @@ bool check(QString a,QString b){
 }
 
 void Login::onLoginCheckFromClient(const QByteArray &msg) {
+    qDebug() << "in slot: onLoginCheckFromClient";
     QByteArray dataSrc = msg;
     QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
     Message::Type type = Message::getType(dataStream);
@@ -57,14 +58,14 @@ void Login::onLoginCheckFromClient(const QByteArray &msg) {
         myLog aa(myLog::Critical, "提示", loginCheckMessage.hint, myLog::Ok);
         aa.show();
         aa.exec();
-
-        //todo
-        QString userId = ui->e1->text();
-        emit userLogin(userId, loginCheckMessage.username);
     } else {
         myLog aa(myLog::Critical, "提示", "登录成功", myLog::Ok);
         aa.show();
         aa.exec();
+
+        //todo
+        QString userId = ui->e1->text();
+        emit userLogin(userId, loginCheckMessage.username);
     }
 
 }
@@ -139,7 +140,7 @@ void Login::mousePressEvent(QMouseEvent *e)
   if(e->button() == Qt::LeftButton)
   {
   m_ptPress = e->pos();
-  qDebug() << pos() << e->pos() << m_ptPress;
+//  qDebug() << pos() << e->pos() << m_ptPress;
   m_bPressed = m_areaMovable.contains(m_ptPress);
   }
 }
@@ -148,7 +149,7 @@ void Login::mouseMoveEvent(QMouseEvent *e)
 {
   if(m_bPressed)
   {
-  qDebug() << pos() << e->pos() << m_ptPress;
+//  qDebug() << pos() << e->pos() << m_ptPress;
   move(pos() + e->pos() - m_ptPress);
   }
 }

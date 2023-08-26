@@ -16,11 +16,11 @@ Communicator::~Communicator() {
 
 void Communicator::tryConnect() {
     for(int i = 0; i < MAX_CONNECT_TIMES; i++) {
-//        socket->connectToHost(QHostAddress(HOST_IP), HOST_PORT);
-//        if(socket->waitForConnected())	{
-//            qDebug() << "connected";
-//            return;
-//        }
+        socket->connectToHost(QHostAddress(HOST_IP), HOST_PORT);
+        if(socket->waitForConnected())	{
+            qDebug() << "connected";
+            return;
+        }
     }
     qDebug() << "connect fail";
 }

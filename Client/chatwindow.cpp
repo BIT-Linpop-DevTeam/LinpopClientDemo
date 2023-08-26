@@ -39,8 +39,16 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     case Message::CHAT_MESSAGE:
     {
         const ChatMessage chatMsg = Message::toChatMessage(dataStream);
-        ui->msgShowTextBrowser->append(QString("%1").arg(chatMsg.sendId));
-        ui->msgShowTextBrowser->append(chatMsg.msg);
+
+
+        //todo :diff the output way of me and counterpart
+        if(chatMsg.receiveId == userId) {
+            ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
+            ui->msgShowTextBrowser->append(chatMsg.msg);
+        } else if(chatMsg.sendId == userId) {
+            ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
+            ui->msgShowTextBrowser->append(chatMsg.msg);
+        }
         break;
     }
     case Message::REQUEST_FRIENDLIST_MESSAGE:
@@ -62,6 +70,8 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     case Message::SIGNUP_CHECK_MESSAGE:
         break;
     case Message::ERROR_MESSAGE:
+        break;
+    default:
         break;
     }
 }

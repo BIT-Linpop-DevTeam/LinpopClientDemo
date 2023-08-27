@@ -16,9 +16,8 @@ int main(int argc, char *argv[])
 
     login.initLogin(client);
 
-//    ChatWindow w;
-//    w.show();
-
+    client.initClient();
+    client.show();
 
     return a.exec();
 }

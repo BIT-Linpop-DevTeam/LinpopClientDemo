@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QDataStream>
+#include "acceptfriend.h"
 //#include<login.h>
 Client::Client(QWidget *parent)
     : QWidget(parent)
@@ -34,6 +35,10 @@ void Client::onSendMessageButtonFromChat(const QByteArray &msg) {
     emit signalSendMessageToCommunicator(msg);
 }
 
+void Client::onSendMessageFromChildToCommunitor(const QByteArray &msg) {
+    emit signalSendMessageToCommunicator(msg);
+}
+
 void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     qDebug() << "in slot: onReadyReadFromCommunicator";
 
@@ -55,10 +60,18 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
             QByteArray dataSrc = Message::FromRequestChatLogMessage(requestChatLogMessage);
             emit signalSendMessageToCommunicator(dataSrc);
         }
+        break;
     }
     case Message::LOGIN_CHECK_MESSAGE:
         emit signalLoginCheckToLogin(msg);
         break;
+    case Message::REQUEST_FRIEND_MESSAGE:
+    {
+        RequestFriendMessage requestFriendMessage = Message::toRequestFriendMessage(dataStream);
+        Acceptfriend acceptFriendWindow(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
+        acceptFriendWindow.show();
+        break;
+    }
     default:
         emit signalReadyReadToChat(msg);
         break;
@@ -67,12 +80,18 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
 
 //todo
 void Client::initClient() {
+    qDebug() << "client inited";
 //    this->addChat("1", "user1");
 //    this->addChat("2", "用户2");
     struct RequestFriendListMessage requestFriendListMessage(userId);
     QByteArray msg = Message::FromRequestFriendListMessage(requestFriendListMessage);
     ui->verticalLayout_6->setAlignment(Qt::AlignTop);
     emit signalSendMessageToCommunicator(msg);
+
+    addFriendWindow = new addFriend(nullptr, userId, username);
+    addFriendWindow->initAddFriend();
+    connect(addFriendWindow, &addFriend::signalRequestFriendToClient, this, &Client::onSendMessageFromChildToCommunitor);
+    connect(ui->addFriBotton, &QPushButton::clicked, this, &Client::onAddFriendButtonClicked);
 }
 
 //todo
@@ -152,6 +171,12 @@ void Client::addChat(const QString &ownerId, const QString &userId, const QStrin
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
    QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
    QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
+}
+
+void Client::onAddFriendButtonClicked()
+{
+    qDebug() << "in slot: onAddFriendButtonClicked";
+    addFriendWindow->show();
 }
 
 

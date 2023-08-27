@@ -5,6 +5,7 @@
 #include <QByteArray>
 #include "message.h"
 #include "chatwindow.h"
+#include "addfriend.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Client; }
@@ -32,6 +33,7 @@ private:
 private:
     Ui::Client *ui;
     QList<ChatWindow *> chatWindowList;
+    addFriend *addFriendWindow;
 
 signals:
     void signalSendMessageToCommunicator(const QByteArray &msg);
@@ -40,9 +42,11 @@ signals:
 
 public slots:
     void onSendMessageButtonFromChat(const QByteArray &msg);
+    void onSendMessageFromChildToCommunitor(const QByteArray &msg);
 
     //todo
     void onReadyReadFromCommunicator(const QByteArray &msg);
+    void onAddFriendButtonClicked();
 
 signals:
     void closeLoginWindow();

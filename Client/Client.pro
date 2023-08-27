@@ -22,7 +22,8 @@ SOURCES += \
     main.cpp \
     client.cpp \
     message.cpp \
-    mylog.cpp
+    mylog.cpp \
+    signup.cpp
 
 HEADERS += \
     chatwindow.h \
@@ -30,12 +31,14 @@ HEADERS += \
     communicator.h \
     login.h \
     message.h \
-    mylog.h
+    mylog.h \
+    signup.h
 
 FORMS += \
     chatwindow.ui \
     client.ui \
-    login.ui
+    login.ui \
+    signup.ui
 
 RESOURCES += \
     chatwindowsrc.qrc \

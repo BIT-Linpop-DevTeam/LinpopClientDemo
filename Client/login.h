@@ -17,9 +17,11 @@ public:
 signals:
     void userLogin(QString userId, QString username);
     void signalRequestLoginToCommunicator(const QByteArray &msg);
+    void signalSignUpCheckMessageToRegister(const QByteArray &msg);
 
 public slots:
     void onLoginCheckFromClient(const QByteArray &msg);
+    void onRequestSignUpMessageFromRegister(const QByteArray &msg);
 
 public slots:
     void on_toolButton_2_clicked();

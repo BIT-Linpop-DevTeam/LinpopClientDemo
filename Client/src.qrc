@@ -73,5 +73,8 @@
         <file>src/GUI/head/Genshin/genshin11.webp</file>
         <file>src/GUI/head/Genshin/genshin12.webp</file>
         <file>src/GUI/VCG41N1214827275.jpeg</file>
+        <file>src/GUI/sup.jpg</file>
+        <file>src/GUI/Sup.png</file>
+        <file>src/GUI/Singup.jpg</file>
     </qresource>
 </RCC>

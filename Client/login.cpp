@@ -7,6 +7,7 @@
 #include <mylog.h>
 #include <client.h>
 #include <QMouseEvent>
+#include<signup.h>
 using namespace std;
 
 Login::Login(QWidget *parent)
@@ -48,7 +49,10 @@ void Login::onLoginCheckFromClient(const QByteArray &msg) {
     QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
     Message::Type type = Message::getType(dataStream);
 
-    if(type != Message::LOGIN_CHECK_MESSAGE) {
+    if(type == Message::SIGNUP_CHECK_MESSAGE) {
+        emit signalSignUpCheckMessageToRegister(msg);
+        return;
+    } if(type != Message::LOGIN_CHECK_MESSAGE) {
         qDebug() << "when login, expect loginCheckMessage but not";
         return;
     }
@@ -106,6 +110,7 @@ void Login::on_pushButton_clicked()
 //            aa.show();
 //            aa.exec();
 //        }
+
         struct RequestLoginMessage requestLoginMesage(str, str1);
         QByteArray msg = Message::FromRequestLoginMessage(requestLoginMesage);
         emit signalRequestLoginToCommunicator(msg);
@@ -116,18 +121,31 @@ void Login::on_pushButton_clicked()
 void Login::on_lineEdit_editingFinished(){
     //int a=1;
 }
+
+SignUp *instance;
+SignUp* getInstance(const Login &login)
+{
+    if(instance!=0)return instance;
+    else{
+        instance=new SignUp;
+        instance->initSignUp(login);
+        return instance;
+    }
+}
 void Login::on_pushButton_2_clicked()
 {
-    myLog aa(myLog::Critical, "提示", "注册账号", myLog::Ok);
-    aa.show();
-    aa.exec();
+    //myLog aa(myLog::Critical, "提示", "注册账号", myLog::Ok);
+    //aa.show();
+    //aa.exec();
+    SignUp* sgn=getInstance(*this);
+    sgn->show();
 }
 
 void Login::on_pushButton_3_clicked()
 {
-    myLog aa(myLog::Critical, "提示", "忘记密码", myLog::Ok);
-    aa.show();
-    aa.exec();
+    //myLog aa(myLog::Critical, "提示", "忘记密码", myLog::Ok);
+    //aa.show();
+    //aa.exec();
 }
 void Login:: loginWindowClose(){
     close();
@@ -168,9 +186,14 @@ void Login::setAreaMovable(const QRect rt)
 }
 
 void Login::initLogin(Client &client) {
-    QObject::connect(&client, &Client::signalLoginCheckToLogin, this, &Login::onLoginCheckFromClient);
-    QObject::connect(this, &Login::userLogin, &client, &Client::rcvLogin);
-    QObject::connect(&client, &Client::closeLoginWindow, this, &Login::loginWindowClose);
+    connect(&client, &Client::signalLoginCheckToLogin, this, &Login::onLoginCheckFromClient);
+    connect(this, &Login::userLogin, &client, &Client::rcvLogin);
+    connect(&client, &Client::closeLoginWindow, this, &Login::loginWindowClose);
+
     this->show();
 //    emit userLogin("id1", "nihao");
+}
+
+void Login::onRequestSignUpMessageFromRegister(const QByteArray &msg) {
+    emit signalRequestLoginToCommunicator(msg);
 }

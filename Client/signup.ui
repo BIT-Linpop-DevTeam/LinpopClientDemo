@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Login</class>
- <widget class="QWidget" name="Login">
+ <class>SignUp</class>
+ <widget class="QWidget" name="SignUp">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>869</width>
-    <height>621</height>
+    <width>936</width>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,31 +15,35 @@
   </property>
   <property name="styleSheet">
    <string notr="true">*{
+	background-color: rgba(255, 179, 167,50);
 font-size:15px;
 font-style:MingLiU-ExtB;
 }
 
 QFrame{
 	
-	background-image: url(:/src/GUI/VCG41N1214827275.jpeg);
+	background-color: rgba(255, 179, 167,200);
+	background-image: url(:/src/GUI/Sup.png);
+background-repeat: no-repeat;
+
 border-radius:15px;
 }
 QLineEdit{
 color:#8d98a1;
-background-color:rgb(19, 0, 0, 30);
+background-color:rgba(19, 0, 0, 30);
 font-size:16px;
 border-style:outset;
 border-radius:10px;
 font-style:MingLiU-ExtB;
 }
 QPushButton{
-background:#dbe4ff;
+background:rgba(240, 86, 84,70);
 border-style:outset;
 border-radius:10px;
 font-style:MingLiU-ExtB;
 }
 QPushButton:pressed{
-background:#748ffc;
+background:rgb(240, 86, 84);
 border-style:inset;
 font-style:MingLiU-ExtB;
 }
@@ -77,16 +81,16 @@ background-color: rgba(203, 203, 203, 150);
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>811</width>
-     <height>531</height>
+     <x>40</x>
+     <y>40</y>
+     <width>881</width>
+     <height>530</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>800</width>
-     <height>530</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -96,13 +100,7 @@ background-color: rgba(203, 203, 203, 150);
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true">*{
-border-radious:15px;
-
-background-repeat:no-repeat;
-
-background-size:cover;
-}</string>
+    <string notr="true"/>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -113,7 +111,7 @@ background-size:cover;
    <widget class="QLineEdit" name="e1">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>530</x>
       <y>210</y>
       <width>261</width>
       <height>41</height>
@@ -129,14 +127,14 @@ text-decoration: underline
      <string/>
     </property>
     <property name="placeholderText">
-     <string>请输入账号</string>
+     <string>请创建你的用户名</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="e2">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>260</y>
+      <x>530</x>
+      <y>270</y>
       <width>261</width>
       <height>41</height>
      </rect>
@@ -157,26 +155,26 @@ text-decoration: underline
      <enum>QLineEdit::Password</enum>
     </property>
     <property name="placeholderText">
-     <string>请输入密码</string>
+     <string>请输入你的密码</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>360</y>
-      <width>181</width>
+      <x>570</x>
+      <y>410</y>
+      <width>191</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>   原神，启动！</string>
+     <string>开启你的提瓦特之旅吧！</string>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>840</x>
       <y>0</y>
       <width>41</width>
       <height>41</height>
@@ -189,7 +187,7 @@ text-decoration: underline
    <widget class="QToolButton" name="toolButton_2">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>800</x>
       <y>0</y>
       <width>41</width>
       <height>41</height>
@@ -199,51 +197,11 @@ text-decoration: underline
      <string>-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>560</x>
-      <y>320</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">*{
-	color: rgb(0,0, 0);
-width:200px;
-height:300px;
-}</string>
-    </property>
-    <property name="text">
-     <string>注册</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>320</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">*{
-	color: rgb(0,0, 0);
-width:200px;
-height:300px;
-}</string>
-    </property>
-    <property name="text">
-     <string>忘记密码</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>130</y>
+      <x>630</x>
+      <y>150</y>
       <width>71</width>
       <height>51</height>
      </rect>
@@ -257,9 +215,7 @@ height:300px;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">*{
-	image: url(:/src/GUI/logintext.PNG);
-}</string>
+     <string notr="true">image: url(:/src/GUI/registertext.PNG);</string>
     </property>
     <property name="text">
      <string/>
@@ -271,12 +227,40 @@ height:300px;
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QLineEdit" name="e2_2">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>330</y>
+      <width>261</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">*{
+padding-left:30px;
+text-decoration: underline
+}</string>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+    <property name="placeholderText">
+     <string>请输入你的密码</string>
+    </property>
+   </widget>
    <widget class="QLabel" name="accountLabel">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>380</x>
       <y>210</y>
-      <width>101</width>
+      <width>151</width>
       <height>41</height>
      </rect>
     </property>
@@ -290,14 +274,10 @@ height:300px;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">*{
-	color: rgb(0, 0, 0);
-font: 11pt &quot;微软雅黑&quot;;
-
-}</string>
+     <string notr="true">font: 11pt &quot;微软雅黑&quot;;</string>
     </property>
     <property name="text">
-     <string>账号：</string>
+     <string>你的用户名：</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -306,9 +286,9 @@ font: 11pt &quot;微软雅黑&quot;;
    <widget class="QLabel" name="accountLabel_2">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>260</y>
-      <width>101</width>
+      <x>340</x>
+      <y>270</y>
+      <width>191</width>
       <height>41</height>
      </rect>
     </property>
@@ -322,14 +302,38 @@ font: 11pt &quot;微软雅黑&quot;;
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">*{
-	color: rgb(0, 0, 0);
-font: 11pt &quot;微软雅黑&quot;;
-
-}</string>
+     <string notr="true">font: 11pt &quot;微软雅黑&quot;;</string>
     </property>
     <property name="text">
-     <string>密码：</string>
+     <string>输入你的密码：</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="accountLabel_3">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>330</y>
+      <width>191</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+      <pointsize>11</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 11pt &quot;微软雅黑&quot;;</string>
+    </property>
+    <property name="text">
+     <string>确认你的密码：</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

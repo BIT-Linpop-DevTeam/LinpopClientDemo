@@ -69,13 +69,14 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     case Message::REQUEST_FRIEND_MESSAGE:
     {
         RequestFriendMessage requestFriendMessage = Message::toRequestFriendMessage(dataStream);
+        qDebug() << QString("received requests friend in client: userId %1 friendId %2").arg(requestFriendMessage.friendId).arg(requestFriendMessage.requestId);
         if(requestFriendMessage.friendId != userId) return;
         if(requestFriendMessage.states == Message::SUCCESS) {
-            RequestFriendListMessage requestFriendListmessage(this->userId);
-            emit signalSendMessageToCommunicator(msg);
+//            RequestFriendListMessage requestFriendListmessage(this->userId);
+//            emit signalSendMessageToCommunicator(msg);
         } else if(requestFriendMessage.states == Message::UNTREATED) {
             Acceptfriend *acceptFriendWindow = new Acceptfriend(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
-//            qDebug() <<
+            qDebug() << QString("received UNRATED request friend: requestId %1 friendId %2").arg(requestFriendMessage.requestId).arg(requestFriendMessage.friendId);
             acceptFriendWindow->init();
             connect(acceptFriendWindow, &Acceptfriend::signalRequestFriendMessageToClient, this, &Client::onSendMessageFromChildToCommunitor);
             acceptFriendWindow->show();

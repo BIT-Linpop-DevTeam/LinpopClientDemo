@@ -90,7 +90,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     case Message::FILE_MESSAEG:
     {
         FileMessage fileMessage = Message::toFileMessage(dataStream);
-        if(fileMessage.receiveId != userId) return;
+        if(fileMessage.receiveId != ownerId || fileMessage.sendId != userId) return;
 
         writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent);
 

@@ -62,6 +62,7 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
         }
         break;
     }
+    case Message::SIGNUP_CHECK_MESSAGE:
     case Message::LOGIN_CHECK_MESSAGE:
         emit signalLoginCheckToLogin(msg);
         break;
@@ -72,8 +73,8 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
             RequestFriendListMessage requestFriendListmessage(this->userId);
             emit signalSendMessageToCommunicator(msg);
         } else if(requestFriendMessage.states == Message::UNTREATED) {
-            Acceptfriend acceptFriendWindow(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
-            acceptFriendWindow.show();
+            Acceptfriend *acceptFriendWindow = new Acceptfriend(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
+            acceptFriendWindow->show();
         } else {
             qDebug() << "in slot: onReadyReadFromCommunicator. unexpected fail state in requestFriend msg";
         }

@@ -43,13 +43,13 @@ bool check(QString a,QString b){
     return a==b;
 }
 
-void Login::onLoginCheckFromClient(const QByteArray &msg) {
-    qDebug() << "in slot: onLoginCheckFromClient";
+void Login::onLoginCheckFromClient(const QByteArray &msg) { 
     QByteArray dataSrc = msg;
     QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
     Message::Type type = Message::getType(dataStream);
-
+    qDebug() << "in slot: onLoginCheckFromClient. type: " << type;
     if(type == Message::SIGNUP_CHECK_MESSAGE) {
+        qDebug() << "in slot: onLoginCheckFromClient. signUpcheck to register";
         emit signalSignUpCheckMessageToRegister(msg);
         return;
     } if(type != Message::LOGIN_CHECK_MESSAGE) {

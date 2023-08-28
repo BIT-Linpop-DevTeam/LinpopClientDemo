@@ -90,6 +90,7 @@ void SignUp::on_pushButton_clicked()
 }
 
 void SignUp::onSignUpCheckMessageFromLogin(const QByteArray &msg) {
+    qDebug() << "in slot: onSignUpCheckMessaegFromLogin";
     QByteArray dataSrc = msg;
     QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
     if(Message::getType(dataStream) != Message::SIGNUP_CHECK_MESSAGE)	{
@@ -98,7 +99,7 @@ void SignUp::onSignUpCheckMessageFromLogin(const QByteArray &msg) {
 
     SignUpCheckMessage signUpCheckMessage = Message::toSignUpCheckMessage(dataStream);
     if(signUpCheckMessage.state == Message::SUCCESS) {
-        myLog aa(myLog::Critical, "欸嘿", "创建成功", myLog::Ok);
+        myLog aa(myLog::Critical, "欸嘿", QString("创建成功, 你的ID是%1").arg(signUpCheckMessage.userId), myLog::Ok);
         aa.show();
         aa.exec();
         this->close();

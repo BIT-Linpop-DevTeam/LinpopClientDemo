@@ -26,7 +26,7 @@ border-radius:15px;
 }
 QLineEdit{
 color:#8d98a1;
-background-color:rgb(19, 0, 0, 30);
+background-color:rgba(19, 0, 0, 30);
 font-size:16px;
 border-style:outset;
 border-radius:10px;
@@ -97,11 +97,7 @@ background-color: rgba(203, 203, 203, 150);
    </property>
    <property name="styleSheet">
     <string notr="true">*{
-border-radious:15px;
 
-background-repeat:no-repeat;
-
-background-size:cover;
 }</string>
    </property>
    <property name="frameShape">

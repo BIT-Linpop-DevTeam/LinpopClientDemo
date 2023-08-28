@@ -72,8 +72,8 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
         qDebug() << QString("received requests friend in client: userId %1 friendId %2").arg(requestFriendMessage.friendId).arg(requestFriendMessage.requestId);
         if(requestFriendMessage.friendId != userId) return;
         if(requestFriendMessage.states == Message::SUCCESS) {
-//            RequestFriendListMessage requestFriendListmessage(this->userId);
-//            emit signalSendMessageToCommunicator(msg);
+            RequestFriendListMessage requestFriendListmessage(this->userId);
+            emit signalSendMessageToCommunicator(Message::FromRequestFriendListMessage(requestFriendListmessage));
         } else if(requestFriendMessage.states == Message::UNTREATED) {
             Acceptfriend *acceptFriendWindow = new Acceptfriend(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
             qDebug() << QString("received UNRATED request friend: requestId %1 friendId %2").arg(requestFriendMessage.requestId).arg(requestFriendMessage.friendId);

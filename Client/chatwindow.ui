@@ -117,17 +117,17 @@ QPushButton:pressed{
         <string notr="true">QPushButton{
     image: url(:/src/GUI/min.png);
     border-style: outset;
-        border: none;
+	border: none;
 }
 QPushButton:hover{
     image: url(:/src/GUI/min_hover.png);
     border-style: outset;
-        border: none;
+	border: none;
 }
 QPushButton:pressed{
     image: url(:/src/GUI/min_hover.png);
     border-style: outset;
-        border: none;
+	border: none;
 }
 </string>
        </property>
@@ -159,6 +159,9 @@ QPushButton:pressed{
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_1" stretch="0,1,0,0">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QWidget" name="friendName" native="true">
        <property name="styleSheet">
@@ -213,32 +216,34 @@ QPushButton:pressed{
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="leftMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>9</number>
+        <number>0</number>
        </property>
        <item>
-        <widget class="QTextBrowser" name="msgShowTextBrowser">
-         <property name="font">
-          <font>
-           <family>Roboto</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
+        <widget class="QListWidget" name="listWidget">
          <property name="styleSheet">
           <string notr="true">
-border:none;</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
+QListWidget{background-color: rgb(255, 255, 255); color:rgb(51,51,51); border: none;outline:0px;}
+QListWidget::Item{background-color: rgb(255, 255, 255);}
+QListWidget::Item:hover{background-color: rgb(255, 255, 255); }
+QListWidget::item:selected{
+	background-color: rgb(255, 255, 255);
+	color:black; 
+    border: 1px solid  rgb(255, 255, 255);
+}
+QListWidget::item:selected:!active{border: 1px solid  rgb(255, 255, 255); background-color: rgb(255, 255, 255); color:rgb(51,51,51); } </string>
          </property>
         </widget>
        </item>
@@ -277,8 +282,7 @@ border:none;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">border:none;
-color: rgb(112, 112, 112);</string>
+           <string notr="true">border:none;</string>
           </property>
          </widget>
         </item>
@@ -513,16 +517,16 @@ color: rgb(112, 112, 112);</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
-        border-image: url(:/src/GUI/button.png);
-        color:rgb(254, 254, 254);
+	border-image: url(:/src/GUI/button.png);
+	color:rgb(254, 254, 254);
 }
 QPushButton:hover{
-        border-image: url(:/src/GUI/button_hover.png);
-        color:rgb(254, 254, 254);
+	border-image: url(:/src/GUI/button_hover.png);
+	color:rgb(254, 254, 254);
 }
 QPushButton:pressed{
-        border-image: url(:/src/GUI/button_press.png);
-        color:rgb(254, 254, 254);
+	border-image: url(:/src/GUI/button_press.png);
+	color:rgb(254, 254, 254);
 }
 </string>
           </property>
@@ -530,7 +534,7 @@ QPushButton:pressed{
            <string>Send</string>
           </property>
           <property name="icon">
-           <iconset resource="chatwindowsrc.qrc">
+           <iconset resource="src.qrc">
             <normaloff>:/src/GUI/send.png</normaloff>:/src/GUI/send.png</iconset>
           </property>
           <property name="shortcut">
@@ -546,7 +550,7 @@ QPushButton:pressed{
   </layout>
  </widget>
  <resources>
-  <include location="chatwindowsrc.qrc"/>
+  <include location="src.qrc"/>
  </resources>
  <connections/>
 </ui>

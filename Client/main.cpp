@@ -16,22 +16,11 @@ int main(int argc, char *argv[])
 
     login.initLogin(client);
 
+//    client.initClient();
 //    client.show();
 
-//    QByteArray data;
-//    QDataStream dataStream(&data, QIODevice::WriteOnly);
-//    dataStream << (qint64)18;
-//    dataStream << (qint64)1000000;
-//    dataStream << (qint32)10;
-
-//    qDebug() << data.size();
-
-//    QByteArray data2 = data.chopped(12);
-
-//    QDataStream dataS2(&data2, QIODevice::ReadOnly);
-//    qint64 x;
-//    dataS2 >> x;
-//    qDebug() << x;
+//    ChatWindow cw(nullptr, "1", "2", "111");
+//    cw.show();
 
 
     return a.exec();

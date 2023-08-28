@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include "acceptfriend.h"
 //#include<login.h>
+#include<userprofile.h>
 Client::Client(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Client)
@@ -95,7 +96,7 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
 //todo
 void Client::initClient() {
     qDebug() << "client inited";
-//    this->addChat("1", "user1");
+//    this->addChat("1", "user1", "nihao");
 //    this->addChat("2", "用户2");
     struct RequestFriendListMessage requestFriendListMessage(userId);
     QByteArray msg = Message::FromRequestFriendListMessage(requestFriendListMessage);
@@ -180,6 +181,9 @@ void Client::setAreaMovable(const QRect rt)
 }
 
 void Client::addChat(const QString &ownerId, const QString &userId, const QString &username) {
+   if(idSet.contains(userId)) return;
+   idSet.insert(userId);
+
    qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
    QPushButton *friendButton = new QPushButton();
    friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240);spacing: 25px; }"
@@ -204,3 +208,53 @@ void Client::onAddFriendButtonClicked()
 
 
 
+
+bool f=1;
+void Client::on_modeBotton_clicked()
+{
+    f^=1;
+    if(f){
+        ui->modeBotton->setStyleSheet("#modeBotton{image: url(:/src/GUI/icon/nightmode.png);border:none;}"
+                                     "#modeBotton:hover{"
+                                      "image: url(:/src/GUI/icon/nightmode_hover.png);"
+                                      "border:none;"
+                                     "}"
+                                     "#modeBotton:pressed{"
+                                      "image: url(:/src/GUI/icon/nightmode_hover.png);"
+                                      "border:none;"
+                                     "}");
+        ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
+        ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
+    }
+    else{
+        ui->modeBotton->setStyleSheet("#modeBotton{image: url(:/src/GUI/icon/daymode.png);border:none;}"
+                                     "#modeBotton:hover{"
+                                      "image: url(:/src/GUI/icon/daymode_hover.png);"
+                                      "border:none;"
+                                     "}"
+                                     "#modeBotton:pressed{"
+                                      "image: url(:/src/GUI/icon/daymode_hover.png);"
+                                      "border:none;"
+                                     "}");
+        ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
+        ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
+    }
+}
+
+void Client::on_moreButton_clicked()
+{
+    UserProfile* x=new UserProfile;
+
+    x->show();
+    //qDebug()<<"ffff";
+}
+
+void Client::onConfirmUsernameFromChange(const QString &username) {
+    User user(userId, username);
+    UserMessage userMessage(userId, user);
+    emit signalSendMessageToCommunicator(Message::FromUserMessage(userMessage));
+}
+
+void Client::onConfirmSignatureFromChange(const QString &signature) {
+    ui->signature->setText(signature);
+}

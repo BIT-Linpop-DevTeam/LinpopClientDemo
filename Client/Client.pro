@@ -29,7 +29,9 @@ SOURCES += \
     client.cpp \
     message.cpp \
     mylog.cpp \
-    signup.cpp
+    signup.cpp \
+    userprofile.cpp \
+    qnchatmessage.cpp
 
 HEADERS += \
     acceptfriend.h \
@@ -40,7 +42,9 @@ HEADERS += \
     login.h \
     message.h \
     mylog.h \
-    signup.h
+    signup.h \
+    userprofile.h \
+    qnchatmessage.h
 
 FORMS += \
     acceptfriend.ui \
@@ -48,7 +52,8 @@ FORMS += \
     chatwindow.ui \
     client.ui \
     login.ui \
-    signup.ui
+    signup.ui \
+    userprofile.ui
 
 RESOURCES += \
     chatwindowsrc.qrc \

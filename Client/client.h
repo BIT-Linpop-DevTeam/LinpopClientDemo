@@ -6,6 +6,7 @@
 #include "message.h"
 #include "chatwindow.h"
 #include "addfriend.h"
+#include <QSet>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Client; }
@@ -34,6 +35,7 @@ private:
     Ui::Client *ui;
     QList<ChatWindow *> chatWindowList;
     addFriend *addFriendWindow;
+    QSet<QString> idSet;
 
 signals:
     void signalSendMessageToCommunicator(const QByteArray &msg);
@@ -47,6 +49,8 @@ public slots:
     //todo
     void onReadyReadFromCommunicator(const QByteArray &msg);
     void onAddFriendButtonClicked();
+    void onConfirmUsernameFromChange(const QString &username);
+    void onConfirmSignatureFromChange(const QString &signature);
 
 signals:
     void closeLoginWindow();
@@ -56,6 +60,10 @@ public slots:
 private slots:
     void on_closeButton_clicked();
     void on_minimizeButton_clicked();
+
+    void on_modeBotton_clicked();
+
+    void on_moreButton_clicked();
 
 public:
     //设置鼠标按下可移动窗口的区域，在子窗口中必须设置该区域

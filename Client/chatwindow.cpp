@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QFileDialog>
+
 #define BLOCK_SIZE 20
 void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &fileState);
 
@@ -12,6 +13,8 @@ ChatWindow::ChatWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
+//    ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 }
 
 ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &userId, const QString &username)
@@ -22,6 +25,7 @@ ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &u
     this->username = username;
     ui->friendNameLabel->setText(username);
     setWindowTitle(QString("和%1的对话").arg(username));
+    QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
 }
 
 ChatWindow::~ChatWindow()
@@ -47,11 +51,13 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
     qDebug() << QString("In window: ownerId %1 userId %2").arg(ownerId).arg(userId);
         //todo :diff the output way of me and counterpart
         if(chatMsg.receiveId == userId) {
-            ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
-            ui->msgShowTextBrowser->append(chatMsg.msg);
+//            ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
+//            ui->msgShowTextBrowser->append(chatMsg.msg);
+              showSendMessage(chatMsg.msg);
         } else if(chatMsg.sendId == userId) {
-            ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
-            ui->msgShowTextBrowser->append(chatMsg.msg);
+//            ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
+//            ui->msgShowTextBrowser->append(chatMsg.msg);
+              showReceivedMessage(chatMsg.msg);
         }
         break;
     }
@@ -67,11 +73,13 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         if(chatLogMessage.friendId != userId)	return;
         for(const ChatMessage &chatMsg: chatLogMessage.messageList) {
             if(chatMsg.receiveId == userId) {
-                ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
-                ui->msgShowTextBrowser->append(chatMsg.msg);
+//                ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
+//                ui->msgShowTextBrowser->append(chatMsg.msg);
+                showSendMessage(chatMsg.msg);
             } else if(chatMsg.sendId == userId) {
-                ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
-                ui->msgShowTextBrowser->append(chatMsg.msg);
+//                ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
+//                ui->msgShowTextBrowser->append(chatMsg.msg);
+                showReceivedMessage(chatMsg.msg);
             }
         }
         break;
@@ -95,8 +103,8 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
 
         writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent, fileMessage.state);
 
-        ui->msgShowTextBrowser->append(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
-
+//        ui->msgShowTextBrowser->append(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
+            showReceivedMessage(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
         break;
     }
     default:
@@ -119,8 +127,9 @@ void ChatWindow::onSendMessageButtonClicked()
     if(sendData.length() <= 0)	return;
 
     ui->msgSendTextEdit->setText("");
-    ui->msgShowTextBrowser->append(QString("%1(我)").arg(ownerId));
-    ui->msgShowTextBrowser->append(sendData);
+//    ui->msgShowTextBrowser->append(QString("%1(我)").arg(ownerId));
+//    ui->msgShowTextBrowser->append(sendData);
+    showSendMessage(sendData);
 
     QString sendId = ownerId, receiveId = this->userId;
     struct ChatMessage dataSrc(sendId, receiveId, sendData, QDateTime::currentDateTime());
@@ -217,6 +226,117 @@ void ChatWindow::on_sendFileButton_clicked()
         emit signalSendMessageButtonClickedToClient(msg);
     }
 
+}
+
+void ChatWindow::dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time,  QNChatMessage::User_Type type)
+{
+    messageW->setFixedWidth(this->width());
+    QSize size = messageW->fontRect(text);
+    item->setSizeHint(size);
+    messageW->setText(text, time, size, type);
+    ui->listWidget->setItemWidget(item, messageW);
+}
+
+void ChatWindow::dealMessageTime(QString curMsgTime)
+{
+    bool isShowTime = false;
+    if(ui->listWidget->count() > 0) {
+        QListWidgetItem* lastItem = ui->listWidget->item(ui->listWidget->count() - 1);
+        QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(lastItem);
+        int lastTime = messageW->time().toInt();
+        int curTime = curMsgTime.toInt();
+        qDebug() << "curTime lastTime:" << curTime - lastTime;
+        isShowTime = ((curTime - lastTime) > 60); // 两个消息相差一分钟
+//        isShowTime = true;
+    } else {
+        isShowTime = true;
+    }
+    if(isShowTime) {
+        QNChatMessage* messageTime = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* itemTime = new QListWidgetItem(ui->listWidget);
+
+        QSize size = QSize(this->width(), 40);
+        messageTime->resize(size);
+        itemTime->setSizeHint(size);
+        messageTime->setText(curMsgTime, curMsgTime, size, QNChatMessage::User_Time);
+        ui->listWidget->setItemWidget(itemTime, messageTime);
+    }
+}
+
+void ChatWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+
+
+//    ui->msgSendTextEdit->resize(this->width() - 20, ui->sendBottom->height() - 20);
+//    ui->msgSendTextEdit->move(10, 10);
+
+//    ui->sendPushButton->move(ui->msgSendTextEdit->width()+ui->msgSendTextEdit->x() - ui->sendPushButton->width() - 10,
+//                         ui->msgSendTextEdit->height()+ui->msgSendTextEdit->y() - ui->sendPushButton->height() - 10);
+
+
+    for(int i = 0; i < ui->listWidget->count(); i++) {
+        QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(ui->listWidget->item(i));
+        QListWidgetItem* item = ui->listWidget->item(i);
+
+        dealMessage(messageW, item, messageW->text(), messageW->time(), messageW->userType());
+    }
+}
+
+void ChatWindow::showSendMessage(const QString &msg) {
+      qDebug() << "in showSendMessage";
+        ui->msgSendTextEdit->setText("");
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t()); //时间戳
+
+        bool isSending = true; // 发送中
+
+        qDebug()<<"addMessage" << msg << time << ui->listWidget->count();
+//        if(ui->listWidget->count()%2) {
+            if(isSending) {
+                dealMessageTime(time);
+
+                QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+                QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+                dealMessage(messageW, item, msg, time, QNChatMessage::User_Me);
+            } else {
+                bool isOver = true;
+                for(int i = ui->listWidget->count() - 1; i > 0; i--) {
+                    QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(ui->listWidget->item(i));
+                    if(messageW->text() == msg) {
+                        isOver = false;
+                        messageW->setTextSuccess();
+                    }
+                }
+                if(isOver) {
+                    dealMessageTime(time);
+
+                    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+                    QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+                    dealMessage(messageW, item, msg, time, QNChatMessage::User_Me);
+                    messageW->setTextSuccess();
+                }
+            }
+//        } else {
+//            if(msg != "") {
+//                dealMessageTime(time);
+
+//                QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+//                QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+//                dealMessage(messageW, item, msg, time, QNChatMessage::User_She);
+//            }
+//        }
+        ui->listWidget->setCurrentRow(ui->listWidget->count()-1);
+}
+
+void ChatWindow::showReceivedMessage(const QString &msg) {
+    if(msg != "") {
+        QString time = QString::number(QDateTime::currentDateTime().toTime_t());
+        dealMessageTime(time);
+
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, msg, time, QNChatMessage::User_She);
+    }
 }
 
 void ChatWindow::on_sendPictureButton_clicked()

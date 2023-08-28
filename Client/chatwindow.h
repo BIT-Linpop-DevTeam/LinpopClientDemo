@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "message.h"
+#include "qnchatmessage.h"
+#include <QListWidgetItem>
 
 namespace Ui {
 class ChatWindow;
@@ -16,6 +18,14 @@ public:
     explicit ChatWindow(QWidget *parent = nullptr);
     explicit ChatWindow(QWidget *parent, const QString &ownerId, const QString &userId, const QString &username);
     ~ChatWindow();
+
+    void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QNChatMessage::User_Type type);
+    void dealMessageTime(QString curMsgTime);
+
+    void showSendMessage(const QString &msg);
+    void showReceivedMessage(const QString &msg);
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::ChatWindow *ui;

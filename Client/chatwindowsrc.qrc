@@ -39,5 +39,6 @@
         <file>src/GUI/icon/voice.png</file>
         <file>src/GUI/icon/voice_hover.png</file>
         <file>src/GUI/icon/voice_press.png</file>
+        <file>genshin1.ico</file>
     </qresource>
 </RCC>

@@ -31,7 +31,7 @@ void addFriend::onConfirmButtonClicked() {
         return;
     }
 
-    RequestFriendMessage requestFriendMessage(userId, requestId, Message::SUCCESS);
+    RequestFriendMessage requestFriendMessage(userId, requestId, Message::UNTREATED);
     emit signalRequestFriendToClient(Message::FromRequestFriendMessage(requestFriendMessage));
     close();
 

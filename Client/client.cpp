@@ -68,8 +68,15 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     case Message::REQUEST_FRIEND_MESSAGE:
     {
         RequestFriendMessage requestFriendMessage = Message::toRequestFriendMessage(dataStream);
-        Acceptfriend acceptFriendWindow(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
-        acceptFriendWindow.show();
+        if(requestFriendMessage.states == Message::SUCCESS) {
+            RequestFriendListMessage requestFriendListmessage(this->userId);
+            emit signalSendMessageToCommunicator(msg);
+        } else if(requestFriendMessage.states == Message::UNTREATED) {
+            Acceptfriend acceptFriendWindow(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
+            acceptFriendWindow.show();
+        } else {
+            qDebug() << "in slot: onReadyReadFromCommunicator. unexpected fail state in requestFriend msg";
+        }
         break;
     }
     default:

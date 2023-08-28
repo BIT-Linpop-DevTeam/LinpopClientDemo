@@ -10,205 +10,195 @@ Message::Type Message::getType(QDataStream &dataSrc) {
 
 ChatMessage Message::toChatMessage(QDataStream &dataSrc) {
     ChatMessage ret;
-    dataSrc >> ret.sendId >> ret.receiveId >> ret.msg >> ret.dateTime;
+    dataSrc >> ret;
     return ret;
 }
 
 RequestChatLogMessage Message::toRequestChatLogMessage(QDataStream &dataSrc) {
     RequestChatLogMessage ret;
-    dataSrc >> ret.requestId >> ret.friendId;
+    dataSrc >> ret;
     return ret;
 }
 
 ChatLogMessage Message::toChatLogMessage(QDataStream &dataSrc) {
     ChatLogMessage ret;
-    qint32 sz;
-    dataSrc >> ret.requestId >> ret.friendId >> sz;
-    while(sz--) {
-        ChatMessage msg;
-        dataSrc >> msg.sendId >> msg.receiveId >> msg.msg >> msg.dateTime;
-        ret.messageList.append(msg);
-    }
+    dataSrc >> ret;
     return ret;
 }
 
 RequestFriendListMessage Message::toRequestFriendListMessage(QDataStream &dataSrc) {
     RequestFriendListMessage ret;
-    dataSrc >> ret.requestId;
+    dataSrc >> ret;
     return ret;
 }
 
 FriendListMessage Message::toFriendListMessage(QDataStream &dataSrc) {
     FriendListMessage ret;
-    qint32 sz;
-    dataSrc >> ret.requestId >> sz;
-    while(sz--) {
-        User user;
-        dataSrc >> user.id >> user.username;
-        ret.friendList.append(user);
-    }
+    dataSrc >> ret;
     return ret;
 }
 
 RequestFriendMessage Message::toRequestFriendMessage(QDataStream &dataSrc) {
     RequestFriendMessage ret;
-    dataSrc >> ret.requestId >> ret.friendId;
-    qint32 tmp;
-    dataSrc >> tmp;
-    ret.state = (Message::RequestStates)tmp;
+    dataSrc >> ret;
     return ret;
 }
 
 RequestSignUpMessage Message::toRequestSignUpMessage(QDataStream &dataSrc) {
     RequestSignUpMessage ret;
-    dataSrc >> ret.username >> ret.passward;
+    dataSrc >> ret;
     return ret;
 }
 
 SignUpCheckMessage Message::toSignUpCheckMessage(QDataStream &dataSrc) {
     SignUpCheckMessage ret;
-    qint32 tmp;
-    dataSrc >> tmp >> ret.userId;
-    ret.state = (Message::RequestStates)tmp;
+    dataSrc >> ret;
     return ret;
 }
 
 RequestLoginMessage Message::toRequestLoginMessage(QDataStream &dataSrc) {
     RequestLoginMessage ret;
-    dataSrc >> ret.id >> ret.password;
+    dataSrc >> ret;
     return ret;
 }
 
 LoginCheckMessage Message::toLoginCheckMessage(QDataStream &dataSrc) {
-   LoginCheckMessage ret;
-   qint32 tmp;
-   dataSrc >> tmp >> ret.hint >> ret.username;
-   ret.state = (Message::RequestStates)tmp;
-   return ret;
+    LoginCheckMessage ret;
+    dataSrc >> ret;
+    return ret;
 }
 
 ErrorMessage Message::toErrorMessage(QDataStream &dataSrc) {
     ErrorMessage ret;
-    dataSrc >> ret.errorMsg;
+    dataSrc >> ret;
     return ret;
 }
 
 RequestFriendRequestLogMessage Message::toRequestFriendRequestLogMessage(QDataStream &dataSrc){
     RequestFriendRequestLogMessage ret;
-    dataSrc >> ret.requestId;
+    dataSrc >> ret;
     return ret;
 }
 
 FriendRequestLogMessage Message::toFriendRequestLogMessage(QDataStream &dataSrc){
     FriendRequestLogMessage ret;
-    qint32 sz;
-    dataSrc >> ret.requestId >> sz;
-    while(sz--){
-        RequestFriendMessage request;
-        qint32 tmp;
-        dataSrc >> request.requestId >> request.friendId;
-        dataSrc >> tmp;
-        request.state = (Message::RequestStates)tmp;
-        ret.friendRequestList.append(request);
-    }
+    dataSrc >> ret;
     return ret;
 }
+
+FileMessage Message::toFileMessage(QDataStream &dataSrc){
+    FileMessage ret;
+    dataSrc >> ret;
+    return ret;
+}
+
+FriendStatusMessage Message::toFriendStatusMessage(QDataStream &dataSrc){
+    FriendStatusMessage ret;
+    dataSrc >> ret;
+    return ret;
+}
+
+
+FindUserMessage Message::toFindUserMessage(QDataStream &dataSrc){
+    FindUserMessage ret;
+    dataSrc >> ret;
+    return ret;
+}
+
+UserMessage Message::toUserMessage(QDataStream &dataSrc){
+    UserMessage ret;
+    dataSrc >> ret;
+    return ret;
+}
+
+
+
 
 QByteArray Message::FromChatMessage(const ChatMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)CHAT_MESSAGE;
-    in << msg.sendId << msg.receiveId << msg.msg << msg.dateTime;
+    in << Message::CHAT_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromRequestChatLogMessage(const RequestChatLogMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_CHATLOG_MESSAGE;
-    in << msg.requestId << msg.friendId;
+    in << Message::REQUEST_CHATLOG_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromChatLogMessage(const ChatLogMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)CHATLOG_MESSAGE;
-    qint32 sz = msg.messageList.length();
-    in << msg.requestId << msg.friendId << sz;
-    for(int i = 0; i < sz; i++) {
-        const ChatMessage &chatMsg = msg.messageList.at(i);
-        in << chatMsg.sendId << chatMsg.receiveId << chatMsg.msg << chatMsg.dateTime;
-    }
+    in << Message::CHATLOG_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromRequestFriendListMessage(const RequestFriendListMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_FRIENDLIST_MESSAGE;
-    in << msg.requestId;
+    in << Message::REQUEST_FRIENDLIST_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromFriendListMessage(const FriendListMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)FRIENDLIST_MESSAGE;
-    qint32 sz = msg.friendList.length();
-    in << msg.requestId << sz;
-    for(int i = 0; i < sz; i++) {
-        const User &friendUser = msg.friendList.at(i);
-        in << friendUser.id << friendUser.username;
-    }
+    in << Message::FRIENDLIST_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromRequestFriendMessage(const RequestFriendMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_FRIEND_MESSAGE;
-    in << msg.requestId << msg.friendId << (qint32)msg.state;
+    in << Message::REQUEST_FRIEND_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromRequestSignUpMessage(const RequestSignUpMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_SIGNUP_MESSAGE;
-    in << msg.username << msg.passward;
+    in << Message::REQUEST_SIGNUP_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromSignUpCheckMessage(const SignUpCheckMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)SIGNUP_CHECK_MESSAGE;
-    in << (qint32)msg.state << msg.userId;
+    in << Message::SIGNUP_CHECK_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromRequestLoginMessage(const RequestLoginMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_LOGIN_MESSAGE;
-    in << msg.id << msg.password;
+    in << Message::REQUEST_LOGIN_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromLoginCheckMessage(const LoginCheckMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)LOGIN_CHECK_MESSAGE;
-    in << (qint32)msg.state << msg.hint << msg.username;
+    in << Message::LOGIN_CHECK_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromErrorMessage(const ErrorMessage &msg) {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)ERROR_MESSAGE;
-    in << msg.errorMsg;
+    in << Message::ERROR_MESSAGE;
+    in << msg;
     return ret;
 }
 
@@ -217,22 +207,48 @@ QByteArray Message::FromRequestFriendRequestLogMessage
 {
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)REQUEST_FRIEND_REQUESTLOG_MESSAGE;
-    in << msg.requestId;
+    in << Message::REQUEST_FRIEND_REQUESTLOG_MESSAGE;
+    in << msg;
     return ret;
 }
 
 QByteArray Message::FromFriendRequestLogMessage(const FriendRequestLogMessage &msg){
     QByteArray ret;
     QDataStream in(&ret, QIODevice::WriteOnly);
-    in << (qint32)FRIEND_REQUESTLOG_MESSAGE;
-    qint32 sz = msg.friendRequestList.size();
-    in << msg.requestId << sz;
-    for(int i = 0; i < sz; i++) {
-        const RequestFriendMessage &request = msg.friendRequestList[i];
-        in << request.requestId << request.friendId;
-        qint32 tmp = request.state;
-        in << tmp;
-    }
+    in << Message::FRIEND_REQUESTLOG_MESSAGE;
+    in << msg;
+    return ret;
+}
+
+QByteArray Message::FromFileMessage(const FileMessage &msg){
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << Message::FILE_MESSAEG;
+    in << msg;
+    return ret;
+}
+
+QByteArray Message::FromFriendStatusMessage(const FriendStatusMessage &msg){
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << Message::FRIEND_STATUS_MESSAGE;
+    in << msg;
+    return ret;
+}
+
+
+QByteArray Message::FromFindUserMessage(const FindUserMessage &msg) {
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << Message::FIND_USER_MESSAGE;
+    in << msg;
+    return ret;
+}
+
+QByteArray Message::FromUserMessage(const UserMessage &msg) {
+    QByteArray ret;
+    QDataStream in(&ret, QIODevice::WriteOnly);
+    in << Message::USER_MESSAGE;
+    in << msg;
     return ret;
 }

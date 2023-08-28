@@ -1,4 +1,7 @@
-QT       += core gui network
+QT       += core gui network \
+            quick quickwidgets \
+            quick
+RC_FILE = Test.rc
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,6 +23,7 @@ SOURCES += \
     addfriend.cpp \
     chatwindow.cpp \
     communicator.cpp \
+#    emojimodel.cpp \
     login.cpp \
     main.cpp \
     client.cpp \
@@ -48,9 +52,14 @@ FORMS += \
 
 RESOURCES += \
     chatwindowsrc.qrc \
-    src.qrc
+    src.qrc \
+#    qml.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+#DISTFILES += \
+#    EmojiPicker.pro.user \
+#    EmojiPicker.qml

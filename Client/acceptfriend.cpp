@@ -19,6 +19,8 @@ void Acceptfriend::onConfirmButtonClicked()
 {
     RequestFriendMessage requestFriendMessage(userId, friendId, Message::SUCCESS);
     emit signalRequestFriendMessageToClient(Message::FromRequestFriendMessage(requestFriendMessage));
+    RequestFriendListMessage requestFriendListMessage(userId);
+    emit signalRequestFriendMessageToClient(Message::FromRequestFriendListMessage(requestFriendListMessage));
     close();
 }
 

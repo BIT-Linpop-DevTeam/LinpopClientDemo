@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 
     login.initLogin(client);
 
-    client.initClient();
-    client.show();
+//    client.show();
+
 
     return a.exec();
 }

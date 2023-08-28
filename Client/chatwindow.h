@@ -28,6 +28,9 @@ public slots:
     void onReadyReadFromClient(const QByteArray &msg);
     void onCreateWindowButtonClickedFromClient();
     void onSendMessageButtonClicked();
+private slots:
+    void on_sendFileButton_clicked();
+    void on_sendPictureButton_clicked();
 };
 
 #endif // CHATWINDOW_H

@@ -21,7 +21,7 @@ void Acceptfriend::onConfirmButtonClicked()
     qDebug() << QString("in slot: onConfirmButtonClicked. UserId: %1 FriendId %2").arg(userId).arg(friendId);
     RequestFriendMessage requestFriendMessage(userId, friendId, Message::SUCCESS);
     emit signalRequestFriendMessageToClient(Message::FromRequestFriendMessage(requestFriendMessage));
-    RequestFriendListMessage requestFriendListMessage(userId);
+    RequestFriendListMessage requestFriendListMessage(friendId);
     emit signalRequestFriendMessageToClient(Message::FromRequestFriendListMessage(requestFriendListMessage));
     close();
 }

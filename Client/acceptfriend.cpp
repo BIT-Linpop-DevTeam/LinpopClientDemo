@@ -30,3 +30,9 @@ void Acceptfriend::onCancelButtonClicked()
     emit signalRequestFriendMessageToClient(Message::FromRequestFriendMessage(requestFriendMessage));
     close();
 }
+
+void Acceptfriend::init()
+{
+    connect(ui->acceptButton, &QPushButton::clicked, this, &Acceptfriend::onConfirmButtonClicked);
+    connect(ui->denyButton, &QPushButton::clicked, this, &Acceptfriend::onCancelButtonClicked);
+}

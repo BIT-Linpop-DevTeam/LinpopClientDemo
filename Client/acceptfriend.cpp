@@ -1,6 +1,7 @@
 #include "acceptfriend.h"
 #include "ui_acceptfriend.h"
 #include "message.h"
+#include <QDebug>
 
 Acceptfriend::Acceptfriend(QWidget *parent, const QString &userId, const QString &friendId) :
     QWidget(parent),
@@ -17,6 +18,7 @@ Acceptfriend::~Acceptfriend()
 
 void Acceptfriend::onConfirmButtonClicked()
 {
+    qDebug() << QString("in slot: onConfirmButtonClicked. UserId: %1 FriendId %2").arg(userId).arg(friendId);
     RequestFriendMessage requestFriendMessage(userId, friendId, Message::SUCCESS);
     emit signalRequestFriendMessageToClient(Message::FromRequestFriendMessage(requestFriendMessage));
     RequestFriendListMessage requestFriendListMessage(userId);

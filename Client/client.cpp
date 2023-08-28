@@ -69,13 +69,15 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     case Message::REQUEST_FRIEND_MESSAGE:
     {
         RequestFriendMessage requestFriendMessage = Message::toRequestFriendMessage(dataStream);
+        if(requestFriendMessage.friendId != userId) return;
         if(requestFriendMessage.states == Message::SUCCESS) {
             RequestFriendListMessage requestFriendListmessage(this->userId);
             emit signalSendMessageToCommunicator(msg);
         } else if(requestFriendMessage.states == Message::UNTREATED) {
             Acceptfriend *acceptFriendWindow = new Acceptfriend(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
-
+//            qDebug() <<
             acceptFriendWindow->init();
+            connect(acceptFriendWindow, &Acceptfriend::signalRequestFriendMessageToClient, this, &Client::onSendMessageFromChildToCommunitor);
             acceptFriendWindow->show();
             qDebug() << "show accept window";
         } else {

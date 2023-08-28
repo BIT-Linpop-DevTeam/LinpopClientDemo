@@ -53,7 +53,7 @@ void Communicator::onReadyReadFromSocket() {
 }
 
 void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
-    qDebug() << "in slot: onSendMessageClickedFromClient()";
+    qDebug() << "SEND MESSAGE. in slot: onSendMessageClickedFromClient()";
 
     if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
     if(!socket->isValid())	{

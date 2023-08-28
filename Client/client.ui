@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>666</height>
+    <width>400</width>
+    <height>727</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,7 +20,34 @@
    <string>ListWidget</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <string notr="true">
+
+QWidget#scrollAreaWidgetContents_3{background-color: rgb(255, 255, 255,10);
+border-image: url(:/src/GUI/Main.png);
+}
+QWidget#scrollAreaWidgetContents_2{background-color: rgb(255, 255, 255,10);
+border-image: url(:/src/GUI/Main.png);
+}
+QRadioButton{
+        background-color: rgba(240, 240, 240,100);
+        spacing: 25px;
+}
+QRadioButton:hover{
+        background-color: rgba(219, 219, 219,150);
+        spacing: 25px;
+}
+QRadioButton:press{
+        background-color: rgba(219, 219, 219,200);
+        spacing: 25px;
+}
+QLineEdit#msg{
+        background-color: rgba(240, 240, 240,100);
+        spacing: 25px;
+}
+QLineEdit#time{
+        background-color: rgba(240, 240, 240,100);
+        spacing: 25px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -29,7 +56,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <spacer name="horizontalSpacer_2">
+      <spacer name="horizontalSpacer">
        <property name="font">
         <font>
          <family>Roboto</family>
@@ -39,56 +66,13 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>9</width>
+         <width>40</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="closeButton">
-       <property name="minimumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Roboto</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
-    image: url(:/src/GUI/close.png);
-    border-style: outset;
-}
-QPushButton:hover{
-    image: url(:/src/GUI/close_hover.png);
-    border-style: outset;
-}
-QPushButton:pressed{
-    image: url(:/src/GUI/close_hover.png);
-    border-style: outset;
-}
-</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="minimizeButton">
@@ -111,46 +95,60 @@ QPushButton:pressed{
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton{
-    image: url(:/src/GUI/min.png);
-    border-style: outset;
-        border: none;
+        <string notr="true">
+QPushButton{
+border-style:none;
+color:rgb(0,0,0);
 }
-QPushButton:hover{
-    image: url(:/src/GUI/min_hover.png);
-    border-style: outset;
-        border: none;
-}
-QPushButton:pressed{
-    image: url(:/src/GUI/min_hover.png);
-    border-style: outset;
-        border: none;
+QPushButton::hover{
+border-style:none;
+color:rgb(0,0,0);
+background-color: rgba(203, 203, 203, 150);
 }
 </string>
        </property>
        <property name="text">
-        <string/>
+        <string>-</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer">
+      <widget class="QPushButton" name="closeButton">
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Roboto</family>
          <pointsize>10</pointsize>
         </font>
        </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+       <property name="styleSheet">
+        <string notr="true">
+QPushButton{
+color:rgb(0,0,0);
+border-style:none;
+border-top-right-radius:15px;
+}
+QPushButton::hover{
+color:rgb(255,255,255);
+background-color: rgba(255, 56, 56, 150);
+}
+</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="text">
+        <string>×</string>
        </property>
-      </spacer>
+      </widget>
      </item>
     </layout>
    </item>
@@ -380,7 +378,7 @@ QLineEdit:focus{
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="messagepage">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -426,8 +424,8 @@ QLineEdit:focus{
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>419</width>
-              <height>455</height>
+              <width>380</width>
+              <height>516</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -759,8 +757,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>419</width>
-              <height>455</height>
+              <width>380</width>
+              <height>516</height>
              </rect>
             </property>
             <property name="sizePolicy">

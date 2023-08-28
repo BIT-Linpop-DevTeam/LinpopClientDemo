@@ -55,13 +55,19 @@ void Communicator::onReadyReadFromSocket() {
 void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
     qDebug() << "SEND MESSAGE. in slot: onSendMessageClickedFromClient()";
 
+    QByteArray dataSrc = msg;
+    QDataStream dataStream(&dataSrc, QIODevice::ReadOnly);
+
+    qDebug() << "send message type: " << Message::getType(dataStream);
+
     if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
     if(!socket->isValid())	{
         qDebug() << "send failed!";
         return;
     }
 
-    socket->write(msg);
+    qDebug() << socket->write(msg);
+    qDebug() << "send success";
 }
 
 void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {

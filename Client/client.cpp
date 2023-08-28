@@ -104,6 +104,8 @@ void Client::initClient() {
 
     addFriendWindow = new addFriend(nullptr, userId, username);
     addFriendWindow->initAddFriend();
+    connect(ui->messagepushButton,&QPushButton::clicked,this,&Client::switchPage);
+    connect(ui->friendspushButton,&QPushButton::clicked,this,&Client::switchPage);
     connect(addFriendWindow, &addFriend::signalRequestFriendToClient, this, &Client::onSendMessageFromChildToCommunitor);
     connect(ui->addFriBotton, &QPushButton::clicked, this, &Client::onAddFriendButtonClicked);
 }
@@ -117,7 +119,14 @@ void Client::rcvLogin(QString userId, QString username){
     initClient();
     show();
 }
+void Client::switchPage(){
+    QPushButton *button = qobject_cast<QPushButton*>(sender());//得到按下的按钮的指针
+    if(button==ui->messagepushButton)
+        ui->stackedWidget->setCurrentIndex(0);//根据按下的button按索引显示相应的页面
+    else if(button==ui->friendspushButton)
+        ui->stackedWidget->setCurrentIndex(1);
 
+}
 //todo
 void Client::update(const QString &userId, const QString &username){
     this->userId = userId;

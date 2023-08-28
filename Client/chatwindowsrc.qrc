@@ -40,5 +40,11 @@
         <file>src/GUI/icon/voice_hover.png</file>
         <file>src/GUI/icon/voice_press.png</file>
         <file>genshin1.ico</file>
+        <file>acceptfriend.cpp</file>
+        <file>src/GUI/logintext.PNG</file>
+        <file>src/GUI/Main.png</file>
+        <file>src/GUI/registertext.PNG</file>
+        <file>src/GUI/sup.jpg</file>
+        <file>src/GUI/Sup.png</file>
     </qresource>
 </RCC>

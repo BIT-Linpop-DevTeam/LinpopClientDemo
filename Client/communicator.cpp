@@ -52,6 +52,15 @@ void Communicator::onReadyReadFromSocket() {
     emit signalReadyReadToClient(recvData);
 }
 
+QByteArray addSzInfo(const QByteArray &data) {
+    qint64 sz = data.size();
+    QByteArray dataHead;
+    QDataStream datastream(&dataHead, QIODevice::WriteOnly);
+    datastream << sz << data;
+//    dataHead.append(data);
+    return dataHead;
+}
+
 void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
     qDebug() << "SEND MESSAGE. in slot: onSendMessageClickedFromClient()";
 
@@ -66,7 +75,10 @@ void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
         return;
     }
 
-    qDebug() << socket->write(msg);
+    dataSrc = addSzInfo(msg);
+
+
+    qDebug() << socket->write(dataSrc);
     socket->flush();
     qDebug() << "send success";
 }
@@ -80,6 +92,8 @@ void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {
          return;
      }
 
-     socket->write(msg);
+     QByteArray dataSrc = addSzInfo(msg);
+
+     qDebug() << socket->write(dataSrc);
      socket->flush();
 }

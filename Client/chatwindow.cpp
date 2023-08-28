@@ -3,7 +3,8 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QFileDialog>
-void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data);
+#define BLOCK_SIZE 20
+void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &fileState);
 
 ChatWindow::ChatWindow(QWidget *parent) :
     QWidget(parent),
@@ -92,7 +93,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         FileMessage fileMessage = Message::toFileMessage(dataStream);
         if(fileMessage.receiveId != ownerId || fileMessage.sendId != userId) return;
 
-        writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent);
+        writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent, fileMessage.state);
 
         ui->msgShowTextBrowser->append(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
 
@@ -126,7 +127,20 @@ void ChatWindow::onSendMessageButtonClicked()
     const QByteArray msg = Message::FromChatMessage(dataSrc);
     emit signalSendMessageButtonClickedToClient(msg);
 }
+QList<QByteArray> splitByteArray(QList<QByteArray> &chunks, const QByteArray &data, const qint64 chunkSize)
+{
+//    QList<QByteArray> chunks;
+    int numChunks = (data.size() + chunkSize - 1) / chunkSize; // 计算需要的块数
 
+    qDebug() << "in splitByteArray: " << data.size() << " " << chunkSize;
+    for (int i = 0; i < numChunks; ++i)
+    {
+        QByteArray chunk = data.mid(i * chunkSize, chunkSize);
+        chunks.append(chunk);
+    }
+
+    return chunks;
+}
 QByteArray readFileAsQByteArray(const QString &filePath) {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -136,11 +150,17 @@ QByteArray readFileAsQByteArray(const QString &filePath) {
     return file.readAll();
 }
 
-void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data) {
+void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &state) {
     QDir directory(fileDir);
     QString filePath = directory.filePath(fileName);
     QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly)) {
+    if(state == Message::FIRST){
+        if (!file.open(QIODevice::WriteOnly)) {
+            qDebug() << "Failed to open file for writing:" << filePath;
+            return;
+        }
+    }
+    else if (!file.open(QIODevice::Append)) {
         qDebug() << "Failed to open file for writing:" << filePath;
         return;
     }
@@ -152,17 +172,30 @@ void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  c
     }
 
     qDebug() << "Written" << bytesWritten << "bytes to file:" << filePath;
+//    if(state == Message::LAST)
     file.close();
 
 }
 
-FileMessage readFileAsFileMessage(const QString &sendId, const QString &receiveId,
+void readFileAsFileMessage(QList<FileMessage> &fileMsgList, const QString &sendId, const QString &receiveId,
                                   const QString &filePath){
-    FileMessage fileMsg;
+    qDebug() << "in readFileAsFileMessage";
+
     QFileInfo fileInfo(filePath);
-    fileMsg.sendId = sendId, fileMsg.receiveId = receiveId, fileMsg.fileName = fileInfo.fileName();
-    fileMsg.fileContent = readFileAsQByteArray(filePath);
-    return fileMsg;
+    QByteArray content = readFileAsQByteArray(filePath);
+    QList<QByteArray> byteList;
+    splitByteArray(byteList, content, BLOCK_SIZE);
+    qDebug() << "when read file, size of bytes block";
+    FileMessage fileMsg;
+    for (int i = 0; i < byteList.size(); i++){
+        fileMsg.sendId = sendId, fileMsg.receiveId = receiveId, fileMsg.fileName = fileInfo.fileName();
+        fileMsg.fileContent = byteList[i];
+        if(!i) fileMsg.state = Message::FIRST;
+        else if(i == byteList.size() - 1) fileMsg.state = Message::LAST;
+        else fileMsg.state = Message::MID;
+        fileMsgList.append(fileMsg);
+    }
+    qDebug() << "after read file, size of list: " << fileMsgList.size();
 }
 
 
@@ -175,9 +208,14 @@ void ChatWindow::on_sendFileButton_clicked()
      QObject::tr("传输文件(*)"));
     qDebug() << "in slot: sendFile" << fileName;
 
-    FileMessage fileMessage = readFileAsFileMessage(this->ownerId, this->userId, fileName);
-    const QByteArray &msg = Message::FromFileMessage(fileMessage);
-    emit signalSendMessageButtonClickedToClient(msg);
+    QList<FileMessage> fileMsgList;
+    readFileAsFileMessage(fileMsgList, this->ownerId, this->userId, fileName);
+    qDebug() << "in slot: send File button clicked: list size, " <<fileMsgList.size();
+    for (int i = 0; i < fileMsgList.size(); i++){
+        qDebug() << "state: " << fileMsgList.at(i).state;
+        const QByteArray &msg = Message::FromFileMessage(fileMsgList[i]);
+        emit signalSendMessageButtonClickedToClient(msg);
+    }
 
 }
 
@@ -191,7 +229,10 @@ void ChatWindow::on_sendPictureButton_clicked()
 
           qDebug()<< "in slot: sendPicture clicked" << fileName;
 
-    FileMessage fileMessage = readFileAsFileMessage(this->ownerId, this->userId, fileName);
-    const QByteArray &msg = Message::FromFileMessage(fileMessage);
-    emit signalSendMessageButtonClickedToClient(msg);
+      QList<FileMessage> fileMsgList;
+      readFileAsFileMessage(fileMsgList, this->ownerId, this->userId, fileName);
+      for (int i = 0; i < fileMsgList.size(); i++){
+          const QByteArray &msg = Message::FromFileMessage(fileMsgList.at(i));
+          emit signalSendMessageButtonClickedToClient(msg);
+      }
 }

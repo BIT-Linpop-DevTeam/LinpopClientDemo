@@ -100,6 +100,11 @@ public:
         FAIL,
         UNTREATED,
     };
+    enum FileState{
+        FIRST,
+        MID,
+        LAST
+    };
 
 public:
 
@@ -432,26 +437,6 @@ struct FriendRequestLogMessage{
     }
 };
 
-struct FileMessage{
-    QString sendId, receiveId, fileName;
-    QByteArray fileContent;
-    FileMessage(const QString &sendId, const QString &receiveId, const QString &fileName,
-                const QByteArray &fileContent):
-        sendId(sendId), receiveId(receiveId), fileName(fileName), fileContent(fileContent)
-    {
-
-    }
-    FileMessage(){}
-    friend QDataStream &operator <<(QDataStream &out, const FileMessage &msg){
-        out << msg.sendId << msg.receiveId << msg.fileName << msg.fileContent;
-        return out;
-    }
-    friend QDataStream &operator >>(QDataStream &in, FileMessage &msg){
-        in >> msg.sendId >> msg.receiveId >> msg.fileName >> msg.fileContent;
-        return in;
-    }
-};
-
 
 struct FindUserMessage {
     QString requestId;
@@ -483,6 +468,28 @@ struct UserMessage {
         return in;
     }
 };
+
+struct FileMessage{
+    QString sendId, receiveId, fileName;
+    QByteArray fileContent;
+    Message::FileState state;
+    FileMessage(const QString &sendId, const QString &receiveId, const QString &fileName,
+                const QByteArray &fileContent, const Message::FileState state = Message::MID):
+        sendId(sendId), receiveId(receiveId), fileName(fileName), fileContent(fileContent), state(state)
+    {
+
+    }
+    FileMessage(){}
+    friend QDataStream &operator <<(QDataStream &out, const FileMessage &msg){
+        out << msg.sendId << msg.receiveId << msg.fileName << msg.fileContent << msg.state;
+        return out;
+    }
+    friend QDataStream &operator >>(QDataStream &in, FileMessage &msg){
+        in >> msg.sendId >> msg.receiveId >> msg.fileName >> msg.fileContent >> msg.state;
+        return in;
+    }
+};
+
 
 
 #endif // MESSAGE_H

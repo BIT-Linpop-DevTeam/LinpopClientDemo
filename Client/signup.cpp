@@ -24,7 +24,6 @@ void SignUp::mousePressEvent(QMouseEvent *e)
   if(e->button() == Qt::LeftButton)
   {
   m_ptPress = e->pos();
-//  qDebug() << pos() << e->pos() << m_ptPress;
   m_bPressed = m_areaMovable.contains(m_ptPress);
   }
 }

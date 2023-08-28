@@ -74,6 +74,8 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
             emit signalSendMessageToCommunicator(msg);
         } else if(requestFriendMessage.states == Message::UNTREATED) {
             Acceptfriend *acceptFriendWindow = new Acceptfriend(nullptr, requestFriendMessage.friendId, requestFriendMessage.requestId);
+
+            acceptFriendWindow->init();
             acceptFriendWindow->show();
             qDebug() << "show accept window";
         } else {

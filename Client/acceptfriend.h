@@ -14,6 +14,7 @@ class Acceptfriend : public QWidget
 public:
     explicit Acceptfriend(QWidget *parent, const QString &userId, const QString &friendId);
     ~Acceptfriend();
+    void init();
 
 private:
     Ui::Acceptfriend *ui;

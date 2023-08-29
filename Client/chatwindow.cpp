@@ -422,3 +422,32 @@ void ChatWindow::on_closeButton_clicked()
 {
     close();
 }
+
+void ChatWindow::changeMode(const int modeId){
+    if(modeId){
+        ui->listWidget->setStyleSheet("QListWidget{background-color: rgb(255, 255, 255); color:rgb(51,51,51); border: none;outline:0px;}"
+                                      "QListWidget::Item{background-color: rgb(255, 255, 255);}"
+                                      "QListWidget::Item:hover{background-color: rgb(255, 255, 255); }"
+                                      "QListWidget::item:selected{"
+                                          "background-color: rgb(255, 255, 255);"
+                                          "color:black; "
+                                          "border: 1px solid  rgb(255, 255, 255);"
+                                      "}"
+                                      "QListWidget::item:selected:!active{border: 1px solid  rgb(255, 255, 255); background-color: rgb(255, 255, 255); color:rgb(51,51,51); } ");
+        ui->msgSend->setStyleSheet("background-color: rgb(240, 240, 240);") ;
+        ui->friendName->setStyleSheet("background-color: rgb(36, 200, 254);");
+    }
+    else{
+        ui->listWidget->setStyleSheet("QListWidget{background-color: rgb(64, 65, 66); color:rgb(51,51,51); border: none;outline:0px;}"
+                                      "QListWidget::Item{background-color: rgb(64, 65, 66);}"
+                                      "QListWidget::Item:hover{background-color: rgb(64, 65, 66); }"
+                                      "QListWidget::item:selected{"
+                                          "background-color: rgb(64, 65, 66);"
+                                          "color:black; "
+                                          "border: 1px solid  rgb(64, 65, 66);"
+                                      "}"
+                                      "QListWidget::item:selected:!active{border: 1px solid  rgb(64, 65, 66); background-color: rgb(64, 65, 66); color:rgb(51,51,51); } ");
+      ui->msgSend->setStyleSheet("background-color: rgb(30, 30, 30);color:rgb(255,255,255);") ;
+      ui->friendName->setStyleSheet("background-color:rgb(21, 120, 150);");
+    }
+}

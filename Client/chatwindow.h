@@ -30,6 +30,8 @@ public:
     void showSendMessage(const QString &msg);
     void showReceivedMessage(const ChatMessage &msg);
     void showReceivedMessage(const QString &msg);
+
+    void changeMode(const int modeId);
 protected:
     void resizeEvent(QResizeEvent *event);
 

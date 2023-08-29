@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include "acceptfriend.h"
 #include "mylog.h"
+#include <QFileDialog>
 //#include<login.h>
 #include<userprofile.h>
 Client::Client(QWidget *parent)
@@ -102,8 +103,8 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
 
 void Client::initClient() {
     qDebug() << "client inited";
-//    this->addChat("1", "user1", "nihao");
-//    this->addChat("2", "用户2");
+//    this->t("1", "user1", "nihao");
+//    this->t("2", "用户2");
     struct RequestFriendListMessage requestFriendListMessage(userId);
     QByteArray msg = Message::FromRequestFriendListMessage(requestFriendListMessage);
     ui->verticalLayout_6->setAlignment(Qt::AlignTop);
@@ -189,21 +190,50 @@ void Client::setAreaMovable(const QRect rt)
   }
 }
 
+bool f=1;
 
 void Client::addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar , const QString &userId, const QString &username, const qint32 &userAvatar) {
    if(idSet.contains(userId)) return;
    idSet.insert(userId);
 
-   qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
-   QPushButton *friendButton = new QPushButton();
-   friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240);spacing: 25px; }"
-                            "QPushButton:hover{background-color: rgb(219, 219, 219);spacing: 25px;}"
-                            "QPushButton:press{background-color: rgb(219, 219, 219);spacing: 25px;}"
-                            "QPushButton:indicator{width: 0px;height: 0px;border: none;}");
-   ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
-   friendButton->setText(username);
-   ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
-   chatWindowList.append(cw);
+
+       QString Filepath;
+       Filepath =QDir::currentPath ();
+       //qDebug () << Filepath;
+       int index = Filepath.lastIndexOf("/");
+           Filepath = Filepath.left(index);
+           //qDebug()<<"path=="<<Filepath;
+           Filepath+="/Client/src/GUI/head";
+
+           Filepath+='/';
+           Filepath+=QString::number(userAvatar);
+           Filepath+=".jpg";
+           qDebug()<<"path=="<<Filepath;
+           QString dirPath_ = Filepath;
+           QListWidgetItem *pItem = new QListWidgetItem;
+           pItem->setSizeHint(QSize(60,60));
+           pItem->setText(Filepath);
+           pItem->setIcon(QIcon(QPixmap(Filepath).scaled(QSize(60,60))));
+           //ui->listWidget->addItem(pItem);
+    qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
+    QPushButton *friendButton = new QPushButton();
+    QPixmap icon1(Filepath);
+    friendButton->setIcon(icon1);
+    friendButton-> setIconSize ( QSize ( 55, 55 ));
+    friendButton->setFixedSize (QSize(ui->friendSearchEdit->rect().width()+ui->label->rect().width(),60));
+    friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); }"
+                           "QPushButton:hover{background-color: rgb(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
+                           "QPushButton:press{background-color: rgb(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
+                           "QPushButton:indicator{width: 0px;height: 0px;border: none;}"
+                              "");
+    friendButton->setAutoFillBackground(1);
+    //ui->scrollAreaWidgetContents_2->setStyleSheet()
+    ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
+    friendButton->setText(username);
+    friendButton->setLayoutDirection(Qt::LeftToRight);
+    ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
+    chatWindowList.append(cw);
+    cw->changeMode(f);
 
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
    QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
@@ -217,9 +247,6 @@ void Client::onAddFriendButtonClicked()
 }
 
 
-
-
-bool f=1;
 void Client::on_modeBotton_clicked()
 {
     f^=1;
@@ -235,6 +262,10 @@ void Client::on_modeBotton_clicked()
                                      "}");
         ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
         ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
+        for(auto x:chatWindowList){
+           x->setStyleSheet("background-color: rgb(255, 255, 255);");
+           x->changeMode(1);
+       }
     }
     else{
         ui->modeBotton->setStyleSheet("#modeBotton{image: url(:/src/GUI/icon/daymode.png);border:none;}"
@@ -248,6 +279,11 @@ void Client::on_modeBotton_clicked()
                                      "}");
         ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
         ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
+        for(auto x:chatWindowList){
+            x->setStyleSheet("background-color: rgb(64, 65, 66);");
+            x->changeMode(0);
+        }
+
     }
 }
 

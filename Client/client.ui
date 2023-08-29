@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>562</width>
-    <height>986</height>
+    <width>519</width>
+    <height>871</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -407,8 +407,8 @@ QLineEdit:focus{
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>542</width>
-              <height>737</height>
+              <width>250</width>
+              <height>30</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -585,8 +585,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>542</width>
-              <height>757</height>
+              <width>499</width>
+              <height>642</height>
              </rect>
             </property>
             <property name="sizePolicy">

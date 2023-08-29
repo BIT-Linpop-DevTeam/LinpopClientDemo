@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1299</width>
-    <height>1037</height>
+    <width>1265</width>
+    <height>826</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,8 +77,8 @@ background-color: rgba(203, 203, 203, 150);
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
+     <x>0</x>
+     <y>0</y>
      <width>1261</width>
      <height>821</height>
     </rect>

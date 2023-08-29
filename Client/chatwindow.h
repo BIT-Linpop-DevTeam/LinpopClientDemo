@@ -20,7 +20,7 @@ class ChatWindow : public QWidget
 
 public:
     explicit ChatWindow(QWidget *parent = nullptr);
-    explicit ChatWindow(QWidget *parent, const QString &ownerId, const QString &userId, const QString &username);
+    explicit ChatWindow(QWidget *parent, const QString &ownerId, const QString &ownername, qint32 ownerAvatar, const QString &userId, const QString &username, qint32 userAvatar);
     ~ChatWindow();
 
     void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QNChatMessage::User_Type type);
@@ -34,7 +34,8 @@ protected:
 
 private:
     Ui::ChatWindow *ui;
-    QString ownerId, userId, username;
+    QString ownerId, ownername, userId, username;
+    qint32 ownerAvatar, userAvatar;
     QQmlApplicationEngine *engine;
 
 signals:

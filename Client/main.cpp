@@ -11,15 +11,15 @@ int main(int argc, char *argv[])
     Client client;
     Login login;
 
-//    Communicator communicator;
-//    communicator.initCommunicator(client, login);
+    Communicator communicator;
+    communicator.initCommunicator(client, login);
 
-//    login.initLogin(client);
+    login.initLogin(client);
 
 //    client.initClient();
 //    client.show();
 
-    ChatWindow cw(nullptr, "1", "2", "111");
+    ChatWindow cw(nullptr, "1", "2", 1, "2", "user2", 2);
     cw.show();
 
 

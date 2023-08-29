@@ -465,7 +465,7 @@ struct UserMessage {
         return out;
     }
     friend QDataStream & operator >> (QDataStream &in, UserMessage &msg){
-        in >> msg.requestId << msg.user;
+        in >> msg.requestId >> msg.user;
         return in;
     }
 };

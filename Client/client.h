@@ -23,14 +23,14 @@ public:
     //todo
     void initClient();
 
-    void update(const QString &userId, const QString &username);
+    void update(const QString &userId, const QString &username, qint32 avatarId);
 
 private:
     QString userId, username;
     qint32 avatarId;
 
 private:
-    void addChat(const QString &ownerId, const QString &userId, const QString &username);
+    void addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar, const QString &userId, const QString &username, const qint32 &userAvatar);
 
 private:
     Ui::Client *ui;

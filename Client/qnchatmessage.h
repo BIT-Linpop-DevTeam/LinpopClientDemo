@@ -12,7 +12,8 @@ class QNChatMessage : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QNChatMessage(QWidget *parent = nullptr);
+    explicit QNChatMessage(QWidget *parent);
+    explicit QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAvatar);
 
     enum User_Type{
         User_System,//系统

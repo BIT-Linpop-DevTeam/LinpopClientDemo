@@ -18,12 +18,16 @@ ChatWindow::ChatWindow(QWidget *parent) :
 
 }
 
-ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &userId, const QString &username)
+ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &ownername, qint32 ownerAvatar, const QString &userId, const QString &username, qint32 userAvatar)
     : ChatWindow(parent)
 {
     this->ownerId = ownerId;
+    this->ownername = ownername;
+    this->ownerAvatar = ownerAvatar;
     this->userId = userId;
     this->username = username;
+    this->userAvatar = userAvatar;
+
     ui->friendNameLabel->setText(username);
     setWindowTitle(QString("和%1的对话").arg(username));
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
@@ -272,7 +276,7 @@ void ChatWindow::showSendMessage(const QString &msg) {
             if(isSending) {
                 dealMessageTime(time);
 
-                QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+                QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar);
                 QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
                 dealMessage(messageW, item, msg, time, QNChatMessage::User_Me);
             } else {
@@ -287,7 +291,7 @@ void ChatWindow::showSendMessage(const QString &msg) {
                 if(isOver) {
                     dealMessageTime(time);
 
-                    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+                    QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar);
                     QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
                     dealMessage(messageW, item, msg, time, QNChatMessage::User_Me);
                     messageW->setTextSuccess();
@@ -310,7 +314,7 @@ void ChatWindow::showReceivedMessage(const ChatMessage &chatMessage) {
         QString time = QString::number(chatMessage.dateTime.toTime_t());
         dealMessageTime(time);
 
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar);
         QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
         dealMessage(messageW, item, chatMessage.msg, time, QNChatMessage::User_She);
     }
@@ -321,7 +325,7 @@ void ChatWindow::showReceivedMessage(const QString &msg) {
         QString time = QString::number(QDateTime::currentDateTime().toTime_t());
         dealMessageTime(time);
 
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar);
         QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
         dealMessage(messageW, item, msg, time, QNChatMessage::User_She);
     }

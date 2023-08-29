@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QDebug>
 
-QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
+QNChatMessage::QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAvatar) : QWidget(parent)
 {
     QFont te_font = this->font();
     te_font.setFamily("MicrosoftYaHei");
@@ -17,8 +17,12 @@ QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
 //    te_font.setLetterSpacing(QFont::PercentageSpacing, 100);          //300%,100为默认  //设置字间距%
 //    te_font.setLetterSpacing(QFont::AbsoluteSpacing, 0);             //设置字间距为3像素 //设置字间距像素值
     this->setFont(te_font);
-    m_leftPixmap = QPixmap(":/src/GUI/head/Genshin/genshin11");
-    m_rightPixmap = QPixmap(":/src/GUI/head/Genshin/genshin12");
+    m_leftPixmap = QPixmap(QString(":/src/GUI/head/%1").arg(userAvatar));
+//    m_rightPixmap = QPixmap(QString(":/src/GUI/head/1.jpg"));
+//    qDebug() << "ownerAvatar is " << ownerAvatar;
+//    QString tmp = QString(":/src/GUI/head/%1.jpg").arg(ownerAvatar);
+//    qDebug() << tmp;
+    m_rightPixmap = QPixmap(QString(":/src/GUI/head/%1.jpg").arg(ownerAvatar));
 
     m_loadingMovie = new QMovie(this);
     m_loadingMovie->setFileName(":src/GUI/loading4.gif");
@@ -29,6 +33,27 @@ QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
     m_loading->setAutoFillBackground(false);
 }
 
+QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
+{
+    QFont te_font = this->font();
+    te_font.setFamily("MicrosoftYaHei");
+    te_font.setPointSize(12);
+//    te_font.setWordSpacing(0);
+//    te_font.setLetterSpacing(QFont::PercentageSpacing,0);
+//    te_font.setLetterSpacing(QFont::PercentageSpacing, 100);          //300%,100为默认  //设置字间距%
+//    te_font.setLetterSpacing(QFont::AbsoluteSpacing, 0);             //设置字间距为3像素 //设置字间距像素值
+    this->setFont(te_font);
+    m_leftPixmap = QPixmap();
+    m_rightPixmap = QPixmap();
+
+    m_loadingMovie = new QMovie(this);
+    m_loadingMovie->setFileName(":src/GUI/loading4.gif");
+    m_loading = new QLabel(this);
+    m_loading->setMovie(m_loadingMovie);
+    m_loading->resize(16,16);
+    m_loading->setAttribute(Qt::WA_TranslucentBackground , true);
+    m_loading->setAutoFillBackground(false);
+}
 void QNChatMessage::setTextSuccess()
 {
     m_loading->hide();

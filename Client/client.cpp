@@ -55,7 +55,7 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
         struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
         for(const User friendUser: friendListMessage.friendList) {
             qDebug() << QString("add in friend list: %1 %2").arg(friendUser.id).arg(friendUser.username);
-            addChat(userId, friendUser.id, friendUser.username);
+            addChat(userId, username, avatarId, friendUser.id, friendUser.username, friendUser.avatar);
 
             RequestChatLogMessage requestChatLogMessage(userId, friendUser.id);
             QByteArray dataSrc = Message::FromRequestChatLogMessage(requestChatLogMessage);
@@ -115,8 +115,7 @@ void Client::initClient() {
 void Client::rcvLogin(QString userId, QString username, qint32 avatarId){
 
     qDebug()<<"in slot: rcvLogin"<<endl;
-    update(userId, username);
-    ui->avatarLabel->setPixmap(QPixmap(QString(":/src/GUI/head/%1.jpg").arg(avatarId)));
+    update(userId, username, avatarId);
     emit closeLoginWindow();
     initClient();
     show();
@@ -130,12 +129,14 @@ void Client::switchPage(){
 
 }
 //todo
-void Client::update(const QString &userId, const QString &username){
+void Client::update(const QString &userId, const QString &username, qint32 avatarId){
     this->userId = userId;
     this->username = username;
+    this->avatarId = avatarId;
     qDebug()<<"00000"<<username<<endl;
     ui->usernameLabel->setText("这是"+username);
     ui->signature->setText("这是"+username+"的签名");
+    ui->avatarLabel->setPixmap(QPixmap(QString(":/src/GUI/head/%1.jpg").arg(avatarId)));
 }
 
 void Client::on_closeButton_clicked()
@@ -181,7 +182,8 @@ void Client::setAreaMovable(const QRect rt)
   }
 }
 
-void Client::addChat(const QString &ownerId, const QString &userId, const QString &username) {
+
+void Client::addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar , const QString &userId, const QString &username, const qint32 &userAvatar) {
    if(idSet.contains(userId)) return;
    idSet.insert(userId);
 
@@ -193,7 +195,7 @@ void Client::addChat(const QString &ownerId, const QString &userId, const QStrin
                             "QPushButton:indicator{width: 0px;height: 0px;border: none;}");
    ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
    friendButton->setText(username);
-   ChatWindow *cw = new ChatWindow(nullptr, ownerId, userId, username);
+   ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
    chatWindowList.append(cw);
 
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);

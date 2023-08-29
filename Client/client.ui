@@ -23,10 +23,8 @@
    <string notr="true">
 
 QWidget#scrollAreaWidgetContents_3{background-color: rgba(255, 255, 255,10);
-border-image: url(:/src/GUI/Main.png);
 }
 QWidget#scrollAreaWidgetContents_2{background-color: rgba(255, 255, 255,10);
-border-image: url(:/src/GUI/Main.png);
 }
 QRadioButton{
         background-color: rgba(240, 240, 240,100);

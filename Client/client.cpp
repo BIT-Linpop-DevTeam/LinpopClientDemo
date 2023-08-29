@@ -149,6 +149,9 @@ void Client::update(const QString &userId, const QString &username, qint32 avata
 
 void Client::on_closeButton_clicked()
 {
+    for(auto cw: chatWindowList) {
+        cw->close();
+    }
     close();
 }
 
@@ -193,8 +196,9 @@ void Client::setAreaMovable(const QRect rt)
 bool f=1;
 
 void Client::addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar , const QString &userId, const QString &username, const qint32 &userAvatar) {
-   if(idSet.contains(userId)) return;
-   idSet.insert(userId);
+    qDebug() << "in function: addChat, ownerId = " << ownerId << " userID = " << userId;
+    if(idSet.contains(userId)) return;
+    idSet.insert(userId);
 
 
        QString Filepath;
@@ -233,7 +237,7 @@ void Client::addChat(const QString &ownerId, const QString &ownername, const qin
     friendButton->setLayoutDirection(Qt::LeftToRight);
     ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
     chatWindowList.append(cw);
-    cw->changeMode(f);
+
 
    QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
    QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
@@ -263,7 +267,6 @@ void Client::on_modeBotton_clicked()
         ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
         ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(255, 255, 255,100);}");
         for(auto x:chatWindowList){
-           x->setStyleSheet("background-color: rgb(255, 255, 255);");
            x->changeMode(1);
        }
     }
@@ -280,7 +283,6 @@ void Client::on_modeBotton_clicked()
         ui->scrollAreaWidgetContents_3->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
         ui->scrollAreaWidgetContents_2->setStyleSheet("*{background-color: rgba(0, 0, 0,100);}");
         for(auto x:chatWindowList){
-            x->setStyleSheet("background-color: rgb(64, 65, 66);");
             x->changeMode(0);
         }
 

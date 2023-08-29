@@ -148,6 +148,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
                 showReceivedMessage(chatMsg);
             }
         }
+        changeMode(1);
         break;
     }
     case Message::REQUEST_FRIEND_MESSAGE:
@@ -424,7 +425,44 @@ void ChatWindow::on_closeButton_clicked()
 }
 
 void ChatWindow::changeMode(const int modeId){
+    qDebug() << "in f: changeMode";
     if(modeId){
+        setStyleSheet("*{background-color: rgb(255, 255, 255);}"
+                         "QScrollBar:vertical{"
+                         "margin:16px 0px 16px 0px;"
+                         "background-color:rgb(13, 129, 224);"
+                         "border:0px;"
+                         "width:14px;}"
+                         "QScrollBar::handle:vertical{"
+                         "background-color:rgba(144, 202, 249,190);"
+                         "border-radius:7px;"
+                         "width:13px;}"
+                         "QScrollBar::handle:vertical:hover{"
+                         "background-color:rgba(144, 202, 249,220);}"
+                         "QScrollBar::sub-line:vertical{"
+                         "subcontrol-position:top;"
+                         "subcontrol-origin:margin;"
+                         "background-color:rgb(13, 129, 224);"
+                         "border:1px solid rgb(13, 129, 224);"
+                         "height:16px;}"
+                         "QScrollBar::add-line:vertical{"
+                         "subcontrol-position:bottom;"
+                         "subcontrol-origin:margin;"
+                         "background-color:rgb(13, 129, 224);"
+                         "border:1px solid rgb(13, 129, 224);"
+                         "height:16px;}"
+                         "QScrollBar::up-arrow:vertical{"
+                         "border-image:url(:/commonImg/Resources/image/common/arrowUp.png);"
+                         "width:12px;"
+                         "height:6px;"
+                         "}"
+                         "QScrollBar::down-arrow:vertical{"
+                         "border-image:url(:/commonImg/Resources/image/common/arrowDown.png); "
+                         "width:12px;  "
+                         "height:6px;}"
+                         "QScrollBar::sub-page:vertical,QScrollBar::add-page:vertical{"
+                         "background-color:rgb(13, 129, 224);"
+                         "}");
         ui->listWidget->setStyleSheet("QListWidget{background-color: rgb(255, 255, 255); color:rgb(51,51,51); border: none;outline:0px;}"
                                       "QListWidget::Item{background-color: rgb(255, 255, 255);}"
                                       "QListWidget::Item:hover{background-color: rgb(255, 255, 255); }"
@@ -438,6 +476,42 @@ void ChatWindow::changeMode(const int modeId){
         ui->friendName->setStyleSheet("background-color: rgb(36, 200, 254);");
     }
     else{
+        setStyleSheet("*{background-color: rgb(64, 65, 66);}"
+                         "QScrollBar:vertical{"
+                         "margin:16px 0px 16px 0px;"
+                         "background-color:rgb(11,54,117);"
+                         "border:0px;"
+                         "width:14px;}"
+                         "QScrollBar::handle:vertical{"
+                         "background-color:rgba(59,103,168,190);"
+                         "border-radius:7px;"
+                         "width:13px;}"
+                         "QScrollBar::handle:vertical:hover{"
+                         "background-color:rgba(59,103,168,220);}"
+                         "QScrollBar::sub-line:vertical{"
+                         "subcontrol-position:top;"
+                         "subcontrol-origin:margin;"
+                         "background-color:rgb(11,54,117);"
+                         "border:1px solid rgb(11,54,117);"
+                         "height:16px;}"
+                         "QScrollBar::add-line:vertical{"
+                         "subcontrol-position:bottom;"
+                         "subcontrol-origin:margin;"
+                         "background-color:rgb(11,54,117);"
+                         "border:1px solid rgb(11,54,117);"
+                         "height:16px;}"
+                         "QScrollBar::up-arrow:vertical{"
+                         "border-image:url(:/commonImg/Resources/image/common/arrowUp.png);"
+                         "width:12px;"
+                         "height:6px;"
+                         "}"
+                         "QScrollBar::down-arrow:vertical{"
+                         "border-image:url(:/commonImg/Resources/image/common/arrowDown.png); "
+                         "width:12px;  "
+                         "height:6px;}"
+                         "QScrollBar::sub-page:vertical,QScrollBar::add-page:vertical{"
+                         "background-color:rgb(11,54,117);"
+                         "}");
         ui->listWidget->setStyleSheet("QListWidget{background-color: rgb(64, 65, 66); color:rgb(51,51,51); border: none;outline:0px;}"
                                       "QListWidget::Item{background-color: rgb(64, 65, 66);}"
                                       "QListWidget::Item:hover{background-color: rgb(64, 65, 66); }"

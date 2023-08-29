@@ -54,7 +54,7 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
     {
         struct FriendListMessage friendListMessage = Message::toFriendListMessage(dataStream);
         for(const User friendUser: friendListMessage.friendList) {
-            qDebug() << QString("add in friend list: %1 %2").arg(friendUser.id).arg(friendUser.username);
+            qDebug() << QString("ADD in friend list: %1 %2 %3").arg(friendUser.id).arg(friendUser.username).arg(friendUser.avatar);
             addChat(userId, username, avatarId, friendUser.id, friendUser.username, friendUser.avatar);
 
             RequestChatLogMessage requestChatLogMessage(userId, friendUser.id);
@@ -136,7 +136,7 @@ void Client::update(const QString &userId, const QString &username, qint32 avata
     qDebug()<<"00000"<<username<<endl;
     ui->usernameLabel->setText("这是"+username);
     ui->signature->setText("这是"+username+"的签名");
-//    qDebug() << "in update: avatarId = " << avatarId;
+    qDebug() << "in update: avatarId = " << avatarId;
     ui->avatarLabel->setStyleSheet(QString("border-image: url(:/src/GUI/head/%1.jpg);").arg(avatarId));
 }
 
@@ -248,7 +248,8 @@ void Client::on_modeBotton_clicked()
 void Client::on_moreButton_clicked()
 {
     UserProfile* x=new UserProfile;
-
+    connect(x, &UserProfile::signalConfirmUsernameToClient, this, &Client::onConfirmUsernameFromChange);
+    connect(x, &UserProfile::signalConfirmSignatureToClient, this, &Client::onConfirmSignatureFromChange);
     x->show();
     //qDebug()<<"ffff";
 }

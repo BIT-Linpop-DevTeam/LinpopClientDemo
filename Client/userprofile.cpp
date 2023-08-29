@@ -110,6 +110,7 @@ void UserProfile::onConfirmUsernameClicked()
     QString username = ui->usernameEdit->text();
     if(username.size() <= 0)	return;
     emit signalConfirmUsernameToClient(username);
+    close();
 }
 
 void UserProfile::onConfirmSignatureClicked()
@@ -117,6 +118,7 @@ void UserProfile::onConfirmSignatureClicked()
     QString signature = ui->signatureEdit->text();
     if(signature.size() <= 0) 	return;
     emit signalConfirmSignatureToClient(signature);
+    close();
 }
 
 //void UserProfile::onConfirm

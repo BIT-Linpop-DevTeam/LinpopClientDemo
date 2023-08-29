@@ -117,7 +117,10 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent, fileMessage.state);
 
 //        ui->msgShowTextBrowser->append(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
-            showReceivedMessage(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
+        showReceivedMessage(QString("系统：你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
+
+        ChatMessage chatMessage(ownerId, userId, QString("系统：你发送的文件已被成功接受"), QDateTime::currentDateTime());
+        emit signalSendMessageButtonClickedToClient(Message::FromChatMessage(chatMessage));
         break;
     }
     default:

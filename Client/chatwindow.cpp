@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QFileDialog>
 #include <QQmlApplicationEngine>
+#include <QMouseEvent>
 
 #define BLOCK_SIZE 20
 void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &fileState);
@@ -13,10 +14,27 @@ ChatWindow::ChatWindow(QWidget *parent) :
     ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
+    //去窗口边框
+    setWindowFlags(Qt::FramelessWindowHint | windowFlags());
+
+    //把窗口背景设置为透明;
+    setAttribute(Qt::WA_TranslucentBackground);
+
+    m_areaMovable = geometry();
+    m_bPressed = false;
+
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
     ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
+
+    qmlRegisterType<EmojiModel>("EmojiModel", 1, 0, "EmojiModel");
+    engine = new QQmlApplicationEngine();
+
+
 }
+
+
 
 ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &ownername, qint32 ownerAvatar, const QString &userId, const QString &username, qint32 userAvatar)
     : ChatWindow(parent)
@@ -30,10 +48,7 @@ ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &o
 
     ui->friendNameLabel->setText(username);
     setWindowTitle(QString("和%1的对话").arg(username));
-    QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
 
-    qmlRegisterType<EmojiModel>("EmojiModel", 1, 0, "EmojiModel");
-    engine = new QQmlApplicationEngine();
 }
 
 void ChatWindow::onQmlSignal(QString msg) {
@@ -48,6 +63,40 @@ void ChatWindow::onQmlSignal(QString msg) {
 ChatWindow::~ChatWindow()
 {
     delete ui;
+}
+
+void ChatWindow::mousePressEvent(QMouseEvent *e)
+{
+  //鼠标左键
+  if(e->button() == Qt::LeftButton)
+  {
+  m_ptPress = e->pos();
+//  qDebug() << pos() << e->pos() << m_ptPress;
+  m_bPressed = m_areaMovable.contains(m_ptPress);
+  }
+}
+
+void ChatWindow::mouseMoveEvent(QMouseEvent *e)
+{
+  if(m_bPressed)
+  {
+//  qDebug() << pos() << e->pos() << m_ptPress;
+  move(pos() + e->pos() - m_ptPress);
+  }
+}
+
+void ChatWindow::mouseReleaseEvent(QMouseEvent *)
+{
+  m_bPressed = false;
+}
+
+//设置鼠标按下的区域
+void ChatWindow::setAreaMovable(const QRect rt)
+{
+  if(m_areaMovable != rt)
+  {
+  m_areaMovable = rt;
+  }
 }
 
 void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
@@ -361,4 +410,14 @@ void ChatWindow::on_emojiButton_clicked()
     engine->rootContext()->setContextProperty("chatWindow", this);
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
     connect(engine->rootObjects().first(), SIGNAL(qmlSignal(QString)), this, SLOT(onQmlSignal(QString)));
+}
+
+void ChatWindow::on_minimizeButton_clicked()
+{
+    showMinimized();
+}
+
+void ChatWindow::on_closeButton_clicked()
+{
+    close();
 }

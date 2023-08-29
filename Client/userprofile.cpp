@@ -212,10 +212,10 @@ void UserProfile::onConfirmSignatureClicked()
     close();
 }
 
-//todo
 void UserProfile::onConfirmAvatarClicked()
 {
     qint32 avatarId = getIconId();
     emit signalConfirmAvatarToClient(avatarId);
+    close();
 }
 

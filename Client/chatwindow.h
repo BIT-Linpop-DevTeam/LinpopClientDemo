@@ -23,6 +23,7 @@ public:
     explicit ChatWindow(QWidget *parent, const QString &ownerId, const QString &ownername, qint32 ownerAvatar, const QString &userId, const QString &username, qint32 userAvatar);
     ~ChatWindow();
 
+    void setAreaMovable(const QRect rt);
     void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QNChatMessage::User_Type type);
     void dealMessageTime(QString curMsgTime);
 
@@ -50,6 +51,20 @@ private slots:
     void on_sendPictureButton_clicked();
     void on_emojiButton_clicked();
     void onQmlSignal(QString msg);
+
+    void on_minimizeButton_clicked();
+
+    void on_closeButton_clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+
+private:
+    QRect m_areaMovable;//可移动窗口的区域，鼠标只有在该区域按下才能移动窗口
+    bool m_bPressed;//鼠标按下标志（不分左右键）
+    QPoint m_ptPress;//鼠标按下的初始位置
 };
 
 #endif // CHATWINDOW_H

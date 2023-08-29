@@ -30,132 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_1">
-     <item>
-      <spacer name="horizontalSpacer_1">
-       <property name="font">
-        <font>
-         <family>Roboto</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>9</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="closeButton">
-       <property name="minimumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Roboto</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
-    image: url(:/src/GUI/close.png);
-    border-style: outset;
-}
-QPushButton:hover{
-    image: url(:/src/GUI/close_hover.png);
-    border-style: outset;
-}
-QPushButton:pressed{
-    image: url(:/src/GUI/close_hover.png);
-    border-style: outset;
-}
-</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="minimizeButton">
-       <property name="minimumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Roboto</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
-    image: url(:/src/GUI/min.png);
-    border-style: outset;
-	border: none;
-}
-QPushButton:hover{
-    image: url(:/src/GUI/min_hover.png);
-    border-style: outset;
-	border: none;
-}
-QPushButton:pressed{
-    image: url(:/src/GUI/min_hover.png);
-    border-style: outset;
-	border: none;
-}
-</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="font">
-        <font>
-         <family>Roboto</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+    <layout class="QHBoxLayout" name="horizontalLayout_1"/>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_1" stretch="0,1,0,0">
@@ -210,6 +85,89 @@ QPushButton:pressed{
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="minimizeButton">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Roboto</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+    border-image: url(:/src/GUI/min.png);
+    border-style: outset;
+	border: none;
+}
+QPushButton:hover{
+    image: url(:/src/GUI/min_hover.png);
+    border-style: outset;
+	border: none;
+}
+QPushButton:pressed{
+    image: url(:/src/GUI/min_hover.png);
+    border-style: outset;
+	border: none;
+}
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="closeButton">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Roboto</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+    border-image: url(:/src/GUI/close.png);
+    border-style: outset;
+}
+QPushButton:hover{
+    image: url(:/src/GUI/close_hover.png);
+    border-style: outset;
+}
+QPushButton:pressed{
+    image: url(:/src/GUI/close_hover.png);
+    border-style: outset;
+}
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

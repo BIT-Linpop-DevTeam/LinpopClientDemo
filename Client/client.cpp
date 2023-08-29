@@ -111,8 +111,8 @@ void Client::initClient() {
 
     addFriendWindow = new addFriend(nullptr, userId, username);
     addFriendWindow->initAddFriend();
-    connect(ui->messagepushButton,&QPushButton::clicked,this,&Client::switchPage);
-    connect(ui->friendspushButton,&QPushButton::clicked,this,&Client::switchPage);
+//    connect(ui->messagepushButton,&QPushButton::clicked,this,&Client::switchPage);
+//    connect(ui->friendspushButton,&QPushButton::clicked,this,&Client::switchPage);
     connect(addFriendWindow, &addFriend::signalRequestFriendToClient, this, &Client::onSendMessageFromChildToCommunitor);
     connect(ui->addFriBotton, &QPushButton::clicked, this, &Client::onAddFriendButtonClicked);
 }
@@ -127,11 +127,11 @@ void Client::rcvLogin(QString userId, QString username, qint32 avatarId){
 }
 
 void Client::switchPage(){
-    QPushButton *button = qobject_cast<QPushButton*>(sender());//得到按下的按钮的指针
-    if(button==ui->messagepushButton)
-        ui->stackedWidget->setCurrentIndex(0);//根据按下的button按索引显示相应的页面
-    else if(button==ui->friendspushButton)
-        ui->stackedWidget->setCurrentIndex(1);
+//    QPushButton *button = qobject_cast<QPushButton*>(sender());//得到按下的按钮的指针
+//    if(button==ui->messagepushButton)
+//        ui->stackedWidget->setCurrentIndex(0);//根据按下的button按索引显示相应的页面
+//    else if(button==ui->friendspushButton)
+//        ui->stackedWidget->setCurrentIndex(1);
 
 }
 
@@ -262,6 +262,7 @@ void Client::on_moreButton_clicked()
 }
 
 void Client::onConfirmUsernameFromChange(const QString &username) {
+    update(userId, username, avatarId);
     User user(userId, username, avatarId);
     UserMessage userMessage(userId, user);
     emit signalSendMessageToCommunicator(Message::FromUserMessage(userMessage));
@@ -272,6 +273,7 @@ void Client::onConfirmSignatureFromChange(const QString &signature) {
 }
 
 void Client::onConfirmAvatarFromChange(const qint32 &avatarId) {
+    update(userId, username, avatarId);
     User user(userId, username, avatarId);
     UserMessage userMessage(userId, user);
     emit signalSendMessageToCommunicator(Message::FromUserMessage(userMessage));

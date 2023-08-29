@@ -353,29 +353,6 @@ QLineEdit:focus{
      <property name="spacing">
       <number>0</number>
      </property>
-     <item>
-      <widget class="QPushButton" name="messagepushButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>消 息</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="friendspushButton">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>联 系 人</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
@@ -386,7 +363,7 @@ QLineEdit:focus{
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="messagepage">
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -610,8 +587,8 @@ background-color: rgb(240, 240, 240);
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>250</width>
-              <height>30</height>
+              <width>542</width>
+              <height>757</height>
              </rect>
             </property>
             <property name="sizePolicy">

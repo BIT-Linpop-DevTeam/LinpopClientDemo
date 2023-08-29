@@ -72,7 +72,6 @@ void Communicator::onReadyReadFromSocket() {
             in >> totalBytes;
             bytesReceived += sizeof(totalBytes);
         }
-        //如果现在连文件大小都没传过来，给爹候着。
         else return;
     }
     // 现在将要读的大小

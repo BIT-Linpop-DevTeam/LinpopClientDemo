@@ -134,7 +134,7 @@ QSize QNChatMessage::getRealString(QString src)
         if(nMaxWidth > m_textWidth) {
             nMaxWidth = m_textWidth;
             int size = m_textWidth / fm.width(" ");
-            int num = fm.width(value) / m_textWidth;
+            int num = (fm.width(value) - 1) / m_textWidth + 1;
 //            int ttmp = num*fm.width(" ");
             num = ( fm.width(value) ) / m_textWidth;
             nCount += num;

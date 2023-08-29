@@ -41,6 +41,7 @@ void ChatWindow::onQmlSignal(QString msg) {
 //    ui->msgSendTextEdit->insertPlainText(msg);
     ChatMessage chatMessage(ownerId, userId, msg, QDateTime::currentDateTime());
     emit signalSendMessageButtonClickedToClient(Message::FromChatMessage(chatMessage));
+    showSendMessage(msg);
 
 }
 

@@ -3,6 +3,7 @@
 #define UserProfile_H
 
 #include <QWidget>
+#include <QListWidgetItem>
 
 class QStackedWidget;
 
@@ -34,6 +35,8 @@ private slots:
     void on_cancelButton_3_clicked();
 
     void on_cancelButton_1_clicked();
+
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
     void onConfirmUsernameClicked();
     void onConfirmSignatureClicked();

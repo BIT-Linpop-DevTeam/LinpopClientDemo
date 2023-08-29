@@ -22,6 +22,7 @@ public:
 signals:
     void signalConfirmUsernameToClient(const QString &username);
     void signalConfirmSignatureToClient(const QString &username);
+    void signalConfirmAvatarToClient(const qint32 &avatarId);
 
 private slots:
     void on_toolButton_2_clicked();
@@ -36,6 +37,7 @@ private slots:
 
     void onConfirmUsernameClicked();
     void onConfirmSignatureClicked();
+    void onConfirmAvatarClicked();
 
 private:
     Ui::UserProfile *ui;

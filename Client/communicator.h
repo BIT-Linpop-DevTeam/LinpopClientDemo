@@ -6,8 +6,6 @@
 #include "message.h"
 #include "client.h"
 #include "login.h"
-#define HOST_IP "10.194.39.19"
-#define HOST_PORT 8888
 
 class Communicator: public QObject
 {
@@ -23,6 +21,8 @@ private:
    QByteArray receiveContent;
    // 接收完成的 二进制数组
    QByteArray finalContent;
+   QString HOST_IP;
+   qint16 HOST_PORT;
 public:
     Communicator();
     ~Communicator();

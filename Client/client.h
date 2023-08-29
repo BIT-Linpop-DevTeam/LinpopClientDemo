@@ -20,7 +20,6 @@ public:
     Client(QWidget *parent = nullptr);
     ~Client();
 
-    //todo
     void initClient();
 
     void update(const QString &userId, const QString &username, qint32 avatarId);
@@ -47,11 +46,11 @@ public slots:
     void onSendMessageButtonFromChat(const QByteArray &msg);
     void onSendMessageFromChildToCommunitor(const QByteArray &msg);
 
-    //todo
     void onReadyReadFromCommunicator(const QByteArray &msg);
     void onAddFriendButtonClicked();
     void onConfirmUsernameFromChange(const QString &username);
     void onConfirmSignatureFromChange(const QString &signature);
+    void onConfirmAvatarFromChange(const qint32 &avatarId);
 
 signals:
     void closeLoginWindow();

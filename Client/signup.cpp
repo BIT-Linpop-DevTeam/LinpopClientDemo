@@ -66,6 +66,8 @@ void SignUp::on_pushButton_clicked()
     qDebug() << "in slots of register: onclicked";
     QString Username = ui->e1->text();
     QString UserPassword = ui->e2->text();
+    QString UserPassword2 = ui->e2_2->text();
+
     bool flag=1;
     for(auto x:Username){
         if(x=='/'||x=='\\'||x=='|'||x=='\''||x=='"'){
@@ -74,11 +76,23 @@ void SignUp::on_pushButton_clicked()
         }
     }
     if(!flag){
-        myLog aa(myLog::Critical, "提示", "包含非法字符/,\\,|,\",'等,请重新输入", myLog::Ok);
+        myLog aa(myLog::Critical, "提示", "用户名包含非法字符/,\\,|,\",'等,请重新输入", myLog::Ok);
         aa.show();
         aa.exec();
-    }
-    else{
+        ui->e1->setText("");
+    } else if(UserPassword != UserPassword2) {
+        myLog aa(myLog::Critical, "提示", "两次密码不同,请重新输入", myLog::Ok);
+        aa.show();
+        aa.exec();
+        ui->e2->setText("");
+        ui->e2_2->setText("");
+    } else if(UserPassword.length() <= 0) {
+        myLog aa(myLog::Critical, "提示", "密码不能为空", myLog::Ok);
+        aa.show();
+        aa.exec();
+        ui->e2->setText("");
+        ui->e2_2->setText("");
+    } else{
         RequestSignUpMessage requestSignUpMessage(Username, UserPassword);
         QByteArray dataSrc = Message::FromRequestSignUpMessage(requestSignUpMessage);
         emit signalRequestSignUpMessageToLogin(dataSrc);

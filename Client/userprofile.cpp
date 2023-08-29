@@ -27,6 +27,7 @@ UserProfile::UserProfile(QWidget *parent) :
 
     connect(ui->confirmUsername, &QPushButton::clicked, this, &UserProfile::onConfirmUsernameClicked);
     connect(ui->confirmSign, &QPushButton::clicked, this, &UserProfile::onConfirmSignatureClicked);
+    connect(ui->confirmAverter, &QPushButton::clicked, this, &UserProfile::onConfirmAvatarClicked);
 }
 
 UserProfile::~UserProfile()
@@ -121,4 +122,10 @@ void UserProfile::onConfirmSignatureClicked()
     close();
 }
 
-//void UserProfile::onConfirm
+//todo
+void UserProfile::onConfirmAvatarClicked()
+{
+
+
+}
+

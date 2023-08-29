@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QDataStream>
 #include "acceptfriend.h"
+#include "mylog.h"
 //#include<login.h>
 #include<userprofile.h>
 Client::Client(QWidget *parent)
@@ -87,13 +88,18 @@ void Client::onReadyReadFromCommunicator(const QByteArray &msg) {
         }
         break;
     }
+    case Message::ERROR_MESSAGE:
+    {
+        ErrorMessage errorMessage = Message::toErrorMessage(dataStream);
+        myLog aa(myLog::Critical, "错误信息", errorMessage.errorMsg, myLog::Ok);
+        break;
+    }
     default:
         emit signalReadyReadToChat(msg);
         break;
     }
 }
 
-//todo
 void Client::initClient() {
     qDebug() << "client inited";
 //    this->addChat("1", "user1", "nihao");
@@ -111,7 +117,6 @@ void Client::initClient() {
     connect(ui->addFriBotton, &QPushButton::clicked, this, &Client::onAddFriendButtonClicked);
 }
 
-//todo
 void Client::rcvLogin(QString userId, QString username, qint32 avatarId){
 
     qDebug()<<"in slot: rcvLogin"<<endl;
@@ -120,6 +125,7 @@ void Client::rcvLogin(QString userId, QString username, qint32 avatarId){
     initClient();
     show();
 }
+
 void Client::switchPage(){
     QPushButton *button = qobject_cast<QPushButton*>(sender());//得到按下的按钮的指针
     if(button==ui->messagepushButton)
@@ -128,7 +134,7 @@ void Client::switchPage(){
         ui->stackedWidget->setCurrentIndex(1);
 
 }
-//todo
+
 void Client::update(const QString &userId, const QString &username, qint32 avatarId){
     this->userId = userId;
     this->username = username;
@@ -250,16 +256,23 @@ void Client::on_moreButton_clicked()
     UserProfile* x=new UserProfile;
     connect(x, &UserProfile::signalConfirmUsernameToClient, this, &Client::onConfirmUsernameFromChange);
     connect(x, &UserProfile::signalConfirmSignatureToClient, this, &Client::onConfirmSignatureFromChange);
+    connect(x, &UserProfile::signalConfirmAvatarToClient, this, &Client::onConfirmAvatarFromChange);
     x->show();
     //qDebug()<<"ffff";
 }
 
 void Client::onConfirmUsernameFromChange(const QString &username) {
-    User user(userId, username);
+    User user(userId, username, avatarId);
     UserMessage userMessage(userId, user);
     emit signalSendMessageToCommunicator(Message::FromUserMessage(userMessage));
 }
 
 void Client::onConfirmSignatureFromChange(const QString &signature) {
     ui->signature->setText(signature);
+}
+
+void Client::onConfirmAvatarFromChange(const qint32 &avatarId) {
+    User user(userId, username, avatarId);
+    UserMessage userMessage(userId, user);
+    emit signalSendMessageToCommunicator(Message::FromUserMessage(userMessage));
 }

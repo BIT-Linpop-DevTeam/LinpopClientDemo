@@ -67,7 +67,6 @@ void Login::onLoginCheckFromClient(const QByteArray &msg) {
         aa.show();
         aa.exec();
 
-        //todo
         QString userId = ui->e1->text();
         emit userLogin(userId, loginCheckMessage.username, loginCheckMessage.avatarId);
     }

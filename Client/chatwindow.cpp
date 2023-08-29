@@ -38,7 +38,10 @@ ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &o
 
 void ChatWindow::onQmlSignal(QString msg) {
     qDebug() << "in slot: onQmlSignal";
-    ui->msgSendTextEdit->insertPlainText(msg);
+//    ui->msgSendTextEdit->insertPlainText(msg);
+    ChatMessage chatMessage(ownerId, userId, msg, QDateTime::currentDateTime());
+    emit signalSendMessageButtonClickedToClient(Message::FromChatMessage(chatMessage));
+
 }
 
 ChatWindow::~ChatWindow()
@@ -46,7 +49,6 @@ ChatWindow::~ChatWindow()
     delete ui;
 }
 
-//todo
 void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
 {
     qDebug() << "in slot: onReadySendFromClient()";
@@ -62,7 +64,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
 
         qDebug() << QString("In msg: sendId %1 receivedid %2").arg(chatMsg.sendId).arg(chatMsg.receiveId);
     qDebug() << QString("In window: ownerId %1 userId %2").arg(ownerId).arg(userId);
-        //todo :diff the output way of me and counterpart
+
         if(chatMsg.receiveId == userId && chatMsg.sendId == ownerId) {
 //            ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
 //            ui->msgShowTextBrowser->append(chatMsg.msg);
@@ -176,6 +178,7 @@ QByteArray readFileAsQByteArray(const QString &filePath) {
 }
 
 void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &state) {
+    qDebug() << state;
     QDir directory(fileDir);
     QString filePath = directory.filePath(fileName);
     QFile file(filePath);

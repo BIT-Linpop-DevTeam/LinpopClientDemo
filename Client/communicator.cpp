@@ -1,6 +1,9 @@
 #include "communicator.h"
 #include <QHostAddress>
+#include <QTextStream>
+#include <QDir>
 #define MAX_CONNECT_TIMES 3
+#define FILENAME "HOST.txt"
 
 Communicator::Communicator()
 {
@@ -11,6 +14,18 @@ Communicator::Communicator()
     totalBytes = 0;
     receiveContent.clear();
     finalContent.clear();
+
+    QDir dir = QDir::current();
+    QString FilePath = dir.filePath(FILENAME);
+    QFile file(FilePath);
+    if(!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "open host file fail";
+    }
+    QTextStream fileStream(&file);
+
+    fileStream >> HOST_IP;
+    fileStream >> HOST_PORT;
+    qDebug() << "host ip: " <<  HOST_IP << " host port: " << HOST_PORT;
 }
 
 Communicator::~Communicator() {
@@ -46,11 +61,10 @@ void Communicator::onDisconnectedFromSocket() {
 //    tryConnect();
 }
 
-// STR
+
 void Communicator::onReadyReadFromSocket() {
     qDebug() << "in slot: onReadyReadFromSocket()";
 
-    // STR
     QDataStream in(socket);
 
     if(bytesReceived < (int)sizeof(qint64)){

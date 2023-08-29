@@ -50,11 +50,11 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         qDebug() << QString("In msg: sendId %1 receivedid %2").arg(chatMsg.sendId).arg(chatMsg.receiveId);
     qDebug() << QString("In window: ownerId %1 userId %2").arg(ownerId).arg(userId);
         //todo :diff the output way of me and counterpart
-        if(chatMsg.receiveId == userId) {
+        if(chatMsg.receiveId == userId && chatMsg.sendId == ownerId) {
 //            ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
 //            ui->msgShowTextBrowser->append(chatMsg.msg);
               showSendMessage(chatMsg.msg);
-        } else if(chatMsg.sendId == userId) {
+        } else if(chatMsg.sendId == userId && chatMsg.receiveId == ownerId) {
 //            ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
 //            ui->msgShowTextBrowser->append(chatMsg.msg);
               showReceivedMessage(chatMsg.msg);

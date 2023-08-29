@@ -7,6 +7,10 @@ Communicator::Communicator()
     socket = new QTcpSocket();
     tryConnect();
     QObject::connect(socket, &QTcpSocket::readyRead, this, &Communicator::onReadyReadFromSocket);
+    bytesReceived = 0;
+    totalBytes = 0;
+    receiveContent.clear();
+    finalContent.clear();
 }
 
 Communicator::~Communicator() {
@@ -42,23 +46,46 @@ void Communicator::onDisconnectedFromSocket() {
 //    tryConnect();
 }
 
+// STR
 void Communicator::onReadyReadFromSocket() {
     qDebug() << "in slot: onReadyReadFromSocket()";
 
-    if(socket->bytesAvailable() <= 0) 	return;
+    // STR
+    QDataStream in(socket);
 
-    const QByteArray recvData = socket->readAll();
+    if(bytesReceived < (int)sizeof(qint64)){
+        if(socket->bytesAvailable() >= (int)sizeof(qint64) && totalBytes == 0){
+            in >> totalBytes;
+            bytesReceived += sizeof(totalBytes);
+        }
+        //如果现在连文件大小都没传过来，给爹候着。
+        else return;
+    }
+    // 现在将要读的大小
+    qint64 readBlockSize;
+    if(bytesReceived < totalBytes){
+        readBlockSize =qMin(socket->bytesAvailable(), totalBytes - bytesReceived);
+        receiveContent.append(socket->read(readBlockSize));
+        bytesReceived += readBlockSize;
+    }
+    if(bytesReceived == totalBytes){
+//        finalContent = receiveContent;
+        QDataStream inSecond(receiveContent);
+        inSecond >> finalContent;
+        // 发送准备读取消息信号到客户端
+        emit signalReadyReadToClient(finalContent);
 
-    emit signalReadyReadToClient(recvData);
-}
+        // 清空已经读到的内容
+        receiveContent.clear();
+        finalContent.clear();
+        totalBytes = 0;
+        bytesReceived = 0;
+        if (socket->bytesAvailable() >= (int)sizeof(qint64) ){
+            onReadyReadFromSocket();
+        }
+    }
 
-QByteArray addSzInfo(const QByteArray &data) {
-    qint64 sz = data.size();
-    QByteArray dataHead;
-    QDataStream datastream(&dataHead, QIODevice::WriteOnly);
-    datastream << sz << data;
-//    dataHead.append(data);
-    return dataHead;
+
 }
 
 void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
@@ -75,25 +102,60 @@ void Communicator::onSendMessageClickedFromClient(const QByteArray &msg) {
         return;
     }
 
-    dataSrc = addSzInfo(msg);
+    // 发送消息到服务器
+    QByteArray byte;
+    QDataStream numOut(&byte, QIODevice::WriteOnly);
 
+    // 先占位 + 输出msg
+    numOut << qint64(0) << msg;
 
-    qDebug() << socket->write(dataSrc);
+    // 指针回到零位置
+    numOut.device()->seek(0);
+
+    // 将占位符顶掉
+    numOut << qint64(byte.size());
+
+    qDebug() << "发送消息的大小（包括qint64） " << byte.size();
+    // 发送到服务器
+    socket->write(byte);
     socket->flush();
-    qDebug() << "send success";
 }
 
 void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {
      qDebug() << "in slot: onRequestLoginFromLogin";
+
+     QByteArray dataSrc = msg;
+     QDataStream dataStream(msg);
+     qDebug() << "Message type: " << Message::getType(dataStream);
 
      if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
      if(!socket->isValid()) {
          qDebug() << "send login request failed";
          return;
      }
+     // 发送消息到服务器
+     QByteArray byte;
+     QDataStream numOut(&byte, QIODevice::WriteOnly);
 
-     QByteArray dataSrc = addSzInfo(msg);
+     // 先占位 + 输出msg
+     numOut << qint64(0) << msg;
 
-     qDebug() << socket->write(dataSrc);
+     // 指针回到零位置
+     numOut.device()->seek(0);
+
+     // 将占位符顶掉
+     numOut << qint64(byte.size());
+
+     qDebug() << "发送消息的大小（包括qint64） " << byte.size();
+     socket->write(byte);
      socket->flush();
+
+     QDataStream dataS(byte);
+     qint64 x;
+     QByteArray byteType;
+     Message::Type type;
+     dataS >> x >> byteType;
+     QDataStream dataS2(byteType);
+     dataS2 >> type;
+     qDebug() << x << " " << type;
 }

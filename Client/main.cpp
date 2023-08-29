@@ -8,13 +8,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Client client;
-    Login login;
+    Client *client = new Client();
+    Login *login = new Login();
 
     Communicator communicator;
-    communicator.initCommunicator(client, login);
+    communicator.initCommunicator(*client, *login);
 
-    login.initLogin(client);
+    login->initLogin(*client);
 
 //    client.initClient();
 //    client.show();

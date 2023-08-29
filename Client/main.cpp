@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 //    client.initClient();
 //    client.show();
 
-    ChatWindow cw(nullptr, "1", "2", 1, "2", "user2", 2);
-    cw.show();
+//    ChatWindow cw(nullptr, "1", "2", 1, "2", "user2", 2);
+//    cw.show();
 
 
     return a.exec();

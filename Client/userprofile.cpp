@@ -118,3 +118,5 @@ void UserProfile::onConfirmSignatureClicked()
     if(signature.size() <= 0) 	return;
     emit signalConfirmSignatureToClient(signature);
 }
+
+//void UserProfile::onConfirm

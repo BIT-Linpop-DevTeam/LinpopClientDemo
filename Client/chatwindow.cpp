@@ -349,6 +349,8 @@ void ChatWindow::on_sendPictureButton_clicked()
 
 void ChatWindow::on_emojiButton_clicked()
 {
+    delete engine;
+    engine = new QQmlApplicationEngine();
     engine->rootContext()->setContextProperty("chatWindow", this);
     engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
     connect(engine->rootObjects().first(), SIGNAL(qmlSignal(QString)), this, SLOT(onQmlSignal(QString)));

@@ -136,7 +136,8 @@ void Client::update(const QString &userId, const QString &username, qint32 avata
     qDebug()<<"00000"<<username<<endl;
     ui->usernameLabel->setText("这是"+username);
     ui->signature->setText("这是"+username+"的签名");
-    ui->avatarLabel->setPixmap(QPixmap(QString(":/src/GUI/head/%1.jpg").arg(avatarId)));
+//    qDebug() << "in update: avatarId = " << avatarId;
+    ui->avatarLabel->setStyleSheet(QString("border-image: url(:/src/GUI/head/%1.jpg);").arg(avatarId));
 }
 
 void Client::on_closeButton_clicked()

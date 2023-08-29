@@ -360,16 +360,17 @@ struct RequestLoginMessage {
 struct LoginCheckMessage {
     Message::RequestStates state;
     QString hint, username;
-    LoginCheckMessage(const Message::RequestStates &state, const QString &hint, const QString &username)
-        :state(state), hint(hint), username(username)
+    qint32 avatarId;
+    LoginCheckMessage(const Message::RequestStates &state, const QString &hint, const QString &username, const qint32 &avatarId)
+        :state(state), hint(hint), username(username), avatarId(avatarId)
     {}
     LoginCheckMessage() {}
     friend QDataStream &operator <<(QDataStream &out, const LoginCheckMessage &msg){
-        out << msg.state << msg.hint << msg.username;
+        out << msg.state << msg.hint << msg.username << msg.avatarId;
         return out;
     }
     friend QDataStream &operator >>(QDataStream &in, LoginCheckMessage &msg){
-        in >> msg.state >> msg.hint >> msg.username;
+        in >> msg.state >> msg.hint >> msg.username >> msg.avatarId;
         return in;
     }
 };

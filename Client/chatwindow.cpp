@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QFileDialog>
+#include <QQmlApplicationEngine>
 
 #define BLOCK_SIZE 20
 void writeFileFromQByteArray(const QString &fileDir, const QString &fileName,  const QByteArray &data, const Message::FileState &fileState);
@@ -13,7 +14,7 @@ ChatWindow::ChatWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
-//    ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 }
 
@@ -26,6 +27,14 @@ ChatWindow::ChatWindow(QWidget *parent, const QString &ownerId, const QString &u
     ui->friendNameLabel->setText(username);
     setWindowTitle(QString("和%1的对话").arg(username));
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
+
+    qmlRegisterType<EmojiModel>("EmojiModel", 1, 0, "EmojiModel");
+    engine = new QQmlApplicationEngine();
+}
+
+void ChatWindow::onQmlSignal(QString msg) {
+    qDebug() << "in slot: onQmlSignal";
+    ui->msgSendTextEdit->insertPlainText(msg);
 }
 
 ChatWindow::~ChatWindow()
@@ -57,7 +66,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         } else if(chatMsg.sendId == userId && chatMsg.receiveId == ownerId) {
 //            ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
 //            ui->msgShowTextBrowser->append(chatMsg.msg);
-              showReceivedMessage(chatMsg.msg);
+              showReceivedMessage(chatMsg);
         }
         break;
     }
@@ -79,7 +88,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
             } else if(chatMsg.sendId == userId) {
 //                ui->msgShowTextBrowser->append(QString("%1(对方):").arg(chatMsg.sendId));
 //                ui->msgShowTextBrowser->append(chatMsg.msg);
-                showReceivedMessage(chatMsg.msg);
+                showReceivedMessage(chatMsg);
             }
         }
         break;
@@ -328,6 +337,17 @@ void ChatWindow::showSendMessage(const QString &msg) {
         ui->listWidget->setCurrentRow(ui->listWidget->count()-1);
 }
 
+void ChatWindow::showReceivedMessage(const ChatMessage &chatMessage) {
+    if(chatMessage.msg != "") {
+        QString time = QString::number(chatMessage.dateTime.toTime_t());
+        dealMessageTime(time);
+
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget());
+        QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
+        dealMessage(messageW, item, chatMessage.msg, time, QNChatMessage::User_She);
+    }
+}
+
 void ChatWindow::showReceivedMessage(const QString &msg) {
     if(msg != "") {
         QString time = QString::number(QDateTime::currentDateTime().toTime_t());
@@ -355,4 +375,11 @@ void ChatWindow::on_sendPictureButton_clicked()
           const QByteArray &msg = Message::FromFileMessage(fileMsgList.at(i));
           emit signalSendMessageButtonClickedToClient(msg);
       }
+}
+
+void ChatWindow::on_emojiButton_clicked()
+{
+    engine->rootContext()->setContextProperty("chatWindow", this);
+    engine->load(QUrl(QStringLiteral("qrc:/main.qml")));
+    connect(engine->rootObjects().first(), SIGNAL(qmlSignal(QString)), this, SLOT(onQmlSignal(QString)));
 }

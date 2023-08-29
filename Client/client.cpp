@@ -112,10 +112,11 @@ void Client::initClient() {
 }
 
 //todo
-void Client::rcvLogin(QString userId, QString username){
+void Client::rcvLogin(QString userId, QString username, qint32 avatarId){
 
     qDebug()<<"in slot: rcvLogin"<<endl;
     update(userId, username);
+    ui->avatarLabel->setPixmap(QPixmap(QString(":/src/GUI/head/%1.jpg").arg(avatarId)));
     emit closeLoginWindow();
     initClient();
     show();

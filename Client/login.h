@@ -15,7 +15,7 @@ public:
     Login(QWidget *parent = nullptr);
     ~Login();
 signals:
-    void userLogin(QString userId, QString username);
+    void userLogin(QString userId, QString username, qint32 avatarId);
     void signalRequestLoginToCommunicator(const QByteArray &msg);
     void signalSignUpCheckMessageToRegister(const QByteArray &msg);
 

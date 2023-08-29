@@ -23,7 +23,7 @@ SOURCES += \
     addfriend.cpp \
     chatwindow.cpp \
     communicator.cpp \
-#    emojimodel.cpp \
+    emojimodel.cpp \
     login.cpp \
     main.cpp \
     client.cpp \
@@ -39,6 +39,7 @@ HEADERS += \
     chatwindow.h \
     client.h \
     communicator.h \
+    emojimodel.h \
     login.h \
     message.h \
     mylog.h \
@@ -58,7 +59,7 @@ FORMS += \
 RESOURCES += \
     chatwindowsrc.qrc \
     src.qrc \
-#    qml.qrc
+    qml.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -27,6 +27,7 @@ public:
 
 private:
     QString userId, username;
+    qint32 avatarId;
 
 private:
     void addChat(const QString &ownerId, const QString &userId, const QString &username);
@@ -56,7 +57,7 @@ signals:
     void closeLoginWindow();
     void updateFriendName(QString x);
 public slots:
-    void rcvLogin(QString userId, QString username);
+    void rcvLogin(QString userId, QString username, qint32 avatarId);
 private slots:
     void on_closeButton_clicked();
     void on_minimizeButton_clicked();

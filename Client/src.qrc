@@ -45,36 +45,36 @@
         <file>src/GUI/icon/nightmode.png</file>
         <file>src/GUI/icon/nightmode_hover.png</file>
         <file>src/GUI/icon/nightmode_press.png</file>
-        <file>src/GUI/head/QQ/qq1.jpeg</file>
-        <file>src/GUI/head/QQ/qq2.jpg</file>
-        <file>src/GUI/head/QQ/qq3.jpg</file>
-        <file>src/GUI/head/QQ/qq4.jpg</file>
-        <file>src/GUI/head/QQ/qq5.jpg</file>
-        <file>src/GUI/head/QQ/qq6.jpg</file>
-        <file>src/GUI/head/QQ/qq7.jpg</file>
-        <file>src/GUI/head/QQ/qq8.jpg</file>
-        <file>src/GUI/head/QQ/qq9.jpg</file>
-        <file>src/GUI/head/QQ/qq10.jpg</file>
-        <file>src/GUI/head/QQ/qq11.jpg</file>
-        <file>src/GUI/head/QQ/qq12.jpg</file>
-        <file>src/GUI/head/QQ/qq13.jpg</file>
-        <file>src/GUI/head/QQ/qq14.jpg</file>
-        <file>src/GUI/head/QQ/qq15.jpg</file>
-        <file>src/GUI/head/Genshin/genshin1.jpg</file>
-        <file>src/GUI/head/Genshin/genshin2.jpg</file>
-        <file>src/GUI/head/Genshin/genshin3.webp</file>
-        <file>src/GUI/head/Genshin/genshin4.webp</file>
-        <file>src/GUI/head/Genshin/genshin5.webp</file>
-        <file>src/GUI/head/Genshin/genshin6.jpg</file>
-        <file>src/GUI/head/Genshin/genshin7.webp</file>
-        <file>src/GUI/head/Genshin/genshin8.webp</file>
-        <file>src/GUI/head/Genshin/genshin9.webp</file>
-        <file>src/GUI/head/Genshin/genshin10.webp</file>
-        <file>src/GUI/head/Genshin/genshin11.webp</file>
-        <file>src/GUI/head/Genshin/genshin12.webp</file>
         <file>src/GUI/VCG41N1214827275.jpeg</file>
         <file>src/GUI/sup.jpg</file>
         <file>src/GUI/Sup.png</file>
         <file>src/GUI/Singup.jpg</file>
+        <file>src/GUI/head/0.jpg</file>
+        <file>src/GUI/head/1.jpg</file>
+        <file>src/GUI/head/2.jpg</file>
+        <file>src/GUI/head/3.jpg</file>
+        <file>src/GUI/head/4.jpg</file>
+        <file>src/GUI/head/5.jpg</file>
+        <file>src/GUI/head/6.jpg</file>
+        <file>src/GUI/head/7.jpg</file>
+        <file>src/GUI/head/8.jpg</file>
+        <file>src/GUI/head/9.jpg</file>
+        <file>src/GUI/head/10.jpg</file>
+        <file>src/GUI/head/11.jpg</file>
+        <file>src/GUI/head/12.jpeg</file>
+        <file>src/GUI/head/13.jpg</file>
+        <file>src/GUI/head/14.jpg</file>
+        <file>src/GUI/head/15.jpg</file>
+        <file>src/GUI/head/16.jpg</file>
+        <file>src/GUI/head/17.jpg</file>
+        <file>src/GUI/head/18.jpg</file>
+        <file>src/GUI/head/19.jpg</file>
+        <file>src/GUI/head/20.jpg</file>
+        <file>src/GUI/head/21.jpg</file>
+        <file>src/GUI/head/22.jpg</file>
+        <file>src/GUI/head/23.jpg</file>
+        <file>src/GUI/head/24.jpg</file>
+        <file>src/GUI/head/25.jpg</file>
+        <file>src/GUI/head/26.jpg</file>
     </qresource>
 </RCC>

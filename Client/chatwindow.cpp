@@ -25,6 +25,7 @@ ChatWindow::ChatWindow(QWidget *parent) :
 
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
     ui->listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->listWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     QObject::connect(ui->sendPushButton, &QPushButton::clicked, this, &ChatWindow::onSendMessageButtonClicked);
 

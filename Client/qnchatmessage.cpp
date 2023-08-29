@@ -133,10 +133,12 @@ QSize QNChatMessage::getRealString(QString src)
         QString value = src;
         if(nMaxWidth > m_textWidth) {
             nMaxWidth = m_textWidth;
-            int size = m_textWidth / fm.width(" ");
-            int num = (fm.width(value) - 1) / m_textWidth + 1;
+//            int size = m_textWidth / fm.width(" ") ;
+            int tmp = fm.width("你");
+            int size = m_textWidth / tmp ;
+            int num = ( ( (fm.width(value) - 1) / tmp + 1) - 1 )/ size + 1;
 //            int ttmp = num*fm.width(" ");
-            num = ( fm.width(value) ) / m_textWidth;
+//            num = ( ttmp + fm.width(value) ) / m_textWidth;
             nCount += num;
             QString temp = "";
             for(int i = 0; i < num; i++) {
@@ -150,9 +152,10 @@ QSize QNChatMessage::getRealString(QString src)
             nMaxWidth = fm.width(value) > nMaxWidth ? fm.width(value) : nMaxWidth;
             if(fm.width(value) > m_textWidth) {
                 nMaxWidth = m_textWidth;
-                int size = m_textWidth / fm.width(" ");
-                int num = fm.width(value) / m_textWidth;
-                num = ((i+num)*fm.width(" ") + fm.width(value)) / m_textWidth;
+                int tmp = fm.width("你");
+                int size = m_textWidth / tmp;
+                int num = ( ( (fm.width(value) - 1) / tmp + 1) - 1 )/ size + 1;
+                num = ((i+num)*tmp + ( (fm.width(value) - 1) / tmp + 1)) / size;
                 nCount += num;
                 QString temp = "";
                 for(int i = 0; i < num; i++) {
@@ -162,7 +165,7 @@ QSize QNChatMessage::getRealString(QString src)
             }
         }
     }
-    return QSize(nMaxWidth+m_spaceWid, (nCount + 1) * m_lineHeight+2*m_lineHeight);
+    return QSize(nMaxWidth+m_spaceWid, ( (nCount + 1) * m_lineHeight+2*m_lineHeight) );
 }
 
 void QNChatMessage::paintEvent(QPaintEvent *event)

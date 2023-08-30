@@ -13,6 +13,7 @@ Client::Client(QWidget *parent)
     , ui(new Ui::Client)
 {//
     ui->setupUi(this);
+    ui->signature->setText("这个人很懒，还没有任何签名");
     //去窗口边框
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
 
@@ -141,8 +142,7 @@ void Client::update(const QString &userId, const QString &username, qint32 avata
     this->username = username;
     this->avatarId = avatarId;
     qDebug()<<"00000"<<username<<endl;
-    ui->usernameLabel->setText("这是"+username);
-    ui->signature->setText("这是"+username+"的签名");
+    ui->usernameLabel->setText(username);
     qDebug() << "in update: avatarId = " << avatarId;
     ui->avatarLabel->setStyleSheet(QString("border-image: url(:/src/GUI/head/%1.jpg);").arg(avatarId));
 }

@@ -30,6 +30,15 @@ private:
     qint32 avatarId;
 
 private:
+    /**
+     * @brief addChat 创建与特定好友聊天的函数
+     * @param ownerId
+     * @param ownername
+     * @param ownerAvatar
+     * @param userId
+     * @param username
+     * @param userAvatar
+     */
     void addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar, const QString &userId, const QString &username, const qint32 &userAvatar);
 
 private:
@@ -40,21 +49,63 @@ private:
     UserProfile *userProfile;
 
 signals:
+    /**
+     * @brief signalSendMessageToCommunicator 将要发送的消息转交给通信类进行发送
+     * @param msg
+     */
     void signalSendMessageToCommunicator(const QByteArray &msg);
+    /**
+     * @brief signalReadyReadToChat 将需要下发给聊天窗口的消息发给聊天窗口
+     * @param msg
+     */
     void signalReadyReadToChat(const QByteArray &msg);
+    /**
+     * @brief signalLoginCheckToLogin 转发登录验证结果给登录界面
+     * @param msg
+     */
     void signalLoginCheckToLogin(const QByteArray &msg);
 
 public slots:
+    /**
+     * @brief onSendMessageButtonFromChat 转发聊天窗口发送的消息给通讯类
+     * @param msg
+     */
     void onSendMessageButtonFromChat(const QByteArray &msg);
+    /**
+     * @brief onSendMessageFromChildToCommunitor 转发下属界面需要发送的消息给通讯类
+     * @param msg
+     */
     void onSendMessageFromChildToCommunitor(const QByteArray &msg);
 
+    /**
+     * @brief onReadyReadFromCommunicator 收到来自通讯类的消息
+     * @param msg
+     */
     void onReadyReadFromCommunicator(const QByteArray &msg);
+    /**
+     * @brief onAddFriendButtonClicked 添加好友功能的槽函数
+     */
     void onAddFriendButtonClicked();
+    /**
+     * @brief onConfirmUsernameFromChange 改变用户名
+     * @param username
+     */
     void onConfirmUsernameFromChange(const QString &username);
+    /**
+     * @brief onConfirmSignatureFromChange 改变签名
+     * @param signature
+     */
     void onConfirmSignatureFromChange(const QString &signature);
+    /**
+     * @brief onConfirmAvatarFromChange 改变头像
+     * @param avatarId
+     */
     void onConfirmAvatarFromChange(const qint32 &avatarId);
 
 signals:
+    /**
+     * @brief closeLoginWindow
+     */
     void closeLoginWindow();
     void updateFriendName(QString x);
 public slots:

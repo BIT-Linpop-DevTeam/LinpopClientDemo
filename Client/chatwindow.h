@@ -28,10 +28,27 @@ public:
     void dealMessage(QNChatMessage *messageW, QListWidgetItem *item, QString text, QString time, QNChatMessage::User_Type type);
     void dealMessageTime(QString curMsgTime);
 
+    /**
+     * @brief showSendMessage 使用气泡类（将消息显示在气泡中）在聊天窗口中显示自己发送的信息
+     * @param msg
+     */
     void showSendMessage(const QString &msg);
+    /**
+     * @brief showReceivedMessage 使用气泡类（将消息显示在气泡中）在聊天窗口中显示对方发送的信息
+     * @param msg
+     */
     void showReceivedMessage(const ChatMessage &msg);
+    /**
+     * @brief showReceivedMessage 使用气泡类（将消息显示在气泡中）在聊天窗口中显示对方发送的文件
+     * @param msg
+     * @param fPath 将要存储文件的路径
+     */
     void showReceivedMessage(const QString &msg, const QString &fPath);
 
+    /**
+     * @brief changeMode 改变黑夜/白天模式的函数
+     * @param modeId
+     */
     void changeMode(const int modeId);
 
     bool modeFlag;

@@ -16,11 +16,27 @@ public:
     ~Login();
 signals:
     void userLogin(QString userId, QString username, qint32 avatarId);
+    /**
+     * @brief signalRequestLoginToCommunicator 要求通讯类转发登录验证的消息
+     * @param msg
+     */
     void signalRequestLoginToCommunicator(const QByteArray &msg);
+    /**
+     * @brief signalSignUpCheckMessageToRegister 要求通讯类转发注册验证的消息
+     * @param msg
+     */
     void signalSignUpCheckMessageToRegister(const QByteArray &msg);
 
 public slots:
+    /**
+     * @brief onLoginCheckFromClient 收到服务器发来的登录验证消息
+     * @param msg
+     */
     void onLoginCheckFromClient(const QByteArray &msg);
+    /**
+     * @brief onRequestSignUpMessageFromRegister 收到注册界面发来的注册验证消息
+     * @param msg
+     */
     void onRequestSignUpMessageFromRegister(const QByteArray &msg);
 
 public slots:

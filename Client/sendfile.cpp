@@ -14,8 +14,8 @@ SendFile::SendFile(QWidget *parent) :
     ui->filename->setStyleSheet(QString("font: 25 9pt Microsoft YaHei;"));
     ui->filesize->setStyleSheet(QString("font: 25 8pt Microsoft YaHei;"));
     ui->filename->setReadOnly(true);
-    connect(ui->openFileButton, &QPushButton::clicked, this, &SendFile::on_openFileButton_clicked);
-    connect(ui->openFolderButton, &QPushButton::clicked, this, &SendFile::on_openFolderButton_clicked);
+//    connect(ui->openFileButton, &QPushButton::clicked, this, &SendFile::on_openFileButton_clicked);
+//    connect(ui->openFolderButton, &QPushButton::clicked, this, &SendFile::on_openFolderButton_clicked);
 
 
 }

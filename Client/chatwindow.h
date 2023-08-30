@@ -65,15 +65,37 @@ signals:
     void signalSendMessageButtonClickedToClient(const QByteArray &msg);
 
 public slots:
+    /**
+     * @brief onReadyReadFromClient 需要由客户端下发到聊天窗口处理的消息，通过触发这个槽函数来实现
+     * @param msg
+     */
     void onReadyReadFromClient(const QByteArray &msg);
+
+    /**
+     * @brief onCreateWindowButtonClickedFromClient 创建聊天窗口的槽函数
+     */
     void onCreateWindowButtonClickedFromClient();
+    /**
+     * @brief onSendMessageButtonClicked 点击发送按钮后，由这个函数发送消息
+     */
     void onSendMessageButtonClicked();
     void handleMessageRectClicked(QString filePath);
 
 private slots:
+    /**
+     * @brief on_sendFileButton_clicked 发送文件的函数
+     */
     void on_sendFileButton_clicked();
+    /**
+     * @brief on_sendPictureButton_clicked 发送图片的函数
+     */
     void on_sendPictureButton_clicked();
     void on_emojiButton_clicked();
+
+    /**
+     * @brief onQmlSignal 实现表情发送的槽函数
+     * @param msg
+     */
     void onQmlSignal(QString msg);
 
     void on_minimizeButton_clicked();

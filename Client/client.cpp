@@ -205,26 +205,25 @@ void Client::addChat(const QString &ownerId, const QString &ownername, const qin
        Filepath =QDir::currentPath ();
        //qDebug () << Filepath;
        int index = Filepath.lastIndexOf("/");
-           Filepath = Filepath.left(index);
-           //qDebug()<<"path=="<<Filepath;
-           Filepath+="/Client/src/GUI/head";
+       Filepath = Filepath.left(index);
+       //qDebug()<<"path=="<<Filepath;
+       Filepath+="/Client/src/GUI/head";
 
-           Filepath+='/';
-           Filepath+=QString::number(userAvatar);
-           Filepath+=".jpg";
-           qDebug()<<"path=="<<Filepath;
-           QString dirPath_ = Filepath;
-           QListWidgetItem *pItem = new QListWidgetItem;
-           pItem->setSizeHint(QSize(60,60));
-           pItem->setText(Filepath);
-           pItem->setIcon(QIcon(QPixmap(Filepath).scaled(QSize(60,60))));
-           //ui->listWidget->addItem(pItem);
+       Filepath+='/';
+       Filepath+=QString::number(userAvatar);
+       Filepath+=".jpg";
+       qDebug()<<"path=="<<Filepath;
+       QString dirPath_ = Filepath;
+       QListWidgetItem *pItem = new QListWidgetItem;
+       pItem->setSizeHint(QSize(60,60));
+       pItem->setText(Filepath);
+       pItem->setIcon(QIcon(QPixmap(Filepath).scaled(QSize(60,60))));
+       //ui->listWidget->addItem(pItem);
     qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
     QPushButton *friendButton = new QPushButton();
     QPixmap icon1(Filepath);
     friendButton->setIcon(icon1);
     friendButton-> setIconSize ( QSize ( 55, 55 ));
-    friendButton->setFixedSize (QSize(ui->friendSearchEdit->rect().width()+ui->label->rect().width(),60));
     friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); }"
                            "QPushButton:hover{background-color: rgb(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
                            "QPushButton:press{background-color: rgb(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"

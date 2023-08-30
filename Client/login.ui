@@ -260,7 +260,7 @@ color:rgb(0,0,0);
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>600</y>
+      <y>620</y>
       <width>321</width>
       <height>51</height>
      </rect>
@@ -281,7 +281,7 @@ font-weight:bold
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>510</y>
+      <y>520</y>
       <width>321</width>
       <height>51</height>
      </rect>

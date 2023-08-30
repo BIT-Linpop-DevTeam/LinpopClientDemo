@@ -196,51 +196,50 @@ void Client::setAreaMovable(const QRect rt)
 bool f=1;
 
 void Client::addChat(const QString &ownerId, const QString &ownername, const qint32 &ownerAvatar , const QString &userId, const QString &username, const qint32 &userAvatar) {
-    qDebug() << "in function: addChat, ownerId = " << ownerId << " userID = " << userId;
-    if(idSet.contains(userId)) return;
-    idSet.insert(userId);
+        qDebug() << "in function: addChat, ownerId = " << ownerId << " userID = " << userId;
+        if(idSet.contains(userId)) return;
+        idSet.insert(userId);
 
+        QString Filepath;
+        Filepath =QDir::currentPath ();
+        //qDebug () << Filepath;
+        int index = Filepath.lastIndexOf("/");
+        Filepath = Filepath.left(index);
+        //qDebug()<<"path=="<<Filepath;
+        Filepath+="/Client/src/GUI/head";
 
-       QString Filepath;
-       Filepath =QDir::currentPath ();
-       //qDebug () << Filepath;
-       int index = Filepath.lastIndexOf("/");
-       Filepath = Filepath.left(index);
-       //qDebug()<<"path=="<<Filepath;
-       Filepath+="/Client/src/GUI/head";
-
-       Filepath+='/';
-       Filepath+=QString::number(userAvatar);
-       Filepath+=".jpg";
-       qDebug()<<"path=="<<Filepath;
-       QString dirPath_ = Filepath;
-       QListWidgetItem *pItem = new QListWidgetItem;
-       pItem->setSizeHint(QSize(60,60));
-       pItem->setText(Filepath);
-       pItem->setIcon(QIcon(QPixmap(Filepath).scaled(QSize(60,60))));
-       //ui->listWidget->addItem(pItem);
-    qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
-    QPushButton *friendButton = new QPushButton();
-    QPixmap icon1(Filepath);
-    friendButton->setIcon(icon1);
-    friendButton-> setIconSize ( QSize ( 55, 55 ));
-    friendButton->setStyleSheet("QPushButton{ background-color: rgb(240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); }"
-                           "QPushButton:hover{background-color: rgb(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
-                           "QPushButton:press{background-color: rgb(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
+        Filepath+='/';
+        Filepath+=QString::number(userAvatar);
+        Filepath+=".jpg";
+        qDebug()<<"path=="<<Filepath;
+        QString dirPath_ = Filepath;
+        QListWidgetItem *pItem = new QListWidgetItem;
+        pItem->setSizeHint(QSize(60,60));
+        pItem->setText(Filepath);
+        pItem->setIcon(QIcon(QPixmap(Filepath).scaled(QSize(60,60))));
+        //ui->listWidget->addItem(pItem);
+        qDebug() << QString("in addChat, userId = %1, username = %2").arg(userId).arg(username);
+        QPushButton *friendButton = new QPushButton();
+        QPixmap icon1(Filepath);
+        friendButton->setIcon(icon1);
+        friendButton-> setIconSize ( QSize ( 55, 55 ));
+        friendButton->setStyleSheet("QPushButton{ background-color: rgba(240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); }"
+                           "QPushButton:hover{background-color: rgba(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
+                           "QPushButton:press{background-color: rgba(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
                            "QPushButton:indicator{width: 0px;height: 0px;border: none;}"
                               "");
-    friendButton->setAutoFillBackground(1);
-    //ui->scrollAreaWidgetContents_2->setStyleSheet()
-    ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
-    friendButton->setText(username);
-    friendButton->setLayoutDirection(Qt::LeftToRight);
-    ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
-    chatWindowList.append(cw);
+        friendButton->setAutoFillBackground(1);
+        //ui->scrollAreaWidgetContents_2->setStyleSheet()
+        ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
+        friendButton->setText(username);
+        friendButton->setLayoutDirection(Qt::LeftToRight);
+        ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
+        chatWindowList.append(cw);
 
 
-   QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
-   QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
-   QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
+        QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
+        QObject::connect(this, &Client::signalReadyReadToChat, cw, &ChatWindow::onReadyReadFromClient);
+        QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
 }
 
 void Client::onAddFriendButtonClicked()

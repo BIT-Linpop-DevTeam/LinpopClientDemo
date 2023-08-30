@@ -293,56 +293,6 @@ QToolButton:pressed{
       <property name="spacing">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="minimumSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(219, 219, 219);
-border-image: url(:/src/GUI/icon/search.png);
-border-width:0px;
-border-radius:40px;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="friendSearchEdit">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Roboto</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit{
-        color: rgb(112, 112, 112);
-        background-color: rgb(219, 219, 219);
-        border: none;
-}
-QLineEdit:focus{
-        color: rgb(112, 112, 112);
-        background-color: rgb(219, 219, 219);
-        border: 2px solid rgb(90, 147, 255);
-}</string>
-        </property>
-        <property name="text">
-         <string>搜索</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -407,8 +357,8 @@ QLineEdit:focus{
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>250</width>
-              <height>30</height>
+              <width>248</width>
+              <height>28</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -586,7 +536,7 @@ background-color: rgb(240, 240, 240);
               <x>0</x>
               <y>0</y>
               <width>499</width>
-              <height>642</height>
+              <height>666</height>
              </rect>
             </property>
             <property name="sizePolicy">

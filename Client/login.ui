@@ -259,10 +259,10 @@ color:rgb(0,0,0);
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>520</y>
-      <width>131</width>
-      <height>41</height>
+      <x>870</x>
+      <y>600</y>
+      <width>321</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -280,10 +280,10 @@ font-weight:bold
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>580</y>
-      <width>291</width>
-      <height>61</height>
+      <x>870</x>
+      <y>510</y>
+      <width>321</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -296,27 +296,6 @@ font-weight:bold
     </property>
     <property name="text">
      <string>   原神，启动！</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>520</y>
-      <width>131</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">*{
-	font: 12pt &quot;幼圆&quot;;
-color:rgb(0,0,0);
-font-weight:bold
-
-}</string>
-    </property>
-    <property name="text">
-     <string>忘记密码</string>
     </property>
    </widget>
    <widget class="QLabel" name="accountLabel_2">

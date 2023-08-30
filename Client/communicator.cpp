@@ -140,7 +140,7 @@ void Communicator::onRequestLoginFromLogin(const QByteArray &msg) {
 
      QByteArray dataSrc = msg;
      QDataStream dataStream(msg);
-     qDebug() << "Message type: " << Message::getType(dataStream);
+     qDebug() << "send Message type: " << Message::getType(dataStream);
 
      if(socket->state() == QTcpSocket::UnconnectedState)  tryConnect();
      if(!socket->isValid()) {

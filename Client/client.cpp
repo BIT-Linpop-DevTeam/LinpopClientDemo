@@ -223,15 +223,18 @@ void Client::addChat(const QString &ownerId, const QString &ownername, const qin
         QPixmap icon1(Filepath);
         friendButton->setIcon(icon1);
         friendButton-> setIconSize ( QSize ( 55, 55 ));
-        friendButton->setStyleSheet("QPushButton{ background-color: rgba(240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); }"
-                           "QPushButton:hover{background-color: rgba(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
-                           "QPushButton:press{background-color: rgba(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);}"
-                           "QPushButton:indicator{width: 0px;height: 0px;border: none;}"
-                              "");
+
+        friendButton->setStyleSheet("QPushButton{ background-color: rgb(a240, 240, 240,130);spacing: 25px;height:50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0); background-position: left;padding-left:30px;text-align:left;}"
+                                   "QPushButton:hover{background-color: rgba(219, 219, 219,200);spacing: 50px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);background-position: left;padding-left:30px;text-align:left;}"
+                                   "QPushButton:press{background-color: rgba(219, 219, 219,200);spacing: 25px;font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);background-position: left;padding-left:30px;text-align:left;}"
+                                   "QPushButton:indicator{width: 0px;height: 0px;border: none;}"
+                                      "");
         friendButton->setAutoFillBackground(1);
         //ui->scrollAreaWidgetContents_2->setStyleSheet()
         ui->verticalLayout_6->addWidget(friendButton, 0, Qt::AlignTop);
-        friendButton->setText(username);
+        friendButton->setText("   "+username);
+
+
         friendButton->setLayoutDirection(Qt::LeftToRight);
         ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
         chatWindowList.append(cw);

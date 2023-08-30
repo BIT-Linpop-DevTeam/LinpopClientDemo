@@ -260,7 +260,7 @@ color:rgb(0,0,0);
     <property name="geometry">
      <rect>
       <x>870</x>
-      <y>620</y>
+      <y>600</y>
       <width>321</width>
       <height>51</height>
      </rect>

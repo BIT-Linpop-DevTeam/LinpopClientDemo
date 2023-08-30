@@ -7,6 +7,7 @@
 #include "chatwindow.h"
 #include "addfriend.h"
 #include <QSet>
+#include "userprofile.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Client; }
@@ -36,6 +37,7 @@ private:
     QList<ChatWindow *> chatWindowList;
     addFriend *addFriendWindow;
     QSet<QString> idSet;
+    UserProfile *userProfile;
 
 signals:
     void signalSendMessageToCommunicator(const QByteArray &msg);

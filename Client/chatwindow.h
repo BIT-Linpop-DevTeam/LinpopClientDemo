@@ -33,6 +33,8 @@ public:
     void showReceivedMessage(const QString &msg, const QString &fPath);
 
     void changeMode(const int modeId);
+
+    bool modeFlag;
 protected:
     void resizeEvent(QResizeEvent *event);
 

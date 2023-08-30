@@ -139,9 +139,9 @@ background-color: rgba(203, 203, 203, 150);
    <widget class="QPushButton" name="pushButtonChangeName">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>200</y>
-      <width>221</width>
+      <width>261</width>
       <height>51</height>
      </rect>
     </property>
@@ -157,9 +157,9 @@ color:rgb(0,0,0);
    <widget class="QPushButton" name="pushButtonChangeAvatar">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>280</y>
-      <width>221</width>
+      <x>0</x>
+      <y>290</y>
+      <width>261</width>
       <height>51</height>
      </rect>
     </property>
@@ -186,9 +186,9 @@ color:rgb(0,0,0);
      <widget class="QPushButton" name="confirmUsername">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>220</x>
         <y>400</y>
-        <width>161</width>
+        <width>201</width>
         <height>61</height>
        </rect>
       </property>
@@ -238,9 +238,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
        <rect>
-        <x>100</x>
+        <x>0</x>
         <y>40</y>
-        <width>251</width>
+        <width>411</width>
         <height>61</height>
        </rect>
       </property>
@@ -276,9 +276,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="confirmAvatar">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>220</x>
         <y>400</y>
-        <width>161</width>
+        <width>201</width>
         <height>61</height>
        </rect>
       </property>
@@ -304,9 +304,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="pushButton_7">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>10</x>
         <y>40</y>
-        <width>281</width>
+        <width>401</width>
         <height>61</height>
        </rect>
       </property>
@@ -358,9 +358,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="confirmSign">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>210</x>
         <y>400</y>
-        <width>161</width>
+        <width>211</width>
         <height>61</height>
        </rect>
       </property>
@@ -376,9 +376,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="pushButton_8">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>10</x>
         <y>40</y>
-        <width>321</width>
+        <width>401</width>
         <height>61</height>
        </rect>
       </property>
@@ -396,9 +396,9 @@ font-weight:bold</string>
    <widget class="QPushButton" name="pushButtonChangeSignature">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>380</y>
-      <width>221</width>
+      <width>261</width>
       <height>51</height>
      </rect>
     </property>

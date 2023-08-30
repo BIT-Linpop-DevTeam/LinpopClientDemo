@@ -23,11 +23,10 @@ Client::Client(QWidget *parent)
     m_bPressed = false;
     setWindowTitle("friends list");
 
-//    ChatWindow *cw = new ChatWindow();
-//    chatWindowList.append(cw);
-//    QObject::connect(cw, &ChatWindow::signalSendMessageButtonClickedToClient, this, &Client::onSendMessageButtonFromChat);
-//    QObject::connect(ui->FriendButton1, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
-//    QObject::connect(this, &Client::updateFriendName, cw, &ChatWindow::updateCreateWindow);
+    userProfile =new UserProfile();
+    connect(userProfile, &UserProfile::signalConfirmUsernameToClient, this, &Client::onConfirmUsernameFromChange);
+    connect(userProfile, &UserProfile::signalConfirmSignatureToClient, this, &Client::onConfirmSignatureFromChange);
+    connect(userProfile, &UserProfile::signalConfirmAvatarToClient, this, &Client::onConfirmAvatarFromChange);
 }
 
 Client::~Client()
@@ -141,7 +140,6 @@ void Client::update(const QString &userId, const QString &username, qint32 avata
     this->userId = userId;
     this->username = username;
     this->avatarId = avatarId;
-    qDebug()<<"00000"<<username<<endl;
     ui->usernameLabel->setText(username);
     qDebug() << "in update: avatarId = " << avatarId;
     ui->avatarLabel->setStyleSheet(QString("border-image: url(:/src/GUI/head/%1.jpg);").arg(avatarId));
@@ -211,7 +209,7 @@ void Client::addChat(const QString &ownerId, const QString &ownername, const qin
         Filepath+='/';
         Filepath+=QString::number(userAvatar);
         Filepath+=".jpg";
-        qDebug()<<"path=="<<Filepath;
+//        qDebug()<<"path=="<<Filepath;
         QString dirPath_ = Filepath;
         QListWidgetItem *pItem = new QListWidgetItem;
         pItem->setSizeHint(QSize(60,60));
@@ -238,6 +236,7 @@ void Client::addChat(const QString &ownerId, const QString &ownername, const qin
         friendButton->setLayoutDirection(Qt::LeftToRight);
         ChatWindow *cw = new ChatWindow(nullptr, ownerId, ownername, ownerAvatar, userId, username, userAvatar);
         chatWindowList.append(cw);
+        cw->modeFlag = 1;
 
 
         QObject::connect(friendButton, &QPushButton::clicked, cw, &ChatWindow::onCreateWindowButtonClickedFromClient);
@@ -292,11 +291,8 @@ void Client::on_modeBotton_clicked()
 
 void Client::on_moreButton_clicked()
 {
-    UserProfile* x=new UserProfile;
-    connect(x, &UserProfile::signalConfirmUsernameToClient, this, &Client::onConfirmUsernameFromChange);
-    connect(x, &UserProfile::signalConfirmSignatureToClient, this, &Client::onConfirmSignatureFromChange);
-    connect(x, &UserProfile::signalConfirmAvatarToClient, this, &Client::onConfirmAvatarFromChange);
-    x->show();
+
+    userProfile->show();
     //qDebug()<<"ffff";
 }
 

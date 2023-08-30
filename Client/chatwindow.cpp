@@ -150,7 +150,6 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
                 showReceivedMessage(chatMsg);
             }
         }
-        changeMode(1);
         break;
     }
     case Message::REQUEST_FRIEND_MESSAGE:
@@ -186,6 +185,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
 
 void ChatWindow::onCreateWindowButtonClickedFromClient()
 {
+    changeMode(modeFlag);
     qDebug() << "in slot: onButtonClickedFromClient()";
     show();
 }
@@ -434,6 +434,7 @@ void ChatWindow::on_closeButton_clicked()
 
 void ChatWindow::changeMode(const int modeId){
     qDebug() << "in f: changeMode";
+    modeFlag = modeId;
     if(modeId){
         setStyleSheet("*{background-color: rgb(255, 255, 255);}"
                          "QScrollBar:vertical{"

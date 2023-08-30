@@ -33,11 +33,11 @@ UserProfile::UserProfile(QWidget *parent) :
     Filepath =QDir::currentPath (); qDebug () << Filepath;
     int index = Filepath.lastIndexOf("/");
         Filepath = Filepath.left(index);
-        qDebug()<<"path=="<<Filepath;
+//        qDebug()<<"path=="<<Filepath;
         Filepath+="/Client/src/GUI/head";
-        qDebug()<<"path=="<<Filepath;
+//        qDebug()<<"path=="<<Filepath;
         QString dirPath_ = Filepath;
-        qDebug()<<Filepath;
+//        qDebug()<<Filepath;
         QDir dir(Filepath);
         QStringList filters;
         filters<<"*.png"<<"*.jpg";  // 设置哪些格式图片的可以显示
@@ -53,7 +53,7 @@ UserProfile::UserProfile(QWidget *parent) :
             pItem->setIcon(QIcon(QPixmap(imagePathList[idx]).scaled(QSize(60,60))));
             ui->listWidget->addItem(pItem);
         }
-        qDebug()<<"all imagepath: "<<imagePathList;
+//        qDebug()<<"all imagepath: "<<imagePathList;
         ui->pushButtonChangeName->setStyleSheet("font: \"幼圆\";font-size: 16pt;color:#ffe200;"
                                                     "QPushButton#pushButtonChangeName::hover{font: \"幼圆\";color:rgb(0,0,0);}");
         ui->pushButtonChangeAvatar->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
@@ -186,7 +186,7 @@ int getIconId(){
     ss = ss.right(cnt - i - 1);
     i   = ss.lastIndexOf(".");
     ss=ss.left(i);
-    qDebug()<<ss<<"###";
+//    qDebug()<<ss<<"###";
     flag=ss.toInt();
     return flag;
 }
@@ -194,6 +194,7 @@ int getIconId(){
 void UserProfile::onConfirmUsernameClicked()
 {
     QString username = ui->usernameEdit->text();
+    ui->usernameEdit->setText("");
     if(username.size() <= 0)	return;
     emit signalConfirmUsernameToClient(username);
     close();
@@ -202,6 +203,7 @@ void UserProfile::onConfirmUsernameClicked()
 void UserProfile::onConfirmSignatureClicked()
 {
     QString signature = ui->signatureEdit->text();
+    ui->signatureEdit->setText("");
     if(signature.size() <= 0) 	return;
     emit signalConfirmSignatureToClient(signature);
     close();

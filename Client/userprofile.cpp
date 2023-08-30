@@ -54,12 +54,12 @@ UserProfile::UserProfile(QWidget *parent) :
             ui->listWidget->addItem(pItem);
         }
         qDebug()<<"all imagepath: "<<imagePathList;
-    ui->pushButtonChangeName->setStyleSheet("font: '微软雅黑';font-size: 20pt;color:rgba(144,14,177,100);"
-                                            "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-    ui->pushButtonChangeAvatar->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                            "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-    ui->pushButtonChangeSignature->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                            "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
+        ui->pushButtonChangeName->setStyleSheet("font: \"幼圆\";font-size: 16pt;color:#ffe200;"
+                                                    "QPushButton#pushButtonChangeName::hover{font: \"幼圆\";color:rgb(0,0,0);}");
+        ui->pushButtonChangeAvatar->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                    "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeSignature->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                    "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
     //!!!
     //QObject::connect(&listWidget,&QListWidget::itemClicked,&print,&QMyLabel::rsetText);
     connect(ui->pushButtonChangeName,&QPushButton::clicked,this,&UserProfile::switchPage);
@@ -81,35 +81,34 @@ void UserProfile::switchPage(){
     QPushButton *button = qobject_cast<QPushButton*>(sender());//得到按下的按钮的指针
     if(button==ui->pushButtonChangeName){
         ui->stack->setCurrentIndex(0);//根据按下的button按索引显示相应的页面
-        ui->pushButtonChangeName->setStyleSheet("font: '微软雅黑';font-size: 20pt;color:rgba(144,14,177,100);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeAvatar->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeSignature->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
+        ui->pushButtonChangeName->setStyleSheet("font: \"幼圆\";font-size: 16pt;color:#ffe200;"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeAvatar->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeSignature->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
         }
 
 
     else if(button==ui->pushButtonChangeAvatar){
-        ui->pushButtonChangeName->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeAvatar->setStyleSheet("font: '微软雅黑';font-size: 20pt;color:rgba(144,14,177,100);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeSignature->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
+        ui->pushButtonChangeName->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeAvatar->setStyleSheet("font: \"幼圆\";font-size: 16pt;color:#ffe200;"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeSignature->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
 
         ui->stack->setCurrentIndex(1);
     }
     else{
         ui->stack->setCurrentIndex(2);
-        ui->pushButtonChangeName->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeAvatar->setStyleSheet("font: '微软雅黑';font-size: 13pt;color:rgb(0,0,0);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
-        ui->pushButtonChangeSignature->setStyleSheet("font: '微软雅黑';font-size: 20pt;color:rgba(144,14,177,100);"
-                                                "QPushButton#pushButtonChangeName::hover{font: '微软雅黑';font-size: 50pt;color:rgb(0,0,0);}");
+        ui->pushButtonChangeName->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeAvatar->setStyleSheet("font: \"幼圆\";font-size: 13pt;color:rgb(0,0,0);"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
+        ui->pushButtonChangeSignature->setStyleSheet("font: \"幼圆\";font-size: 16pt;color:#ffe200;"
+                                                "QPushButton#pushButtonChangeName::hover{font: \"幼圆\"; color:rgb(0,0,0);}");
     }
-
 }
 
 void UserProfile::on_toolButton_2_clicked()

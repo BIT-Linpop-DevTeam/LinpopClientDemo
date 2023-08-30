@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>814</width>
-    <height>817</height>
+    <width>736</width>
+    <height>627</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@ font-style:MingLiU-ExtB;
 
 QFrame#frame{
         background-color: rgba(55, 140, 205, 177);
-        background-color: rgba(246, 243, 229, 188);
+        background-color: rgba(85, 170, 255, 255);
 
 border-radius:15px;
 }
@@ -98,8 +98,8 @@ background-color: rgba(203, 203, 203, 150);
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>40</y>
+     <x>10</x>
+     <y>10</y>
      <width>721</width>
      <height>611</height>
     </rect>
@@ -186,9 +186,9 @@ color:rgb(0,0,0);
      <widget class="QPushButton" name="confirmUsername">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>210</y>
-        <width>121</width>
+        <x>240</x>
+        <y>400</y>
+        <width>161</width>
         <height>61</height>
        </rect>
       </property>
@@ -204,8 +204,8 @@ font-weight:bold</string>
      <widget class="QPushButton" name="cancelButton_1">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>210</y>
+        <x>60</x>
+        <y>400</y>
         <width>121</width>
         <height>61</height>
        </rect>
@@ -223,7 +223,7 @@ font-weight:bold</string>
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>120</y>
+        <y>180</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -232,7 +232,7 @@ font-weight:bold</string>
        <string/>
       </property>
       <property name="placeholderText">
-       <string>更改签名</string>
+       <string>更改用户名</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_9">
@@ -241,7 +241,7 @@ font-weight:bold</string>
         <x>100</x>
         <y>40</y>
         <width>251</width>
-        <height>51</height>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -276,9 +276,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="confirmAvatar">
       <property name="geometry">
        <rect>
-        <x>260</x>
+        <x>240</x>
         <y>400</y>
-        <width>121</width>
+        <width>161</width>
         <height>61</height>
        </rect>
       </property>
@@ -324,8 +324,8 @@ font-weight:bold</string>
      <widget class="QPushButton" name="cancelButton_3">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>280</y>
+        <x>60</x>
+        <y>400</y>
         <width>121</width>
         <height>61</height>
        </rect>
@@ -342,8 +342,8 @@ font-weight:bold</string>
      <widget class="QLineEdit" name="signatureEdit">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>120</y>
+        <x>130</x>
+        <y>180</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -358,9 +358,9 @@ font-weight:bold</string>
      <widget class="QPushButton" name="confirmSign">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>280</y>
-        <width>121</width>
+        <x>240</x>
+        <y>400</y>
+        <width>161</width>
         <height>61</height>
        </rect>
       </property>
@@ -376,7 +376,7 @@ font-weight:bold</string>
      <widget class="QPushButton" name="pushButton_8">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>70</x>
         <y>40</y>
         <width>321</width>
         <height>61</height>

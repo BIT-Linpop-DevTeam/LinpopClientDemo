@@ -8,7 +8,6 @@
 Communicator::Communicator()
 {
     socket = new QTcpSocket();
-    tryConnect();
     QObject::connect(socket, &QTcpSocket::readyRead, this, &Communicator::onReadyReadFromSocket);
     bytesReceived = 0;
     totalBytes = 0;
@@ -26,6 +25,8 @@ Communicator::Communicator()
     fileStream >> HOST_IP;
     fileStream >> HOST_PORT;
     qDebug() << "host ip: " <<  HOST_IP << " host port: " << HOST_PORT;
+
+    tryConnect();
 }
 
 Communicator::~Communicator() {

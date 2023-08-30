@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QFileDialog>
 #include <QQmlApplicationEngine>
+#include <QFileInfo>
 #include <QMouseEvent>
 
 #define BLOCK_SIZE 20
@@ -139,6 +140,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         if(chatLogMessage.friendId != userId)	return;
         for(const ChatMessage &chatMsg: chatLogMessage.messageList) {
             if(chatMsg.receiveId == userId) {
+                if(chatMsg.msg.contains("系统：")) continue;
 //                ui->msgShowTextBrowser->append(QString("%1(我):").arg(chatMsg.sendId));
 //                ui->msgShowTextBrowser->append(chatMsg.msg);
                 showSendMessage(chatMsg.msg);
@@ -171,7 +173,7 @@ void ChatWindow::onReadyReadFromClient(const QByteArray& msg)
         writeFileFromQByteArray(QDir::current().absolutePath(), fileMessage.fileName, fileMessage.fileContent, fileMessage.state);
 
 //        ui->msgShowTextBrowser->append(QString("你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
-        showReceivedMessage(QString("系统：你收到了一个文件%1, 已存于%2").arg(fileMessage.fileName).arg(QDir::current().absolutePath()));
+        showReceivedMessage(QString("系统：\n你收到了一个文件%1\n**单击打开**").arg(fileMessage.fileName), QDir::current().filePath(fileMessage.fileName));
 
         ChatMessage chatMessage(ownerId, userId, QString("系统：你发送的文件已被成功接受"), QDateTime::currentDateTime());
         emit signalSendMessageButtonClickedToClient(Message::FromChatMessage(chatMessage));
@@ -259,6 +261,8 @@ void ChatWindow::on_sendFileButton_clicked()
      "C:", //初始路径
      QObject::tr("传输文件(*)"));
     qDebug() << "in slot: sendFile" << fileName;
+
+    if(fileName.length() <= 0)  return;
 
     FileMessage fileMsg = readFileAsFileMessage(this->ownerId, this->userId, fileName);
 
@@ -378,16 +382,18 @@ void ChatWindow::showReceivedMessage(const ChatMessage &chatMessage) {
     }
 }
 
-void ChatWindow::showReceivedMessage(const QString &msg) {
+void ChatWindow::showReceivedMessage(const QString &msg, const QString &fPath) {
     if(msg != "") {
         QString time = QString::number(QDateTime::currentDateTime().toTime_t());
         dealMessageTime(time);
 
-        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar);
+        QNChatMessage* messageW = new QNChatMessage(ui->listWidget->parentWidget(), ownerAvatar, userAvatar, fPath);
+        connect(messageW, &QNChatMessage::messageRectClicked,this , &ChatWindow::handleMessageRectClicked);
         QListWidgetItem* item = new QListWidgetItem(ui->listWidget);
         dealMessage(messageW, item, msg, time, QNChatMessage::User_She);
     }
 }
+
 void ChatWindow::on_sendPictureButton_clicked()
 {
     QString fileName =
@@ -397,6 +403,8 @@ void ChatWindow::on_sendPictureButton_clicked()
        QObject::tr("图片文件(*png *jpg *jpeg *gif *bmp)"));
 
           qDebug()<< "in slot: sendPicture clicked" << fileName;
+
+          if(fileName.length() <= 0)    return;
 
           FileMessage fileMsg = readFileAsFileMessage(this->ownerId, this->userId, fileName);
 
@@ -518,10 +526,20 @@ void ChatWindow::changeMode(const int modeId){
                                       "QListWidget::item:selected{"
                                           "background-color: rgb(64, 65, 66);"
                                           "color:black; "
-                                          "border: 1px solid  rgb(64, 65, 66);"
+                                          "border: 2px solid  rgb(64, 65, 66);"
                                       "}"
                                       "QListWidget::item:selected:!active{border: 1px solid  rgb(64, 65, 66); background-color: rgb(64, 65, 66); color:rgb(51,51,51); } ");
       ui->msgSend->setStyleSheet("background-color: rgb(30, 30, 30);color:rgb(255,255,255);") ;
       ui->friendName->setStyleSheet("background-color:rgb(21, 120, 150);");
     }
+}
+
+void ChatWindow::handleMessageRectClicked(QString filePath) {
+
+    QFileInfo fileInfo(filePath);
+    qint64 fileSize = fileInfo.size();
+//    qDebug()<<folderPath;
+    SendFile *sendFileWidget = new SendFile(this);
+    sendFileWidget->initsender(filePath, fileInfo, fileSize);
+    sendFileWidget->show();
 }

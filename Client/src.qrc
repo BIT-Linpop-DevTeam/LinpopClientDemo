@@ -76,5 +76,17 @@
         <file>src/GUI/head/24.jpg</file>
         <file>src/GUI/head/25.jpg</file>
         <file>src/GUI/head/26.jpg</file>
+        <file>src/GUI/fileicon/doc.png</file>
+        <file>src/GUI/fileicon/exe.png</file>
+        <file>src/GUI/fileicon/file.png</file>
+        <file>src/GUI/fileicon/jpg.png</file>
+        <file>src/GUI/fileicon/mp3.png</file>
+        <file>src/GUI/fileicon/mp4.png</file>
+        <file>src/GUI/fileicon/pdf.png</file>
+        <file>src/GUI/fileicon/ppt.png</file>
+        <file>src/GUI/fileicon/rar.png</file>
+        <file>src/GUI/fileicon/txt.png</file>
+        <file>src/GUI/fileicon/xlsx.png</file>
+        <file>src/GUI/fileicon/zip.png</file>
     </qresource>
 </RCC>

@@ -33,6 +33,33 @@ QNChatMessage::QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAva
     m_loading->setAutoFillBackground(false);
 }
 
+QNChatMessage::QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAvatar, QString fPath) : QWidget(parent)
+{
+    m_filePath = fPath;
+    QFont te_font = this->font();
+    te_font.setFamily("MicrosoftYaHei");
+    te_font.setPointSize(12);
+//    te_font.setWordSpacing(0);
+//    te_font.setLetterSpacing(QFont::PercentageSpacing,0);
+//    te_font.setLetterSpacing(QFont::PercentageSpacing, 100);          //300%,100为默认  //设置字间距%
+//    te_font.setLetterSpacing(QFont::AbsoluteSpacing, 0);             //设置字间距为3像素 //设置字间距像素值
+    this->setFont(te_font);
+    m_leftPixmap = QPixmap(QString(":/src/GUI/head/%1").arg(userAvatar));
+//    m_rightPixmap = QPixmap(QString(":/src/GUI/head/1.jpg"));
+//    qDebug() << "ownerAvatar is " << ownerAvatar;
+//    QString tmp = QString(":/src/GUI/head/%1.jpg").arg(ownerAvatar);
+//    qDebug() << tmp;
+    m_rightPixmap = QPixmap(QString(":/src/GUI/head/%1.jpg").arg(ownerAvatar));
+
+    m_loadingMovie = new QMovie(this);
+    m_loadingMovie->setFileName(":src/GUI/loading4.gif");
+    m_loading = new QLabel(this);
+    m_loading->setMovie(m_loadingMovie);
+    m_loading->resize(16,16);
+    m_loading->setAttribute(Qt::WA_TranslucentBackground , true);
+    m_loading->setAutoFillBackground(false);
+}
+
 QNChatMessage::QNChatMessage(QWidget *parent) : QWidget(parent)
 {
     QFont te_font = this->font();
@@ -122,50 +149,41 @@ QSize QNChatMessage::fontRect(QString str)
     return QSize(size.width(), hei);
 }
 
-QSize QNChatMessage::getRealString(QString src)
-{
+QSize QNChatMessage::getRealString(QString src) {
     QFontMetricsF fm(this->font());
     m_lineHeight = fm.lineSpacing();
-    int nCount = src.count("\n");
-    int nMaxWidth = 0;
-    if(nCount == 0) {
-        nMaxWidth = fm.width(src);
-        QString value = src;
-        if(nMaxWidth > m_textWidth) {
-            nMaxWidth = m_textWidth;
-//            int size = m_textWidth / fm.width(" ") ;
-            int tmp = fm.width("你");
-            int size = m_textWidth / tmp ;
-            int num = ( ( (fm.width(value) - 1) / tmp + 1) - 1 )/ size + 1;
-//            int ttmp = num*fm.width(" ");
-//            num = ( ttmp + fm.width(value) ) / m_textWidth;
-            nCount += num;
-            QString temp = "";
-            for(int i = 0; i < num; i++) {
-                temp += value.mid(i*size, (i+1)*size) + "\n";
-            }
-            src.replace(value, temp);
-        }
-    } else {
-        for(int i = 0; i < (nCount + 1); i++) {
-            QString value = src.split("\n").at(i);
-            nMaxWidth = fm.width(value) > nMaxWidth ? fm.width(value) : nMaxWidth;
-            if(fm.width(value) > m_textWidth) {
-                nMaxWidth = m_textWidth;
-                int tmp = fm.width("你");
-                int size = m_textWidth / tmp;
-                int num = ( ( (fm.width(value) - 1) / tmp + 1) - 1 )/ size + 1;
-                num = ((i+num)*tmp + ( (fm.width(value) - 1) / tmp + 1)) / size;
-                nCount += num;
-                QString temp = "";
-                for(int i = 0; i < num; i++) {
-                    temp += value.mid(i*size, (i+1)*size) + "\n";
-                }
-                src.replace(value, temp);
+
+    int totalLines = 1;
+    int lineWidth = 0;
+    int maxLineWidth = 0;
+    QString value = src;
+
+    for (int i = 0; i < value.length(); ++i) {
+
+        QChar currentChar = value.at(i);
+
+        if (currentChar == '\n') {
+            totalLines++;
+            maxLineWidth = std::max(maxLineWidth, lineWidth);
+            lineWidth = 0;
+        } else {
+            int charWidth = fm.width(currentChar);
+//            qDebug() << "fm.width(currentChar)"<< fm.width("😁");
+            if (lineWidth + charWidth <= m_textWidth) {
+                lineWidth += charWidth;
+            } else {
+                totalLines++;
+                maxLineWidth = std::max(maxLineWidth, lineWidth);
+                lineWidth = charWidth;
             }
         }
     }
-    return QSize(nMaxWidth+m_spaceWid, ( (nCount + 1) * m_lineHeight+2*m_lineHeight) );
+    maxLineWidth = std::max(maxLineWidth, lineWidth);
+
+//    qDebug() << "totalLines :: " << totalLines;
+//    qDebug() << "maxLineWidth :: " << maxLineWidth;
+
+    return QSize(maxLineWidth + m_spaceWid + 20, totalLines * m_lineHeight + 2 * m_lineHeight  + 5);
 }
 
 void QNChatMessage::paintEvent(QPaintEvent *event)
@@ -214,7 +232,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         penText.setColor(QColor(51,51,51));
         painter.setPen(penText);
         QTextOption option(Qt::AlignLeft | Qt::AlignVCenter);
-        option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+        option.setWrapMode(QTextOption::WrapAnywhere);
         painter.setFont(this->font());
         painter.drawText(m_textLeftRect, m_msg,option);
     }  else if(m_userType == User_Type::User_Me) { // 自己
@@ -243,7 +261,7 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         penText.setColor(Qt::white);
         painter.setPen(penText);
         QTextOption option(Qt::AlignLeft | Qt::AlignVCenter);
-        option.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+        option.setWrapMode(QTextOption::WrapAnywhere);
         painter.setFont(this->font());
         painter.drawText(m_textRightRect,m_msg,option);
     }  else if(m_userType == User_Type::User_Time) { // 时间
@@ -258,4 +276,19 @@ void QNChatMessage::paintEvent(QPaintEvent *event)
         painter.setFont(te_font);
         painter.drawText(this->rect(),m_curTime,option);
     }
+}
+
+void QNChatMessage::mousePressEvent(QMouseEvent *event) {
+    // 获取点击位置
+    QPoint clickPos = event->pos();
+
+    // 检查点击位置是否在 m_textLeftRect 区域内
+    if (m_textLeftRect.contains(clickPos)) {
+        qDebug()<<"clicked";
+//        emit messageRectClicked("C:/Users/81249/Desktop/receivefile/src/GUI/head/Genshin/genshin1.jpg");
+        emit messageRectClicked(m_filePath);
+    }
+
+    // 调用基类的鼠标点击处理
+    QWidget::mousePressEvent(event);
 }

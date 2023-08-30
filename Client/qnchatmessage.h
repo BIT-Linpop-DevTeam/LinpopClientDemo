@@ -14,6 +14,7 @@ class QNChatMessage : public QWidget
 public:
     explicit QNChatMessage(QWidget *parent);
     explicit QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAvatar);
+    explicit QNChatMessage(QWidget *parent, qint32 ownerAvatar, qint32 userAvatar, QString fPath);
 
     enum User_Type{
         User_System,//系统
@@ -30,12 +31,23 @@ public:
     inline QString text() {return m_msg;}
     inline QString time() {return m_time;}
     inline User_Type userType() {return m_userType;}
+
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
+
+signals:
+    void messageRectClicked(QString filePath);
+
+
 protected:
     void paintEvent(QPaintEvent *event);
 private:
     QString m_msg;
     QString m_time;
     QString m_curTime;
+    QString m_filePath;
 
     QSize m_allSize;
     User_Type m_userType = User_System;

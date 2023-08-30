@@ -3,7 +3,7 @@
 #include <QTextStream>
 #include <QDir>
 #define MAX_CONNECT_TIMES 3
-#define FILENAME "HOST.txt"
+#define FILENAME ".HOST"
 
 Communicator::Communicator()
 {

@@ -45,7 +45,7 @@ UserProfile::UserProfile(QWidget *parent) :
         // 设置显示的item
         for(uint idx=0;idx<dir.count();idx++)
         {
-            QString imagePath = QString("%1\\%2").arg(Filepath).arg(dir[idx]);
+            QString imagePath = QString("%1/%2").arg(Filepath).arg(dir[idx]);
             imagePathList.push_back(imagePath);
             QListWidgetItem *pItem = new QListWidgetItem;
             pItem->setSizeHint(QSize(60,60));
@@ -170,7 +170,7 @@ void UserProfile::on_cancelButton_1_clicked()
     close();
 }
 
-QString ss="C:/Users/lyl/Desktop/qt/client/new/LinpopClientDemo/Client/src/GUI/head\\0.jpg";
+QString ss="C:/Users/lyl/Desktop/qt/client/new/LinpopClientDemo/Client/src/GUI/head/0.jpg";
 void UserProfile::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     ss=item->text();//单击操作
@@ -181,18 +181,14 @@ void UserProfile::on_listWidget_itemClicked(QListWidgetItem *item)
 int getIconId(){
     int flag=0;
     QString id;
-    for(auto x:ss){
-
-        if(x=='.')break;
-        if(flag==1){
-            id+=x;
-        }
-        if(x=='\\')flag++;
-    }
-    flag=0;
-    flag=id.toInt();
+    int cnt=ss.size();
+    int i   = ss.lastIndexOf("/");
+    ss = ss.right(cnt - i - 1);
+    i   = ss.lastIndexOf(".");
+    ss=ss.left(i);
+    qDebug()<<ss<<"###";
+    flag=ss.toInt();
     return flag;
-
 }
 
 void UserProfile::onConfirmUsernameClicked()

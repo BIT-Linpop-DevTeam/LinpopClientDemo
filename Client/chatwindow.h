@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "message.h"
 #include "qnchatmessage.h"
+#include "sendfile.h"
 #include <QListWidgetItem>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
@@ -29,7 +30,7 @@ public:
 
     void showSendMessage(const QString &msg);
     void showReceivedMessage(const ChatMessage &msg);
-    void showReceivedMessage(const QString &msg);
+    void showReceivedMessage(const QString &msg, const QString &fPath);
 
     void changeMode(const int modeId);
 protected:
@@ -48,6 +49,8 @@ public slots:
     void onReadyReadFromClient(const QByteArray &msg);
     void onCreateWindowButtonClickedFromClient();
     void onSendMessageButtonClicked();
+    void handleMessageRectClicked(QString filePath);
+
 private slots:
     void on_sendFileButton_clicked();
     void on_sendPictureButton_clicked();

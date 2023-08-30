@@ -113,7 +113,7 @@ void UserProfile::switchPage(){
 
 void UserProfile::on_toolButton_2_clicked()
 {
-    minimumSize();
+    showMinimized();
 }
 
 void UserProfile::on_toolButton_clicked()
